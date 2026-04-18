@@ -1,0 +1,3049 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Desafio Usucapião – Marcel Rulli</title>
+  <meta name="description" content="Em apenas 4 dias, aprenda a dominar o mercado com mais de 30 milhões de imóveis irregulares esperando por você. Junte-se ao Desafio Usucapião com Marcel Rulli." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,300&display=swap" rel="stylesheet" />
+  <style>
+    /* =============================================
+       DESIGN TOKENS – Cinematic Authority
+    ============================================= */
+    :root {
+      --bg:               #131313;
+      --surface-low:      #1b1b1b;
+      --surface:          #222222;
+      --surface-high:     #2a2a2a;
+      --surface-highest:  #353535;
+      --primary:          #e8e8ea;
+      --gold:             #e9c349;
+      --gold-dark:        #af8d11;
+      --on-gold:          #1a1200;
+      --muted:            #909099;
+      --ghost:            rgba(206,206,208,.10);
+      --font-display:     'Jost', -apple-system, system-ui, sans-serif;
+      --font-body:        'Jost', -apple-system, system-ui, sans-serif;
+    }
+
+    /* =============================================
+       RESET & BASE
+    ============================================= */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--primary);
+      font-family: var(--font-body);
+      font-weight: 300;
+      font-size: 1.05rem;
+      line-height: 1.85;
+      overflow-x: hidden;
+    }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+
+    /* =============================================
+       UTILITY
+    ============================================= */
+    .label {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: .72rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .section-pad { padding: 120px 0; }
+    .container {
+      width: min(980px, 90vw);
+      margin: 0 auto;
+    }
+    .gold-text { color: var(--gold); }
+    .muted { color: var(--muted); }
+
+    /* Primary CTA Button */
+    .btn-primary {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+      color: var(--on-gold);
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: .9rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      padding: 22px 56px;
+      border: none;
+      cursor: pointer;
+      transition: opacity .25s, transform .25s;
+    }
+    .btn-primary:hover { opacity: .88; transform: translateY(-2px); }
+    .btn-primary.large { font-size: 1rem; padding: 26px 72px; }
+
+    /* =============================================
+       GLASS MORPHISM SECTION DIVIDERS
+    ============================================= */
+    .glass-divider {
+      position: relative;
+      height: 120px;
+      margin: -60px 0;
+      z-index: 10;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .glass-divider::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      background: rgba(255,255,255,0.012);
+      border-top: 1px solid rgba(255,255,255,0.04);
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      box-shadow: 0 0 40px rgba(200,220,255,0.025);
+      opacity: 0;
+      transition: opacity 0.6s ease;
+    }
+    .glass-divider.visible::before { opacity: 1; }
+
+    /* =============================================
+       PROGRESS MONOLITH (right side tall line)
+    ============================================= */
+    #progress-monolith {
+      position: fixed;
+      right: 28px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 2px;
+      height: 180px;
+      background: var(--ghost);
+      z-index: 100;
+    }
+    #progress-monolith::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: var(--gold);
+      transition: height .3s ease;
+      height: 0%;
+    }
+
+    /* =============================================
+       HERO SECTION
+    ============================================= */
+    #hero {
+      background: var(--bg);
+      height: 250vh;          /* tall so scroll has room to scrub full video */
+      width: 100%;
+      position: relative;
+    }
+    /* sticky viewport wrapper stays pinned while hero scrolls */
+    #hero-sticky {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+    #hero-scroll-video {
+      position: absolute;
+      top: 0; right: 0;
+      width: 55%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 1;
+      opacity: 0.9;
+      filter: contrast(1.05) brightness(0.75);
+    }
+    .hero-video-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to right, var(--bg) 35%, transparent 65%),
+        linear-gradient(to bottom, transparent 55%, var(--bg) 100%);
+      z-index: 2;
+    }
+    #hero .hero-inner {
+      width: min(1000px, 92vw);
+      margin: 0 auto;
+      position: relative;
+      z-index: 3;
+    }
+    #hero .hero-content {
+      max-width: 55%;
+    }
+    .top-pill {
+      display: inline-block;
+      padding: 8px 16px;
+      border: 1px solid rgba(233,195,73,0.3);
+      font-family: var(--font-display);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 24px;
+      background: rgba(233,195,73,0.05);
+    }
+    .hero-title {
+      font-family: var(--font-display);
+      font-weight: 300;
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+      color: var(--gold);
+      opacity: 0.85;
+    }
+    .hero-title span { color: var(--gold); }
+    #hero h1 {
+      font-family: var(--font-display);
+      font-weight: 200;
+      font-size: clamp(1.8rem, 3.2vw, 2.6rem);
+      line-height: 1.28;
+      letter-spacing: -0.01em;
+      margin-bottom: 36px;
+      color: var(--primary);
+    }
+    #hero h1 strong {
+      font-weight: 700;
+      color: var(--gold);
+    }
+    #hero h1 .highlight {
+      color: var(--gold);
+      font-weight: 600;
+    }
+    #hero .hero-sub {
+      font-size: 1.25rem;
+      font-weight: 300;
+      color: rgba(232,232,234,0.65);
+      max-width: 520px;
+      margin-bottom: 52px;
+      line-height: 1.8;
+    }
+    .price-hint {
+      margin-top: 24px;
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      font-weight: 300;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+    }
+    .price-hint .strike {
+      text-decoration: line-through;
+      opacity: 0.5;
+    }
+    .price-hint span:not(.strike) {
+      color: var(--gold);
+      font-weight: 600;
+    }
+
+    /* =============================================
+       TRUTH SECTION
+    ============================================= */
+    /* =============================================
+       TRUTH SECTION — Cinematic Parallax
+    ============================================= */
+    #truth {
+      position: relative;
+      background: #131313;
+      padding: 0;
+      overflow: hidden;
+    }
+    /* Bottom edge fade — mirrors the top */
+    #truth::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 220px;
+      background: linear-gradient(to bottom, transparent 0%, #131313 100%);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+
+    #truth-parallax-bg {
+      position: absolute;
+      top: -15%; left: 0; width: 100%; height: 130%;
+      background:
+        linear-gradient(to right, rgba(19,19,19,0.98) 0%, rgba(19,19,19,0.92) 25%, rgba(19,19,19,0.72) 55%, rgba(19,19,19,0.85) 100%),
+        linear-gradient(to bottom, rgba(19,19,19,0.55) 0%, transparent 22%, transparent 62%, rgba(19,19,19,0.98) 100%),
+        url('event-wide-1.jpg') center/cover no-repeat;
+      filter: grayscale(100%);
+      will-change: transform;
+      z-index: 0;
+    }
+    #truth .container { position: relative; z-index: 2; }
+    #truth .truth-inner {
+      padding: 140px 0 160px;
+    }
+    #truth .truth-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 56px;
+    }
+    #truth .truth-eyebrow span {
+      font-family: var(--font-display);
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      opacity: 0.8;
+    }
+    #truth .truth-eyebrow-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(233,195,73,0.4), transparent);
+      max-width: 120px;
+    }
+    /* Two-column layout with breathing room */
+    #truth .truth-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 0 80px;
+      align-items: start;
+    }
+    /* Left column: large statement */
+    #truth .truth-left {
+      position: sticky;
+      top: 80px;
+      padding-bottom: 80px;
+    }
+    #truth h2 {
+      font-family: var(--font-display);
+      font-weight: 200;
+      font-size: clamp(2.6rem, 4.5vw, 3.8rem);
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+      color: var(--primary);
+      margin-bottom: 48px;
+    }
+    #truth h2 em {
+      font-style: normal;
+      font-weight: 700;
+      color: var(--gold);
+      position: relative;
+    }
+    #truth h2 em::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0; right: 0; height: 2px;
+      background: var(--gold);
+      opacity: 0.5;
+    }
+    /* Stat chips on the left */
+    .truth-stat-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 40px;
+    }
+    .truth-stat-chip {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 16px 20px;
+      background: rgba(255,255,255,0.025);
+      border: 1px solid rgba(255,255,255,0.05);
+      position: relative;
+      overflow: hidden;
+    }
+    .truth-stat-chip::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0; width: 2px;
+      background: var(--gold);
+    }
+    .truth-stat-chip .chip-num {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: var(--gold);
+      letter-spacing: -0.04em;
+      line-height: 1;
+      min-width: 72px;
+    }
+    .truth-stat-chip .chip-label {
+      font-size: 0.78rem;
+      font-weight: 400;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      line-height: 1.4;
+    }
+    /* Right column: text content with clip reveals */
+    .truth-right {
+      padding-top: 8px;
+      position: relative;
+    }
+    .truth-right::before {
+      content: '';
+      position: absolute;
+      inset: -32px -36px -32px -20px;
+      background: rgba(4,4,4,0.45);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(233,195,73,0.08);
+      box-shadow:
+        0 0 40px rgba(233,195,73,0.06),
+        inset 0 0 60px rgba(233,195,73,0.03);
+      -webkit-mask-image: radial-gradient(
+        ellipse 90% 90% at 50% 50%,
+        black 40%,
+        transparent 100%
+      );
+      mask-image: radial-gradient(
+        ellipse 90% 90% at 50% 50%,
+        black 40%,
+        transparent 100%
+      );
+      z-index: -1;
+    }
+    #truth .truth-right h3 {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 1.5rem;
+      margin-bottom: 36px;
+      color: var(--primary);
+      letter-spacing: -0.01em;
+      line-height: 1.25;
+    }
+    #truth .truth-right .truth-p {
+      font-size: 1.2rem;
+      font-weight: 300;
+      color: rgba(232,232,234,0.85);
+      line-height: 1.9;
+      margin-bottom: 28px;
+    }
+    #truth .truth-quote {
+      margin-top: 52px;
+      padding: 36px 40px;
+      background: rgba(255,255,255,0.02);
+      border-left: 2px solid var(--gold);
+      backdrop-filter: blur(12px);
+    }
+    #truth .truth-quote p {
+      font-style: italic;
+      font-weight: 300;
+      color: rgba(232,232,234,0.8);
+      font-size: 1.15rem;
+      line-height: 1.75;
+    }
+    #truth .truth-quote cite {
+      display: block;
+      margin-top: 16px;
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-style: normal;
+    }
+
+
+
+    /* =============================================
+       PROMISE SECTION — Editorial Numbered
+    ============================================= */
+    #promise {
+      background: var(--bg);
+      padding: 20px 0 140px;
+      position: relative;
+      overflow: hidden;
+    }
+    #promise::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(233,195,73,0.3), transparent);
+    }
+    #promise .promise-header {
+      margin-bottom: 100px;
+      position: relative;
+    }
+    #promise .promise-eyebrow {
+      font-family: var(--font-display);
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      opacity: 0.8;
+      margin-bottom: 20px;
+      text-align: center;
+      padding-top: 50px;
+    }
+    #promise h2 {
+      font-family: var(--font-display);
+      font-weight: 200;
+      font-size: clamp(2.2rem, 4vw, 3.4rem);
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      text-align: center;
+      color: var(--primary);
+    }
+    #promise h2 em {
+      font-style: normal;
+      font-weight: 700;
+      color: var(--gold);
+    }
+    /* Numbered feature list */
+    #promise .features-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    #promise .feature-row {
+      display: grid;
+      grid-template-columns: 80px 1px 1fr;
+      gap: 0 48px;
+      padding: 60px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      position: relative;
+      align-items: start;
+      opacity: 0;
+      transform: translateX(-32px);
+      transition: opacity 0.7s ease var(--fr-delay, 0ms), transform 0.7s ease var(--fr-delay, 0ms);
+    }
+    #promise .feature-row.play {
+      opacity: 1;
+      transform: none;
+    }
+    #promise .feature-row:first-child { border-top: 1px solid rgba(255,255,255,0.04); }
+    /* Large ghost number */
+    .feature-num {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      color: var(--gold);
+      padding-top: 6px;
+    }
+    /* Vertical separator */
+    .feature-sep {
+      width: 1px;
+      background: linear-gradient(to bottom, rgba(233,195,73,0.6), rgba(233,195,73,0.1));
+      align-self: stretch;
+    }
+    /* Content */
+    .feature-body { padding-left: 0; }
+    .feature-icon {
+      width: 26px;
+      height: 26px;
+      color: var(--gold);
+      margin-bottom: 20px;
+      opacity: 0.75;
+    }
+    .feature-body h3 {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 1.35rem;
+      line-height: 1.3;
+      margin-bottom: 16px;
+      color: var(--primary);
+    }
+    .feature-body p {
+      font-size: 1rem;
+      color: var(--muted);
+      line-height: 1.9;
+      font-weight: 300;
+      max-width: 640px;
+    }
+    #promise .promise-footer {
+      margin-top: 80px;
+      text-align: center;
+    }
+
+
+    /* =============================================
+       MENTOR SECTION — Cinematic Full-Bleed
+    ============================================= */
+    #mentor {
+      position: relative;
+      background: #0a0a0a;
+      min-height: 90vh;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      padding: 0;
+    }
+    /* Full-bleed photo on the right */
+    .mentor-photo-bg {
+      position: absolute;
+      top: 0; right: 0;
+      width: 52%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      filter: contrast(1.08) brightness(0.7);
+      z-index: 1;
+    }
+    /* Horizontal gradient mask so photo bleeds into dark left */
+    .mentor-photo-mask {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to right, #0a0a0a 45%, rgba(10,10,10,0.5) 70%, transparent 100%),
+        linear-gradient(to bottom, transparent 70%, #0a0a0a 100%);
+      z-index: 2;
+    }
+    .mentor-inner {
+      position: relative;
+      z-index: 3;
+      width: min(1100px, 92vw);
+      margin: 0 auto;
+      padding: 140px 0;
+      display: grid;
+      grid-template-columns: 1fr 52%;
+      gap: 0;
+      align-items: center;
+    }
+    .mentor-content {
+      padding-right: 60px;
+    }
+    .mentor-eyebrow {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      opacity: 0.8;
+      margin-bottom: 20px;
+    }
+    #mentor h2 {
+      font-family: var(--font-display);
+      font-weight: 200;
+      font-size: clamp(2.2rem, 4vw, 3.4rem);
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin-bottom: 8px;
+      color: var(--primary);
+    }
+    #mentor h2 strong {
+      font-weight: 700;
+      color: var(--gold);
+    }
+    .mentor-title-rule {
+      width: 48px;
+      height: 2px;
+      background: var(--gold);
+      margin: 28px 0 36px;
+    }
+    #mentor .bio-text {
+      font-size: 1.05rem;
+      font-weight: 300;
+      color: rgba(232,232,234,0.65);
+      line-height: 1.9;
+      margin-bottom: 20px;
+      max-width: 480px;
+    }
+    /* Credential stats row */
+    .mentor-stats {
+      display: flex;
+      gap: 48px;
+      margin-top: 52px;
+      padding-top: 40px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .mentor-stat {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .mentor-stat .stat-num {
+      font-family: var(--font-display);
+      font-weight: 300;
+      font-size: 2.4rem;
+      color: var(--gold);
+      letter-spacing: -0.04em;
+      line-height: 1;
+    }
+    .mentor-stat .stat-num strong { font-weight: 700; }
+    .mentor-stat .stat-label {
+      font-size: 0.78rem;
+      font-weight: 400;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      max-width: 120px;
+      line-height: 1.4;
+    }
+
+    /* =============================================
+       FOR YOU SECTION
+    ============================================= */
+    #for-you {
+      background: var(--bg);
+      padding: 120px 0;
+      text-align: center;
+    }
+    #for-you h2 {
+      font-family: var(--font-display);
+      font-weight: 200;
+      font-size: clamp(2.4rem, 4.5vw, 3.8rem);
+      margin-bottom: 64px;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      color: var(--primary);
+    }
+    #for-you .check-list {
+      list-style: none;
+      max-width: 800px;
+      margin: 0 auto 64px;
+      padding: 0;
+    }
+    #for-you .check-list li {
+      background: var(--surface-low);
+      margin-bottom: 12px;
+      padding: 24px 32px;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      border-left: 2px solid var(--gold);
+      transition: transform 0.2s ease;
+    }
+    #for-you .check-list li:hover {
+      transform: scale(1.01);
+      background: var(--surface);
+    }
+    #for-you .check-list li.pain {
+      border-left-color: #ff4d4d;
+    }
+    #for-you .check-list li .icon {
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+    }
+    #for-you .check-list li.pain .icon { color: #ff4d4d; }
+    #for-you .check-list li:not(.pain) .icon { color: var(--gold); }
+    
+    #for-you .check-list li span {
+      font-size: 1rem;
+      color: var(--primary);
+      font-weight: 500;
+    }
+    #for-you .for-you-cta {
+      margin-top: 64px;
+    }
+
+
+    /* =============================================
+       DAILY CONTENT SECTION
+    ============================================= */
+    #content-schedule {
+      background: var(--bg);
+      padding: 120px 0;
+    }
+    #content-schedule h2 {
+      font-family: var(--font-display);
+      font-weight: 300;
+      font-size: clamp(2rem, 3.8vw, 3rem);
+      margin-bottom: 80px;
+      line-height: 1.1;
+      max-width: 750px;
+    }
+    #content-schedule h2 span.gold { color: var(--gold); }
+    #content-schedule .days-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+    }
+    #content-schedule .day-card {
+      background: linear-gradient(135deg, rgba(34,34,34,0.6) 0%, rgba(20,20,20,0.8) 100%);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.05);
+      padding: 56px 48px;
+      position: relative;
+      transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+      overflow: hidden;
+    }
+    #content-schedule .day-card:hover {
+      transform: translateY(-10px);
+      border-color: rgba(233,195,73,0.3);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    }
+    #content-schedule .day-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(233,195,73,0.4), transparent);
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+    #content-schedule .day-card:hover::before { opacity: 1; }
+    
+    #content-schedule .day-label-wrap {
+      margin-bottom: 28px;
+    }
+    #content-schedule .day-label-wrap .day-meta {
+      font-family: var(--font-display);
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    #content-schedule .day-num-bg {
+      position: absolute;
+      top: 32px;
+      right: 32px;
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 5rem;
+      line-height: 1;
+      color: rgba(255,255,255,0.03);
+      pointer-events: none;
+      transition: color 0.4s;
+    }
+    #content-schedule .day-card:hover .day-num-bg {
+      color: rgba(233,195,73,0.06);
+    }
+    #content-schedule .day-card h3 {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 1.4rem;
+      line-height: 1.3;
+      margin-bottom: 20px;
+      color: var(--primary);
+      position: relative;
+      z-index: 2;
+    }
+    #content-schedule .day-card p {
+      font-size: 0.95rem;
+      color: var(--muted);
+      line-height: 1.8;
+      position: relative;
+      z-index: 2;
+    }
+    #content-schedule .schedule-footer {
+      margin-top: 80px;
+      text-align: center;
+    }
+
+    /* =============================================
+       GAP SECTION (before/after)
+    ============================================= */
+    #gap {
+      position: relative;
+      background: transparent;
+      padding: 140px 0;
+      overflow: hidden;
+    }
+    /* Top fade — dissolves from --bg into section */
+    #gap::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 300px;
+      background: linear-gradient(to bottom, var(--bg) 0%, transparent 100%);
+      z-index: 3;
+      pointer-events: none;
+    }
+    /* Bottom fade — dissolves section back into --bg */
+    #gap::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 300px;
+      background: linear-gradient(to top, var(--bg) 0%, transparent 100%);
+      z-index: 3;
+      pointer-events: none;
+    }
+    .parallax-bg {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 120%;
+      background: linear-gradient(rgba(19,19,19,0.9), rgba(19,19,19,0.9)), 
+                  url('event-wide-2.jpg') center/cover no-repeat;
+      z-index: 1;
+      transform: translateY(0);
+      will-change: transform;
+    }
+    #gap .container { position: relative; z-index: 2; }
+    #gap h2 {
+      font-family: var(--font-display);
+      font-weight: 300;
+      font-size: clamp(2rem, 3.8vw, 3rem);
+      margin-bottom: 80px;
+      padding-top: 40px;
+      text-align: center;
+      line-height: 1.25;
+    }
+    #gap h2 strong { font-weight: 700; color: var(--gold); }
+    #gap h2 em { font-style: italic; font-weight: 200; color: var(--primary); }
+    #gap .gap-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+    }
+    .glass-card {
+      background: rgba(40, 40, 40, 0.4);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 64px 48px;
+      border-radius: 4px; /* Maintaining sharp corners as per design rules */
+    }
+    .glass-card.gold-glass {
+      border-top: 4px solid var(--gold);
+      background: rgba(50, 50, 50, 0.5);
+    }
+    .glass-card h3 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 48px;
+    }
+    .glass-card.before h3 { color: var(--muted); }
+    .glass-card.after h3 { color: var(--gold); }
+    
+    .glass-card ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .glass-card ul li {
+      font-size: 1rem;
+      line-height: 1.6;
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+    .glass-card.before ul li { color: var(--muted); }
+    .glass-card.after ul li { color: var(--primary); font-weight: 500; }
+    
+    .glass-card .icon-wrap {
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      margin-top: 2px;
+    }
+    .glass-card.before .icon-wrap { color: rgba(255,255,255,0.15); }
+    .glass-card.after .icon-wrap { color: var(--gold); }
+
+    /* =============================================
+       INVESTMENT SECTION — Vertical Premium
+    ============================================= */
+    #investment {
+      background: #060606;
+      padding: 140px 0;
+      position: relative;
+      overflow: hidden;
+    }
+    #investment::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 70% 50% at 50% 0%, rgba(233,195,73,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    #investment .inv-wrap {
+      max-width: 760px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    #investment .inv-eyebrow {
+      font-family: var(--font-display);
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      opacity: 0.8;
+      margin-bottom: 20px;
+    }
+    #investment h2 {
+      font-family: var(--font-display);
+      font-weight: 200;
+      font-size: clamp(2.2rem, 4vw, 3.2rem);
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin-bottom: 64px;
+      color: var(--primary);
+    }
+    #investment h2 em {
+      font-style: normal;
+      font-weight: 700;
+      color: var(--gold);
+    }
+    /* Includes list: centered vertical */
+    #investment .includes-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin-bottom: 64px;
+      text-align: left;
+    }
+    #investment .includes-list li {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 20px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      font-size: 1.05rem;
+      font-weight: 300;
+      color: rgba(232,232,234,0.8);
+    }
+    #investment .includes-list li:first-child { border-top: 1px solid rgba(255,255,255,0.05); }
+    #investment .includes-list li::before {
+      content: '';
+      flex-shrink: 0;
+      width: 5px;
+      height: 5px;
+      background: var(--gold);
+      border-radius: 50%;
+    }
+    /* Gold separator line */
+    .inv-divider {
+      width: 48px;
+      height: 2px;
+      background: var(--gold);
+      margin: 0 auto 64px;
+    }
+    /* Price card: centered glass */
+    #investment .price-card {
+      background: linear-gradient(160deg, rgba(28,28,28,0.9) 0%, rgba(14,14,14,0.95) 100%);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-top: 2px solid var(--gold);
+      padding: 64px 56px;
+      position: relative;
+      overflow: hidden;
+    }
+    #investment .price-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 120px;
+      background: radial-gradient(ellipse at 50% 0%, rgba(233,195,73,0.08) 0%, transparent 80%);
+      pointer-events: none;
+    }
+    #investment .price-label {
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 0.65rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+      opacity: 0.8;
+    }
+    #investment .price-from {
+      font-size: 0.88rem;
+      color: var(--muted);
+      text-decoration: line-through;
+      margin-bottom: 4px;
+      opacity: 0.6;
+    }
+    #investment .price-value {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(4rem, 10vw, 7rem);
+      color: var(--gold);
+      letter-spacing: -0.05em;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    #investment .price-period {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-bottom: 48px;
+      letter-spacing: 0.04em;
+    }
+    #investment .total-value {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 20px;
+      letter-spacing: 0.05em;
+    }
+    /* Offer stack */
+    .offer-stack {
+      margin-bottom: 48px;
+      border: 1px solid rgba(255,255,255,0.06);
+      overflow: hidden;
+    }
+    .offer-header-row {
+      background: linear-gradient(135deg, rgba(233,195,73,0.12) 0%, rgba(233,195,73,0.04) 100%);
+      border-bottom: 1px solid rgba(233,195,73,0.2);
+      padding: 24px 32px;
+      text-align: left;
+    }
+    .offer-brand {
+      display: block;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.78rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .offer-brand-sub {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 300;
+      color: rgba(232,232,234,0.5);
+      margin-top: 4px;
+      letter-spacing: 0.04em;
+    }
+    .offer-row {
+      display: grid;
+      grid-template-columns: 28px 1fr auto;
+      align-items: center;
+      gap: 16px;
+      padding: 20px 32px;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      text-align: left;
+      transition: background 0.2s ease;
+    }
+    .offer-row:hover { background: rgba(255,255,255,0.02); }
+    .offer-check {
+      color: var(--gold);
+      font-size: 1rem;
+      font-weight: 700;
+    }
+    .offer-desc {
+      font-size: 0.95rem;
+      font-weight: 300;
+      color: rgba(232,232,234,0.82);
+      line-height: 1.5;
+    }
+    .offer-val {
+      font-family: var(--font-display);
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--muted);
+      white-space: nowrap;
+      text-decoration: line-through;
+      opacity: 0.6;
+    }
+    .offer-total-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 32px;
+      background: rgba(233,195,73,0.05);
+      border-top: 1px solid rgba(233,195,73,0.15);
+    }
+    .offer-total-label {
+      font-family: var(--font-display);
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .offer-total-val {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-decoration: line-through;
+      opacity: 0.6;
+    }
+
+    /* =============================================
+       SOCIAL PROOF — Testimonial Gallery
+    ============================================= */
+    #social-proof {
+      background: var(--bg);
+      padding: 100px 0 80px;
+    }
+    .sp-header {
+      text-align: center;
+      max-width: 680px;
+      margin: 0 auto 72px;
+    }
+    .sp-eyebrow {
+      font-family: var(--font-display);
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+      opacity: 0.8;
+    }
+    .sp-header h2 {
+      font-family: var(--font-display);
+      font-weight: 200;
+      font-size: clamp(1.9rem, 3.4vw, 2.8rem);
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      margin-bottom: 20px;
+    }
+    .sp-sub {
+      font-size: 0.95rem;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+    /* Gallery glossy card grid */
+    .dep-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .dep-card {
+      background: linear-gradient(160deg, rgba(32,32,32,0.85) 0%, rgba(16,16,16,0.92) 100%);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 2px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.32s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+    .dep-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(233,195,73,0.35);
+      box-shadow: 0 12px 48px rgba(0,0,0,0.5), 0 0 0 1px rgba(233,195,73,0.12);
+    }
+    .dep-card-img {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 4/3;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .dep-card-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
+      display: block;
+      transition: transform 0.5s ease, filter 0.4s ease;
+      filter: grayscale(10%);
+    }
+    .dep-card:hover .dep-card-img img {
+      transform: scale(1.05);
+      filter: grayscale(0%);
+    }
+    .dep-zoom {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      background: rgba(6,6,6,0.45);
+      transition: opacity 0.3s ease;
+    }
+    .dep-card:hover .dep-zoom { opacity: 1; }
+    .dep-zoom svg {
+      width: 32px;
+      height: 32px;
+      color: var(--gold);
+      filter: drop-shadow(0 0 10px rgba(233,195,73,0.7));
+    }
+    /* Pull quote */
+    .dep-quote {
+      padding: 20px 20px 22px;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      background: linear-gradient(180deg, rgba(233,195,73,0.03) 0%, transparent 100%);
+    }
+    .dep-quote-mark {
+      display: block;
+      font-family: Georgia, serif;
+      font-size: 2rem;
+      line-height: 0.6;
+      color: var(--gold);
+      opacity: 0.7;
+    }
+    .dep-quote p {
+      font-size: 0.82rem;
+      font-weight: 300;
+      color: rgba(232,232,234,0.7);
+      line-height: 1.6;
+      font-style: italic;
+    }
+    .sp-cta-wrap { text-align: center; }
+
+    /* Lightbox */
+    #dep-lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(4,4,4,0.94);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+    }
+    #dep-lightbox.open { display: flex; }
+    .lb-inner {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      max-height: 90vh;
+    }
+    #lb-img {
+      max-height: 88vh;
+      max-width: 88vw;
+      width: auto;
+      object-fit: contain;
+      border: 1px solid rgba(233,195,73,0.15);
+      box-shadow: 0 0 80px rgba(0,0,0,0.8);
+      animation: lb-fade .25s ease;
+    }
+    @keyframes lb-fade { from { opacity:0; transform:scale(0.97); } to { opacity:1; transform:scale(1); } }
+    .lb-close {
+      position: absolute;
+      top: -48px;
+      right: 0;
+      background: none;
+      border: none;
+      color: rgba(255,255,255,0.6);
+      font-size: 2rem;
+      cursor: pointer;
+      line-height: 1;
+      transition: color 0.2s;
+    }
+    .lb-close:hover { color: var(--gold); }
+    .lb-nav {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: rgba(255,255,255,0.7);
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      font-size: 1.6rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+    }
+    .lb-nav:hover {
+      background: rgba(233,195,73,0.1);
+      border-color: rgba(233,195,73,0.3);
+      color: var(--gold);
+    }
+    .lb-counter {
+      position: absolute;
+      bottom: -36px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+
+    /* =============================================
+       FAQ SECTION
+    ============================================= */
+    #faq {
+      background: var(--surface-low);
+      padding: 100px 0;
+    }
+    #faq h2 {
+      font-family: var(--font-display);
+      font-weight: 300;
+      font-size: clamp(1.8rem, 3.2vw, 2.6rem);
+      letter-spacing: -0.02em;
+      margin-bottom: 64px;
+    }
+    .faq-item {
+      border-top: 1px solid var(--ghost);
+      padding: 32px 0;
+      cursor: pointer;
+    }
+    .faq-item:last-child { border-bottom: 1px solid var(--ghost); }
+    .faq-question {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .faq-question h3 {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 1rem;
+      letter-spacing: -.01em;
+    }
+    .faq-icon {
+      flex-shrink: 0;
+      width: 22px;
+      height: 22px;
+      position: relative;
+      color: var(--gold);
+      transition: transform .3s;
+    }
+    .faq-icon::before, .faq-icon::after {
+      content: '';
+      position: absolute;
+      background: var(--gold);
+      border-radius: 1px;
+    }
+    .faq-icon::before { width: 100%; height: 2px; top: 50%; transform: translateY(-50%); }
+    .faq-icon::after { width: 2px; height: 100%; left: 50%; transform: translateX(-50%); transition: opacity .3s; }
+    .faq-item.open .faq-icon::after { opacity: 0; }
+    .faq-answer {
+      font-size: .9rem;
+      color: var(--muted);
+      line-height: 1.85;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .4s ease, padding .3s;
+    }
+    .faq-item.open .faq-answer {
+      max-height: 400px;
+      padding-top: 20px;
+    }
+
+    /* =============================================
+       FINAL CTA SECTION
+    ============================================= */
+    #final-cta {
+      background: var(--bg);
+      padding: 120px 0 100px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    #final-cta::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(233,195,73,.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    #final-cta .label { margin-bottom: 28px; }
+    #final-cta h2 {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      letter-spacing: -.04em;
+      line-height: 1.08;
+      margin-bottom: 20px;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    #final-cta .final-sub {
+      font-size: .95rem;
+      color: var(--muted);
+      max-width: 460px;
+      margin: 0 auto 48px;
+      line-height: 1.8;
+    }
+    #final-cta .final-price-hint {
+      font-family: var(--font-display);
+      font-size: .82rem;
+      color: var(--muted);
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin-top: 22px;
+    }
+    #final-cta .final-price-hint span { color: var(--gold); font-weight: 700; }
+
+    /* =============================================
+       FOOTER
+    ============================================= */
+    footer {
+      background: var(--surface-low);
+      padding: 40px 0;
+      text-align: center;
+    }
+    footer .footer-brand {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: .9rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 12px;
+    }
+    footer p { font-size: .76rem; color: var(--muted); }
+
+    /* =============================================
+       RESPONSIVE
+    ============================================= */
+    @media (max-width: 768px) {
+
+      /* ---- GLOBAL ---- */
+      .container {
+        width: 100%;
+        padding: 0 25px;
+      }
+      .section-pad { padding: 72px 0; }
+
+      /* All headings + labels left-align on mobile */
+      h1, h2, h3, h4,
+      .label, .promise-eyebrow,
+      #promise h2, #gap h2,
+      #for-you h2, #for-you,
+      #faq h2, #faq .label,
+      #final-cta, #final-cta h2,
+      #investment .inv-wrap,
+      #content-schedule h2,
+      #social-proof h2, #social-proof .label {
+        text-align: left !important;
+      }
+
+      /* ---- HERO — untouched layout, just text scale ---- */
+      #hero-text h1 {
+        font-size: clamp(2.2rem, 9vw, 3.6rem);
+        letter-spacing: -0.03em;
+      }
+      #hero-text .hero-sub {
+        font-size: 0.95rem;
+      }
+      #hero-cta-wrap {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+      }
+
+      /* ---- TRUTH ---- */
+      #truth .truth-grid {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+      #truth .truth-left {
+        position: static;
+        padding-bottom: 0;
+      }
+      #truth h2 {
+        font-size: clamp(2.4rem, 8vw, 3.2rem);
+      }
+      #truth .truth-inner {
+        padding: 100px 0 120px;
+      }
+      #truth .truth-right::before {
+        display: none; /* remove glow box on mobile */
+      }
+      .truth-stat-chip {
+        padding: 14px 16px;
+      }
+
+      /* ---- PROMISE / O MÉTODO ---- */
+      #promise {
+        padding: 60px 0 100px;
+      }
+      #promise .promise-header {
+        margin-bottom: 60px;
+      }
+      #promise h2 {
+        font-size: clamp(2rem, 7vw, 3rem);
+        text-align: left;
+      }
+      .features-list {
+        gap: 0;
+      }
+      .feature-row {
+        gap: 20px;
+        padding: 32px 0;
+      }
+      .feature-body h3 {
+        font-size: 1.15rem;
+      }
+      #promise .promise-footer {
+        text-align: left;
+      }
+
+      /* ---- FOR YOU ---- */
+      #for-you {
+        padding: 80px 0;
+        text-align: left;
+      }
+      #for-you h2 {
+        font-size: clamp(1.8rem, 7vw, 2.8rem);
+        margin-bottom: 40px;
+      }
+      #for-you .check-list li {
+        padding: 18px 20px;
+        gap: 16px;
+        font-size: 0.95rem;
+      }
+      #for-you .for-you-footer {
+        text-align: left;
+      }
+
+      /* ---- GAP SECTION (abismo) ---- */
+      #gap {
+        padding: 100px 0;
+      }
+      #gap h2 {
+        font-size: clamp(1.8rem, 7vw, 2.6rem);
+        margin-bottom: 48px;
+        padding-top: 20px;
+        text-align: left;
+      }
+      #gap .gap-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      .glass-card {
+        padding: 40px 28px;
+      }
+      .glass-card h3 {
+        font-size: 0.8rem;
+        margin-bottom: 24px;
+      }
+      .glass-card ul li {
+        gap: 14px;
+      }
+
+      /* ---- MENTOR ---- */
+      #mentor {
+        min-height: auto;
+      }
+      .mentor-inner {
+        grid-template-columns: 1fr;
+        padding: 100px 0 60px;
+        gap: 40px;
+      }
+      .mentor-content {
+        padding-right: 0;
+        order: 2;
+      }
+      .mentor-photo-bg {
+        position: relative;
+        width: 100%;
+        height: 380px;
+        object-position: top center;
+        order: 1;
+      }
+      .mentor-photo-mask {
+        background:
+          linear-gradient(to bottom, transparent 50%, #0a0a0a 100%),
+          linear-gradient(to right, #0a0a0a 0%, rgba(10,10,10,0.2) 60%, transparent 100%);
+      }
+      #mentor h2 {
+        font-size: clamp(1.8rem, 7vw, 2.8rem);
+      }
+
+      /* ---- SCHEDULE / CRONOGRAMA ---- */
+      #content-schedule {
+        padding: 80px 0;
+      }
+      #content-schedule h2 {
+        font-size: clamp(1.6rem, 6.5vw, 2.4rem);
+        margin-bottom: 48px;
+      }
+      #content-schedule .days-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      #content-schedule .day-card {
+        padding: 40px 28px;
+      }
+
+      /* ---- INVESTMENT (O que você recebe) ---- */
+      #investment {
+        padding: 80px 0;
+      }
+      .inv-wrap {
+        padding: 40px 28px;
+      }
+      .offer-row {
+        gap: 12px;
+        padding: 16px 0;
+        flex-wrap: wrap;
+      }
+      .offer-val {
+        margin-left: auto;
+      }
+      .investment-price-block {
+        text-align: left;
+      }
+
+      /* ---- SOCIAL PROOF / DEPOIMENTOS ---- */
+      #social-proof {
+        padding: 80px 0;
+      }
+      #social-proof h2 {
+        font-size: clamp(1.6rem, 6.5vw, 2.4rem);
+        margin-bottom: 40px;
+      }
+      .dep-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+      }
+      .dep-card-img img {
+        height: 220px;
+      }
+      .dep-quote p {
+        font-size: 0.78rem;
+      }
+
+      /* ---- FAQ ---- */
+      #faq {
+        padding: 80px 0;
+      }
+      #faq h2 {
+        font-size: clamp(1.8rem, 7vw, 2.6rem);
+        margin-bottom: 48px;
+      }
+      .faq-item {
+        padding: 24px 0;
+      }
+      .faq-question h3 {
+        font-size: 1rem;
+      }
+
+      /* ---- FINAL CTA ---- */
+      #final-cta {
+        padding: 80px 0;
+        text-align: left;
+      }
+      #final-cta h2 {
+        font-size: clamp(1.8rem, 7vw, 2.8rem);
+        margin-left: 0;
+        margin-right: 0;
+        text-align: left;
+      }
+      #final-cta .final-sub {
+        margin: 0 0 40px;
+        text-align: left;
+      }
+      #final-cta .final-price-hint {
+        text-align: left;
+      }
+
+      /* ---- BUTTONS ---- */
+      .btn-primary {
+        width: 100%;
+        text-align: center;
+        justify-content: center;
+        padding: 18px 24px;
+        font-size: 0.85rem;
+      }
+      .btn-primary.large {
+        font-size: 0.9rem;
+        padding: 20px 28px;
+      }
+
+      /* ---- FOOTER ---- */
+      footer {
+        padding: 40px 25px;
+        text-align: left;
+      }
+      footer .footer-brand {
+        font-size: 1.2rem;
+        margin-bottom: 12px;
+      }
+      footer p {
+        font-size: 0.78rem;
+      }
+
+      /* ---- LIGHTBOX ---- */
+      .lb-inner {
+        width: 96vw;
+        max-height: 80vh;
+      }
+
+      /* Ensure tech grid on schedule still shows */
+      #schedule::after {
+        opacity: 0.5;
+      }
+    }
+
+    /* Extra small phones */
+    @media (max-width: 420px) {
+      .dep-grid {
+        grid-template-columns: 1fr;
+      }
+      #content-schedule .day-card {
+        padding: 32px 20px;
+      }
+      .glass-card {
+        padding: 32px 20px;
+      }
+      #truth h2 {
+        font-size: 2.1rem;
+      }
+    }
+
+
+    /* =============================================
+       SCROLL ANIMATION & HIGH-TECH REVEAL SYSTEM
+    ============================================= */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* Word token animation */
+    .word-token {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(22px);
+      transition:
+        opacity 0.55s cubic-bezier(0.215,0.61,0.355,1) var(--wi, 0ms),
+        transform 0.55s cubic-bezier(0.215,0.61,0.355,1) var(--wi, 0ms);
+    }
+    .anim-words.play .word-token { opacity: 1; transform: none; }
+
+    /* Line-clip reveal: parent clips, child slides up */
+    .clip-wrap {
+      overflow: hidden;
+      display: block;
+    }
+    .clip-inner {
+      display: block;
+      transform: translateY(110%);
+      transition: transform 0.75s cubic-bezier(0.215,0.61,0.355,1) var(--ci, 0ms);
+    }
+    .clip-parent.play .clip-inner { transform: none; }
+
+    /* Stagger reveal for sibling elements */
+    .stagger-parent.play > * {
+      animation: staggerUp 0.65s cubic-bezier(0.215,0.61,0.355,1) both;
+    }
+    .stagger-parent.play > *:nth-child(1) { animation-delay: 0ms; }
+    .stagger-parent.play > *:nth-child(2) { animation-delay: 120ms; }
+    .stagger-parent.play > *:nth-child(3) { animation-delay: 240ms; }
+    @keyframes staggerUp {
+      from { opacity: 0; transform: translateY(36px); }
+      to   { opacity: 1; transform: none; }
+    }
+
+    /* Gold draw-in line */
+    .draw-line {
+      width: 0;
+      height: 1px;
+      background: linear-gradient(90deg, var(--gold), transparent);
+      transition: width 1.4s cubic-bezier(0.4,0,0.2,1) 0.2s;
+    }
+    .draw-active .draw-line { width: 100%; }
+
+    /* Scan‑line shimmer on dark elements */
+    @keyframes scanShimmer {
+      0%   { background-position: -100% 0; }
+      100% { background-position: 200% 0; }
+    }
+    /* =============================================
+       CINEMATIC ATMOSPHERE — GLOBAL
+    ============================================= */
+
+    /* Particle canvas sits behind everything, fixed */
+    #atm-canvas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 1;
+    }
+
+
+
+    /* Tech grid on schedule section only */
+    #schedule::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+      background-size: 72px 72px;
+      animation: gridDrift 28s linear infinite;
+    }
+    @keyframes gridDrift {
+      0%   { background-position: 0 0; }
+      100% { background-position: 72px 72px; }
+    }
+
+    /* Multi-layer parallax targets */
+    .py-section {
+      isolation: isolate;
+    }
+    .py-section .py-bg {
+      position: absolute;
+      inset: -20%;
+      pointer-events: none;
+      z-index: 0;
+      will-change: transform;
+    }
+    .py-section .container { position: relative; z-index: 2; }
+
+  </style>
+</head>
+<body>
+
+  <!-- Progress Monolith -->
+  <div id="progress-monolith"></div>
+
+  <!-- ======== HERO ======== -->
+  <section id="hero">
+    <div id="hero-sticky">
+      <video id="hero-scroll-video" muted playsinline preload="auto">
+        <source src="hero-scroll.mp4" type="video/mp4">
+      </video>
+      <div class="hero-video-overlay"></div>
+      <div class="hero-inner">
+      <div class="hero-content">
+        <div class="top-pill reveal">DOS DIAS 04 A 07 DE MAIO | ÀS 20H | AO VIVO NO ZOOM</div>
+        <div class="hero-title reveal">DESAFIO USUCAPIÃO <span style="opacity:0.5;margin:0 6px;">—</span> UMA OPORTUNIDADE DE NEGÓCIOS</div>
+        <h1 class="reveal">
+          <strong>Advogado:</strong> enquanto você lê esta página, colegas estão faturando <strong>até R$ 30.000 por processo</strong> em um mercado com mais de <strong>30 Milhões</strong> de imóveis irregulares esperando por você.
+        </h1>
+        <p class="hero-sub reveal">
+          Uma Oportunidade de Negócios para advogados que desejam multiplicar seus resultados e dominar a Regularização Imobiliária.
+        </p>
+        <a href="#truth" class="btn-primary large reveal" id="hero-cta">QUERO PARTICIPAR</a>
+        <p class="price-hint reveal">De <span class="strike">R$ 4.437</span> por <span>R$ 57,00</span> | Por tempo limitado!</p>
+      </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="glass-divider" id="gd-1"></div>
+
+  <!-- ======== TRUTH (MANIFESTO) ======== -->
+  <section id="truth">
+    <div id="truth-parallax-bg"></div>
+    <div class="container">
+      <div class="truth-inner">
+
+
+        <div class="truth-grid">
+          <!-- Sticky left: big statement + stats -->
+          <div class="truth-left">
+            <h2 class="anim-words" id="truth-h2">
+              A <em>verdade</em> que ningu&eacute;m est&aacute; te contando:
+            </h2>
+          </div>
+
+          <!-- Right: text + stats below -->
+          <div class="truth-right clip-parent" id="truth-right-clip">
+            <h3>
+              <span class="clip-wrap"><span class="clip-inner" style="--ci:0ms">Ser um bom advogado N&Atilde;O &Eacute; MAIS SUFICIENTE.</span></span>
+            </h3>
+            <p class="truth-p">
+              <span class="clip-wrap"><span class="clip-inner" style="--ci:120ms">Enquanto voc&ecirc; compete por pre&ccedil;o em &aacute;reas saturadas, existe um mercado bilion&aacute;rio pr&aacute;ticamente DESERTO: 30 milh&otilde;es de im&oacute;veis irregulares no Brasil. Cada caso vale entre R$ 5.000 e R$ 30.000.</span></span>
+            </p>
+            <p class="truth-p">
+              <span class="clip-wrap"><span class="clip-inner" style="--ci:240ms">Fa&ccedil;a as contas: &eacute; matematicamente IMPOSS&Iacute;VEL saturar esse mercado nos pr&oacute;ximos 20 anos.</span></span>
+            </p>
+            <div class="truth-quote">
+              <p><span class="clip-wrap"><span class="clip-inner" style="--ci:360ms">A quest&atilde;o &eacute;: voc&ecirc; vai aproveitar essa janela de oportunidade ou vai assistir de camarote enquanto outros advogados prosperam?</span></span></p>
+              <cite><span class="clip-wrap"><span class="clip-inner" style="--ci:480ms">&mdash; Marcel Rulli</span></span></cite>
+            </div>
+
+            <!-- Stats moved here, below the text -->
+            <div class="truth-stat-stack reveal" style="margin-top:48px;">
+              <div class="truth-stat-chip">
+                <span class="chip-num">30M</span>
+                <span class="chip-label">Im&oacute;veis irregulares no Brasil</span>
+              </div>
+              <div class="truth-stat-chip">
+                <span class="chip-num">R$ 30K</span>
+                <span class="chip-label">Teto de honor&aacute;rios por processo</span>
+              </div>
+              <div class="truth-stat-chip">
+                <span class="chip-num">20+</span>
+                <span class="chip-label">Anos de mercado insatur&aacute;vel</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="promise">
+    <div class="container">
+      <div class="promise-header">
+        <p class="promise-eyebrow reveal">O m&eacute;todo</p>
+        <h2 class="anim-words reveal" id="promise-h2">Voc&ecirc; acabou de encontrar o caminho para <em>dominar esse mercado em 4 dias</em></h2>
+      </div>
+
+      <div class="features-list">
+        <!-- Feature 1 -->
+        <div class="feature-row" style="--fr-delay:0ms">
+          <div class="feature-num">01</div>
+          <div class="feature-sep"></div>
+          <div class="feature-body">
+            <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
+            <h3>Construa uma F&aacute;brica de Clientes Premium</h3>
+            <p>Pare de mendigar por clientes. Aprenda a atrair quem REALMENTE paga: honor&aacute;rios de R$ 5.000 a R$ 30.000 por processo. Posicione-se como autoridade e transforme interessados em contratos lucrativos &mdash; funciona at&eacute; para iniciantes.</p>
+          </div>
+        </div>
+        <!-- Feature 2 -->
+        <div class="feature-row" style="--fr-delay:120ms">
+          <div class="feature-num">02</div>
+          <div class="feature-sep"></div>
+          <div class="feature-body">
+            <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <h3>Domine Estrat&eacute;gias que Poucos Conhecem</h3>
+            <p>Acesse modelos exclusivos de peti&ccedil;&otilde;es, fluxos otimizados e t&eacute;cnicas que aceleram processos. Negocie valores que refletem o VERDADEIRO valor do seu trabalho, n&atilde;o o que o mercado saturado est&aacute; pagando.</p>
+          </div>
+        </div>
+        <!-- Feature 3 -->
+        <div class="feature-row" style="--fr-delay:240ms">
+          <div class="feature-num">03</div>
+          <div class="feature-sep"></div>
+          <div class="feature-body">
+            <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+            <h3>Transforme Conhecimento em Faturamento Previs&iacute;vel</h3>
+            <p>Automatize da capta&ccedil;&atilde;o ao p&oacute;s-atendimento. Estruture seu escrit&oacute;rio para processar m&uacute;ltiplos casos simultaneamente enquanto outros continuam na luta di&aacute;ria por clientes.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="promise-footer reveal">
+        <a href="https://hub.la/r/W9E7MRvAudq7IzLXRqND" target="_blank" rel="noopener" class="btn-primary large" id="promise-cta">QUERO PARTICIPAR</a>
+        <p class="price-hint">De <span class="strike">R$ 4.437</span> por <span>R$ 57,00</span> | Por tempo limitado!</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== MENTOR ======== -->
+  <section id="mentor">
+    <!-- Full-bleed photo -->
+    <img src="marcel.jpg" alt="Marcel Rulli" class="mentor-photo-bg reveal" />
+    <div class="mentor-photo-mask"></div>
+
+    <div class="mentor-inner">
+      <div class="mentor-content">
+        <p class="mentor-eyebrow reveal">Marcel Rulli &mdash; quem está por trás do desafio</p>
+        <h2 class="reveal">Mais de <strong>15 anos</strong><br>transformando a advocacia</h2>
+        <div class="mentor-title-rule reveal"></div>
+
+        <p class="bio-text reveal">
+          Especialista em Regularização Imobiliária, Marcel criou um método próprio para
+          identificar, avaliar e executar processos de Usucapião com velocidade cirúrgica
+          &mdash; sem depender de peças genéricas que custam ao cliente meses desnecessários.
+        </p>
+        <p class="bio-text reveal">
+          Já ajudou centenas de advogados a dominar este nicho e faturar de forma
+          consistente com regularização fundiaria &mdash; em um mercado bilionário que
+          <strong style="color:var(--primary);font-weight:600">99% dos advogados ignora</strong>.
+        </p>
+
+        <div class="mentor-stats reveal">
+          <div class="mentor-stat">
+            <span class="stat-num"><strong>30k</strong></span>
+            <span class="stat-label">por processo honorários reais</span>
+          </div>
+          <div class="mentor-stat">
+            <span class="stat-num">+<strong>15</strong></span>
+            <span class="stat-label">anos de experi&ecirc;ncia no nicho</span>
+          </div>
+          <div class="mentor-stat">
+            <span class="stat-num">+<strong>500</strong></span>
+            <span class="stat-label">advogados treinados</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right side spacer (photo occupies this space) -->
+      <div></div>
+    </div>
+  </section>
+
+  <section id="for-you">
+    <div class="container">
+      <h2 class="reveal">O Desafio &eacute; para voc&ecirc; se...</h2>
+      <ul class="check-list">
+        <li class="pain reveal">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+          <span>Está cansado de competir por preço em áreas saturadas</span>
+        </li>
+        <li class="reveal">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+          <span>Deseja honorários elevados em casos de alta complexidade</span>
+        </li>
+        <li class="reveal">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+          <span>Quer se especializar onde há demanda crescente e BAIXA concorrência</span>
+        </li>
+        <li class="reveal">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+          <span>Busca clientes que pagam o valor JUSTO pelo seu trabalho</span>
+        </li>
+        <li class="reveal">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+          <span>Entende que essa é uma oportunidade que 99% dos advogados está ignorando</span>
+        </li>
+      </ul>
+      <div class="for-you-cta reveal">
+        <a href="https://hub.la/r/W9E7MRvAudq7IzLXRqND" target="_blank" rel="noopener" class="btn-primary" id="foryou-cta">O DESAFIO É PRA MIM!</a>
+        <p class="price-hint">De <span class="strike">R$ 4.437</span> por <span>R$ 57,00</span> | Por tempo limitado!</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="content-schedule">
+    <div class="container">
+      <h2 class="reveal">Confira o conteúdo <span class="gold">exclusivo de cada dia</span>:</h2>
+
+      <div class="days-grid">
+        <!-- Dia 01 -->
+        <div class="day-card reveal">
+          <div class="day-num-bg">01</div>
+          <div class="day-label-wrap">
+            <span class="day-meta">DIA 01 - 04/05 às 20h</span>
+          </div>
+          <h3>O mercado de ouro da advocacia</h3>
+          <p>Os dados não mentem: 30 milhões de imóveis irregulares representam um mercado de R$ 300 BILHÕES em honorários potenciais. Descubra por que este nicho permite honorários muito acima da média e como se posicionar como autoridade IMEDIATAMENTE. Domine o Método 33 — o sistema que elimina erros e garante resultados previsíveis em cada caso.</p>
+        </div>
+        <!-- Dia 02 -->
+        <div class="day-card reveal">
+          <div class="day-num-bg">02</div>
+          <div class="day-label-wrap">
+            <span class="day-meta">DIA 02 - 05/05 às 20h</span>
+          </div>
+          <h3>Dominando usucapião do início ao fim</h3>
+          <p>Passo a passo completo: análise documental, requisitos legais, provas contundentes e petições irretocáveis. Aprenda a precificar corretamente e use técnicas de negociação que fazem clientes escolherem VOCÊ mesmo quando existem opções mais baratas.</p>
+        </div>
+        <!-- Dia 03 -->
+        <div class="day-card reveal">
+          <div class="day-num-bg">03</div>
+          <div class="day-label-wrap">
+            <span class="day-meta">DIA 03 - 06/05 às 20h</span>
+          </div>
+          <h3>Sistema de faturamento constante</h3>
+          <p>Estruture seu escritório para atender em ESCALA sem comprometer qualidade ou seu tempo. Ferramentas de automação, contratos blindados e estratégias para transformar clientes em divulgadores. Saia com um plano de ação para implementar IMEDIATAMENTE.</p>
+        </div>
+        <!-- Dia 04 -->
+        <div class="day-card reveal">
+          <div class="day-num-bg">04</div>
+          <div class="day-label-wrap">
+            <span class="day-meta">DIA 04 - 07/05 às 20h</span>
+          </div>
+          <h3>Dominando todas as modalidades</h3>
+          <p>Judicial e extrajudicial: saiba aplicar o caminho correto, mais rápido e mais barato para cada caso. Descubra outros métodos de regularização tão rentáveis quanto usucapião. Receba TODOS os modelos e mapas mentais.</p>
+        </div>
+      </div>
+
+      <div class="schedule-footer reveal">
+        <a href="https://hub.la/r/W9E7MRvAudq7IzLXRqND" target="_blank" rel="noopener" class="btn-primary large" id="schedule-cta">QUERO PARTICIPAR DO DESAFIO</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="gap">
+    <div class="parallax-bg" id="gap-parallax"></div>
+    <div class="container">
+      <h2 class="reveal">O <strong>abismo</strong> entre onde voc&ecirc; est&aacute; <em>e onde pode chegar</em>:</h2>
+
+      <div class="gap-grid">
+        <!-- Before -->
+        <div class="glass-card before reveal">
+          <h3>Como você está agora</h3>
+          <ul>
+            <li>
+              <div class="icon-wrap">—</div>
+              <span>Competindo em áreas saturadas, reduzindo honorários para conquistar clientes</span>
+            </li>
+            <li>
+              <div class="icon-wrap">—</div>
+              <span>Dedicando horas em processos com retornos medíocres</span>
+            </li>
+            <li>
+              <div class="icon-wrap">—</div>
+              <span>Sem diferencial competitivo no seu escritório</span>
+            </li>
+            <li>
+              <div class="icon-wrap">—</div>
+              <span>Honorários que raramente ultrapassam alguns milhares de reais</span>
+            </li>
+          </ul>
+        </div>
+        <!-- After -->
+        <div class="glass-card gold-glass after reveal">
+          <h3>COMO VOCÊ SAIRÁ DO DESAFIO:</h3>
+          <ul>
+            <li>
+              <div class="icon-wrap">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                  <polyline points="17 6 23 6 23 12"></polyline>
+                </svg>
+              </div>
+              <span>Dominando um nicho onde você é ESPECIALISTA, não mais um generalista</span>
+            </li>
+            <li>
+              <div class="icon-wrap">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                  <polyline points="17 6 23 6 23 12"></polyline>
+                </svg>
+              </div>
+              <span>Com um sistema completo de captação que funciona como máquina de resultados</span>
+            </li>
+            <li>
+              <div class="icon-wrap">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                  <polyline points="17 6 23 6 23 12"></polyline>
+                </svg>
+              </div>
+              <span>Possuindo modelos exclusivos que reduzem seu tempo e aumentam eficiência</span>
+            </li>
+            <li>
+              <div class="icon-wrap">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                  <polyline points="17 6 23 6 23 12"></polyline>
+                </svg>
+              </div>
+              <span>Escritório referência em regularização com fluxo constante de clientes qualificados</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== INVESTMENT ======== -->
+  <section id="investment">
+    <div class="container">
+      <div class="inv-wrap reveal">
+        <p class="inv-eyebrow">Investimento</p>
+        <h2>Veja tudo que voc&ecirc; recebe ao garantir sua vaga<br>no Desafio Usucapi&atilde;o:</h2>
+
+        <!-- Offer stack -->
+        <div class="offer-stack">
+          <!-- Header row -->
+          <div class="offer-header-row">
+            <div class="offer-header-title">
+              <span class="offer-brand">DESAFIO USUCAPI&Atilde;O:</span>
+              <span class="offer-brand-sub">Uma oportunidade de neg&oacute;cios</span>
+            </div>
+          </div>
+
+          <!-- Items -->
+          <div class="offer-row">
+            <div class="offer-check">&#10003;</div>
+            <div class="offer-desc">4 encontros ao vivo com Marcel Rulli</div>
+            <div class="offer-val">R$ 1.997</div>
+          </div>
+          <div class="offer-row">
+            <div class="offer-check">&#10003;</div>
+            <div class="offer-desc">Modelo completo de peti&ccedil;&atilde;o inicial de Usucapi&atilde;o e requerimentos extrajudiciais com argumenta&ccedil;&atilde;o jur&iacute;dica avan&ccedil;ada</div>
+            <div class="offer-val">R$ 497</div>
+          </div>
+          <div class="offer-row">
+            <div class="offer-check">&#10003;</div>
+            <div class="offer-desc">Guia estrat&eacute;gico de capta&ccedil;&atilde;o de clientes para regulariza&ccedil;&atilde;o imobili&aacute;ria</div>
+            <div class="offer-val">R$ 249</div>
+          </div>
+          <div class="offer-row">
+            <div class="offer-check">&#10003;</div>
+            <div class="offer-desc">Guia exclusivo para precifica&ccedil;&atilde;o de honor&aacute;rios em regulariza&ccedil;&atilde;o</div>
+            <div class="offer-val">R$ 1.497</div>
+          </div>
+          <div class="offer-row">
+            <div class="offer-check">&#10003;</div>
+            <div class="offer-desc">Acesso &agrave; comunidade de advogados especialistas durante o desafio</div>
+            <div class="offer-val">R$ 197</div>
+          </div>
+
+          <!-- Total row -->
+          <div class="offer-total-row">
+            <span class="offer-total-label">Valor total acumulado:</span>
+            <span class="offer-total-val">R$ 4.437</span>
+          </div>
+        </div>
+
+        <div class="inv-divider"></div>
+
+        <div class="price-card">
+          <p class="price-label">Seu investimento:</p>
+          <p class="price-from">De R$ 4.437</p>
+          <div class="price-value">R$ 57</div>
+          <p class="price-period">pagamento &uacute;nico &mdash; acesso imediato</p>
+          <a href="https://hub.la/r/W9E7MRvAudq7IzLXRqND" target="_blank" rel="noopener" class="btn-primary large" id="invest-cta">REALIZAR INSCRI&Ccedil;&Atilde;O AGORA</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== SOCIAL PROOF — Testimonials Gallery ======== -->
+  <section id="social-proof">
+    <div class="container">
+      <div class="sp-header reveal">
+        <p class="sp-eyebrow">Resultados reais</p>
+        <h2>Esses s&atilde;o alguns dos resultados<br>que os meus alunos est&atilde;o tendo...</h2>
+      </div>
+
+      <!-- Testimonial glossy card grid -->
+      <div class="dep-grid reveal">
+
+        <!-- Card 1 -->
+        <div class="dep-card" onclick="openLightbox(0)">
+          <div class="dep-card-img">
+            <img src="depoimentos/marcelrullidepoimentos_1.jpeg" alt="Depoimento 1" loading="lazy">
+            <div class="dep-zoom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div>
+          </div>
+          <div class="dep-quote">
+            <span class="dep-quote-mark">&ldquo;</span>
+            <p>Sem me expor nas redes, consegui fechar contratos inclusive um de &aacute;rea de 240 mil M2.</p>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="dep-card" onclick="openLightbox(1)">
+          <div class="dep-card-img">
+            <img src="depoimentos/marcelrullidepoimentos_2.jpeg" alt="Depoimento 2" loading="lazy">
+            <div class="dep-zoom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div>
+          </div>
+          <div class="dep-quote">
+            <span class="dep-quote-mark">&ldquo;</span>
+            <p>&Eacute; verdade. Seu curr&iacute;culo, suas lives &mdash; o conte&uacute;do que muda vidas.</p>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="dep-card" onclick="openLightbox(2)">
+          <div class="dep-card-img">
+            <img src="depoimentos/marcelrullidepoimentos_3.jpeg" alt="Depoimento 3" loading="lazy">
+            <div class="dep-zoom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div>
+          </div>
+          <div class="dep-quote">
+            <span class="dep-quote-mark">&ldquo;</span>
+            <p>Consegui fixar excelentes honor&aacute;rios — valores na alc&atilde;da de R$ 900.000.</p>
+          </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="dep-card" onclick="openLightbox(3)">
+          <div class="dep-card-img">
+            <img src="depoimentos/marcelrullidepoimentos_4.jpeg" alt="Depoimento 4" loading="lazy">
+            <div class="dep-zoom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div>
+          </div>
+          <div class="dep-quote">
+            <span class="dep-quote-mark">&ldquo;</span>
+            <p>No primeiro ano de 5 d&iacute;gitos fui para 6. No m&ecirc;s passado atingi os 6 d&iacute;gitos.</p>
+          </div>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="dep-card" onclick="openLightbox(4)">
+          <div class="dep-card-img">
+            <img src="depoimentos/marcelrullidepoimentos_5.jpeg" alt="Depoimento 5" loading="lazy">
+            <div class="dep-zoom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div>
+          </div>
+          <div class="dep-quote">
+            <span class="dep-quote-mark">&ldquo;</span>
+            <p>Fechei meu primeiro contrato na regulariza&ccedil;&atilde;o. Grato, professor!</p>
+          </div>
+        </div>
+
+        <!-- Card 6 — depoimentos2 -->
+        <div class="dep-card" onclick="openLightbox(5)">
+          <div class="dep-card-img">
+            <img src="depoimentos2/WhatsApp_Image_2026-04-18_at_16.20.37.jpeg" alt="Depoimento 6" loading="lazy">
+            <div class="dep-zoom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div>
+          </div>
+          <div class="dep-quote">
+            <span class="dep-quote-mark">&ldquo;</span>
+            <p>Resultados que falam por si s&oacute;. Gratid&atilde;o pelo conhecimento.</p>
+          </div>
+        </div>
+
+        <!-- Card 7 -->
+        <div class="dep-card" onclick="openLightbox(6)">
+          <div class="dep-card-img">
+            <img src="depoimentos2/WhatsApp_Image_2026-04-18_at_16.21.39.jpeg" alt="Depoimento 7" loading="lazy">
+            <div class="dep-zoom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div>
+          </div>
+          <div class="dep-quote">
+            <span class="dep-quote-mark">&ldquo;</span>
+            <p>Valor transformado em resultado real. O nicho existe e &eacute; enorme.</p>
+          </div>
+        </div>
+
+        <!-- Card 8 -->
+        <div class="dep-card" onclick="openLightbox(7)">
+          <div class="dep-card-img">
+            <img src="depoimentos2/WhatsApp_Image_2026-04-18_at_16.22.12.jpeg" alt="Depoimento 8" loading="lazy">
+            <div class="dep-zoom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div>
+          </div>
+          <div class="dep-quote">
+            <span class="dep-quote-mark">&ldquo;</span>
+            <p>Uma jornada que mudou minha vis&atilde;o da advocacia e dos meus ganhos.</p>
+          </div>
+        </div>
+
+        <!-- Card 9 -->
+        <div class="dep-card" onclick="openLightbox(8)">
+          <div class="dep-card-img">
+            <img src="depoimentos2/Skype_Picture_2022_06_26T13_20_27_805Z.jpeg" alt="Depoimento 9" loading="lazy">
+            <div class="dep-zoom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div>
+          </div>
+          <div class="dep-quote">
+            <span class="dep-quote-mark">&ldquo;</span>
+            <p>Apliquei o m&eacute;todo e fechei meu primeiro processo de Usucapi&atilde;o.</p>
+          </div>
+        </div>
+
+        <!-- Card 10 -->
+        <div class="dep-card" onclick="openLightbox(9)">
+          <div class="dep-card-img">
+            <img src="depoimentos2/image_2022_07_01T20_16_47_248Z.png" alt="Depoimento 10" loading="lazy">
+            <div class="dep-zoom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div>
+          </div>
+          <div class="dep-quote">
+            <span class="dep-quote-mark">&ldquo;</span>
+            <p>O mercado de regulariza&ccedil;&atilde;o &eacute; real e est&aacute; esperando por voc&ecirc;.</p>
+          </div>
+        </div>
+
+        <!-- Card 11 -->
+        <div class="dep-card" onclick="openLightbox(10)">
+          <div class="dep-card-img">
+            <img src="depoimentos2/image_2022_08_31T23_03_56_244Z.png" alt="Depoimento 11" loading="lazy">
+            <div class="dep-zoom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div>
+          </div>
+          <div class="dep-quote">
+            <span class="dep-quote-mark">&ldquo;</span>
+            <p>Honor&aacute;rios acima da m&eacute;dia e clientes qualificados. Gratid&atilde;o!</p>
+          </div>
+        </div>
+
+        <!-- Card 12 -->
+        <div class="dep-card" onclick="openLightbox(11)">
+          <div class="dep-card-img">
+            <img src="depoimentos2/image_2023_03_03T00_52_38_514Z.png" alt="Depoimento 12" loading="lazy">
+            <div class="dep-zoom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div>
+          </div>
+          <div class="dep-quote">
+            <span class="dep-quote-mark">&ldquo;</span>
+            <p>Nicho inexplorado, resultado imediato. Esse m&eacute;todo funciona.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Lightbox -->
+    <div id="dep-lightbox" onclick="closeLightboxOutside(event)">
+      <div class="lb-inner">
+        <button class="lb-close" onclick="closeLightbox()">&times;</button>
+        <button class="lb-nav lb-prev" onclick="lightboxNav(-1)">&#8249;</button>
+        <img id="lb-img" src="" alt="">
+        <button class="lb-nav lb-next" onclick="lightboxNav(1)">&#8250;</button>
+        <div class="lb-counter"><span id="lb-cur">1</span> / <span id="lb-tot">12</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== FAQ ======== -->
+  <section id="faq">
+    <div class="container">
+      <p class="label reveal">Perguntas Frequentes</p>
+      <h2 class="reveal">Suas dúvidas, respondidas.</h2>
+
+      <div class="faq-list">
+
+        <div class="faq-item reveal">
+          <div class="faq-question">
+            <h3>Preciso ter experi&ecirc;ncia pr&eacute;via com direito imobili&aacute;rio para participar?</h3>
+            <span class="faq-icon"></span>
+          </div>
+          <p class="faq-answer">
+            N&atilde;o! O Desafio foi estruturado para atender desde advogados que nunca atuaram na &aacute;rea at&eacute; profissionais que j&aacute; possuem alguma experi&ecirc;ncia com regulariza&ccedil;&atilde;o. Come&ccedil;aremos do zero e avan&ccedil;aremos de forma gradual e did&aacute;tica.
+          </p>
+        </div>
+
+        <div class="faq-item reveal">
+          <div class="faq-question">
+            <h3>Quais s&atilde;o os requisitos t&eacute;cnicos para participar das aulas ao vivo?</h3>
+            <span class="faq-icon"></span>
+          </div>
+          <p class="faq-answer">
+            Voc&ecirc; precisar&aacute; apenas de um dispositivo com acesso &agrave; internet (computador, tablet ou celular) e o aplicativo Zoom instalado. Todas as aulas ser&atilde;o gravadas e disponibilizadas por 7 dias ap&oacute;s o evento, caso voc&ecirc; n&atilde;o possa assistir ao vivo.
+          </p>
+        </div>
+
+        <div class="faq-item reveal">
+          <div class="faq-question">
+            <h3>O que torna a regulariza&ccedil;&atilde;o imobili&aacute;ria mais rent&aacute;vel que outras &aacute;reas do direito?</h3>
+            <span class="faq-icon"></span>
+          </div>
+          <p class="faq-answer">
+            A regulariza&ccedil;&atilde;o imobili&aacute;ria combina tr&ecirc;s fatores essenciais: 1) Honor&aacute;rios elevados (R$5.000 a R$30.000 por processo); 2) Baixa concorr&ecirc;ncia qualificada; e 3) Demanda massiva (mais de 30 milh&otilde;es de im&oacute;veis irregulares no Brasil). Essa combina&ccedil;&atilde;o n&atilde;o existe em praticamente nenhuma outra &aacute;rea da advocacia atualmente.
+          </p>
+        </div>
+
+        <div class="faq-item reveal">
+          <div class="faq-question">
+            <h3>Como vou aplicar o conhecimento na pr&aacute;tica ap&oacute;s o Desafio?</h3>
+            <span class="faq-icon"></span>
+          </div>
+          <p class="faq-answer">
+            Durante os 4 dias, voc&ecirc; receber&aacute; modelos de peti&ccedil;&otilde;es, contratos, scripts de atendimento e um plano de a&ccedil;&atilde;o personalizado para implementar imediatamente em seu escrit&oacute;rio. O objetivo &eacute; que voc&ecirc; consiga captar seu primeiro cliente de regulariza&ccedil;&atilde;o em at&eacute; 30 dias ap&oacute;s o Desafio.
+          </p>
+        </div>
+
+        <div class="faq-item reveal">
+          <div class="faq-question">
+            <h3>Moro em uma cidade pequena. Existe demanda para esse tipo de servi&ccedil;o?</h3>
+            <span class="faq-icon"></span>
+          </div>
+          <p class="faq-answer">
+            Absolutamente! Na verdade, cidades menores costumam ter percentuais ainda maiores de im&oacute;veis irregulares, especialmente em regi&otilde;es de expans&atilde;o urbana. Al&eacute;m disso, a concorr&ecirc;ncia &eacute; praticamente inexistente, o que facilita seu posicionamento como o especialista local em regulariza&ccedil;&atilde;o.
+          </p>
+        </div>
+
+        <div class="faq-item reveal">
+          <div class="faq-question">
+            <h3>J&aacute; sou advogado h&aacute; muitos anos. N&atilde;o estou muito velho para mudar de &aacute;rea?</h3>
+            <span class="faq-icon"></span>
+          </div>
+          <p class="faq-answer">
+            De forma alguma! Muitos dos alunos mais bem-sucedidos do Marcel t&ecirc;m entre 45 e 65 anos. Na verdade, a maturidade e experi&ecirc;ncia profissional s&atilde;o grandes vantagens nessa &aacute;rea, pois transmitem confian&ccedil;a aos clientes em um servi&ccedil;o que envolve seu bem mais valioso: o im&oacute;vel.
+          </p>
+        </div>
+
+        <div class="faq-item reveal">
+          <div class="faq-question">
+            <h3>O investimento de R$ 57,00 d&aacute; direito a quais materiais?</h3>
+            <span class="faq-icon"></span>
+          </div>
+          <p class="faq-answer">
+            Al&eacute;m das 4 aulas ao vivo, voc&ecirc; receber&aacute; acesso a todos os materiais complementares: modelos de peti&ccedil;&otilde;es, modelos de requerimento, scripts de atendimento, mapas mentais e acesso &agrave; comunidade exclusiva durante o desafio. Todo o necess&aacute;rio para implementar o m&eacute;todo imediatamente.
+          </p>
+        </div>
+
+        <div class="faq-item reveal">
+          <div class="faq-question">
+            <h3>Existe alguma garantia?</h3>
+            <span class="faq-icon"></span>
+          </div>
+          <p class="faq-answer">
+            Sim! Se ap&oacute;s participar do primeiro dia de Desafio voc&ecirc; sentir que o conte&uacute;do n&atilde;o &eacute; valioso para sua carreira, basta solicitar o reembolso integral at&eacute; 24 horas ap&oacute;s a primeira aula. Sem perguntas, sem complica&ccedil;&otilde;es.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== FINAL CTA ======== -->
+  <section id="final-cta">
+    <div class="container">
+      <p class="label reveal">O seu próximo nível começa aqui</p>
+      <h2 class="reveal">
+        Eu quero transformar minha advocacia.
+      </h2>
+      <p class="final-sub reveal">
+        Junte-se aos advogados que pararam de subestimar o próprio potencial
+        e decidiram dominar o mercado que ninguém está disputando — ainda.
+      </p>
+      <a href="https://hub.la/r/W9E7MRvAudq7IzLXRqND" target="_blank" rel="noopener" class="btn-primary large reveal" id="final-cta-btn">EU QUERO PARTICIPAR DO DESAFIO</a>
+      <p class="final-price-hint reveal">
+        Gratuito no Dia 1 · Ou inscrição completa por apenas <span>R$ 57,00</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- ======== FOOTER ======== -->
+  <footer>
+    <div class="container">
+      <p class="footer-brand">Marcel Rulli</p>
+      <p>© 2025 Marcel Rulli · Todos os direitos reservados</p>
+      <p style="margin-top:8px;">Este evento é educacional e não constitui consultoria jurídica individual.</p>
+    </div>
+  </footer>
+
+  <!-- ======== SCRIPTS ======== -->
+  <script>
+    /* ---------- Scroll Reveal ---------- */
+    const reveals = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(el => io.observe(el));
+
+    /* ---------- Word Animator ---------- */
+    function tokenizeWords(el) {
+      // Split text nodes only, preserve child elements (em, strong)
+      const frag = document.createDocumentFragment();
+      el.childNodes.forEach(node => {
+        if (node.nodeType === 3) { // text node
+          node.textContent.split(/(\s+)/).forEach(part => {
+            if (/\s+/.test(part)) {
+              frag.appendChild(document.createTextNode(' '));
+            } else if (part) {
+              const span = document.createElement('span');
+              span.className = 'word-token';
+              span.textContent = part;
+              frag.appendChild(span);
+            }
+          });
+        } else {
+          // For elements like <em>, wrap the element itself
+          const wrapper = document.createElement('span');
+          wrapper.className = 'word-token';
+          wrapper.appendChild(node.cloneNode(true));
+          frag.appendChild(wrapper);
+        }
+      });
+      el.innerHTML = '';
+      el.appendChild(frag);
+      // Set staggered delays
+      el.querySelectorAll('.word-token').forEach((tok, i) => {
+        tok.style.setProperty('--wi', (i * 55) + 'ms');
+      });
+    }
+
+    document.querySelectorAll('.anim-words').forEach(el => {
+      tokenizeWords(el);
+    });
+
+    const wordObserver = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('play');
+          wordObserver.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.25 });
+    document.querySelectorAll('.anim-words').forEach(el => wordObserver.observe(el));
+
+    /* ---------- Clip-Line Reveal (truth right column) ---------- */
+    const clipObserver = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('play');
+          clipObserver.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.2 });
+    document.querySelectorAll('.clip-parent').forEach(el => clipObserver.observe(el));
+
+    /* ---------- Feature Row Stagger (promise section) ---------- */
+    const rowObserver = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('play');
+          rowObserver.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.feature-row').forEach(el => rowObserver.observe(el));
+
+    /* ---------- Truth Section Parallax ---------- */
+    const truthBg = document.getElementById('truth-parallax-bg');
+    if (truthBg) {
+      const truthSection = document.getElementById('truth');
+      window.addEventListener('scroll', () => {
+        const rect = truthSection.getBoundingClientRect();
+        if (rect.bottom > 0 && rect.top < window.innerHeight) {
+          const progress = -rect.top / rect.height;
+          truthBg.style.transform = `translateY(${progress * 12}%)`;
+        }
+      }, { passive: true });
+    }
+
+    /* ---------- Scroll-Down Arrow Fade ---------- */
+    const scrollArrow = document.getElementById('scroll-arrow');
+    if (scrollArrow) {
+      const promiseSection = document.getElementById('promise');
+      window.addEventListener('scroll', () => {
+        const rect = promiseSection.getBoundingClientRect();
+        if (rect.top < window.innerHeight * 0.9) {
+          scrollArrow.classList.add('hidden');
+        } else {
+          scrollArrow.classList.remove('hidden');
+        }
+      }, { passive: true });
+    }
+
+    /* ---------- Progress Monolith ---------- */
+    const monolith = document.querySelector('#progress-monolith');
+    const monolithFill = () => {
+      const st = window.scrollY;
+      const dh = document.documentElement.scrollHeight - window.innerHeight;
+      const pct = Math.min(100, (st / dh) * 100);
+      monolith.style.setProperty('--pct', pct + '%');
+      monolith.style.cssText += '; --pct:' + pct + '%';
+      monolith.querySelector && (monolith.querySelector(':before') || monolith);
+      // hack: update via CSS custom property
+      document.documentElement.style.setProperty('--scroll-pct', pct + '%');
+    };
+    window.addEventListener('scroll', monolithFill, { passive: true });
+
+    /* Use inline approach for progress line */
+    (function () {
+      const line = document.createElement('div');
+      line.style.cssText = `
+        position: fixed; right: 28px; top: 50%; transform: translateY(-50%);
+        width: 2px; height: 180px; background: rgba(206,206,208,.13); z-index: 100;
+      `;
+      const fill = document.createElement('div');
+      fill.style.cssText = `
+        position: absolute; top: 0; left: 0; width: 100%;
+        background: #e9c349; height: 0%; transition: height .2s ease;
+      `;
+      line.appendChild(fill);
+      document.body.appendChild(line);
+      // remove original placeholder
+      document.getElementById('progress-monolith').style.display = 'none';
+
+      window.addEventListener('scroll', () => {
+        const st = window.scrollY;
+        const dh = document.documentElement.scrollHeight - window.innerHeight;
+        fill.style.height = Math.min(100, (st / dh) * 100) + '%';
+      }, { passive: true });
+    })();
+
+    /* ---------- FAQ Accordion ---------- */
+    document.querySelectorAll('.faq-item').forEach(item => {
+      item.querySelector('.faq-question').addEventListener('click', () => {
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+        if (!isOpen) item.classList.add('open');
+      });
+    });
+
+    /* ---------- Smooth anchor scroll ---------- */
+    document.querySelectorAll('a[href="#final-cta"]').forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        document.getElementById('final-cta').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+    });
+    /* ---------- Video Scroll Scrub ---------- */
+    (function () {
+      const vid = document.getElementById('hero-scroll-video');
+      const hero = document.getElementById('hero');
+
+      // Freeze autoplay; we control playback manually
+      vid.pause();
+
+      let ready = false;
+      let isSeeking = false;
+      let pendingTime = null;
+      let rafId = null;
+      let lastScrollY = -1;
+
+      function doSeek(t) {
+        if (!ready) return;
+        t = Math.max(0, Math.min(vid.duration, t));
+        if (Math.abs(vid.currentTime - t) < 0.01) return; // already there
+        if (isSeeking) {
+          pendingTime = t;
+          return;
+        }
+        isSeeking = true;
+        pendingTime = null;
+        vid.currentTime = t;
+      }
+
+      vid.addEventListener('seeked', () => {
+        isSeeking = false;
+        if (pendingTime !== null) {
+          const t = pendingTime;
+          pendingTime = null;
+          doSeek(t);
+        }
+      });
+
+      function onReady() {
+        ready = true;
+        // Seek to position matching current scroll (in case page was not at top)
+        scheduleUpdate();
+      }
+
+      vid.addEventListener('canplay', onReady, { once: true });
+      vid.load(); // trigger loading
+
+      function computeTarget() {
+        const scrollPos = window.scrollY;
+        const heroH = hero.offsetHeight;   /* 250vh */
+        const vpH  = window.innerHeight;   /* 100vh */
+        /* subtract 1 viewport so progress reaches 1 at the BOTTOM of hero */
+        const progress = Math.max(0, Math.min(1, scrollPos / (heroH - vpH)));
+        return vid.duration * progress;
+      }
+
+      function scheduleUpdate() {
+        if (rafId) return;
+        rafId = requestAnimationFrame(() => {
+          rafId = null;
+          if (window.scrollY !== lastScrollY) {
+            lastScrollY = window.scrollY;
+            doSeek(computeTarget());
+          }
+        });
+      }
+
+      window.addEventListener('scroll', scheduleUpdate, { passive: true });
+    })();
+
+    /* ---------- Particle Canvas ---------- */
+    (function () {
+      const canvas = document.createElement('canvas');
+      canvas.id = 'particle-canvas';
+      canvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;z-index:9999;pointer-events:none;';
+      document.body.insertBefore(canvas, document.body.firstChild);
+
+      const ctx = canvas.getContext('2d');
+      let W, H, particles;
+
+      const GOLD = 'rgba(233,195,73,';
+      const WHITE = 'rgba(232,232,234,';
+
+      function resize() {
+        W = canvas.width = window.innerWidth;
+        H = canvas.height = window.innerHeight;
+      }
+
+      function initParticles() {
+        particles = [];
+        const count = Math.floor((W * H) / 24000); // ~50-80 particles
+        for (let i = 0; i < count; i++) {
+          const isGold = Math.random() < 0.2;
+          particles.push({
+            x: Math.random() * W,
+            y: Math.random() * H,
+            r: Math.random() * 1.4 + 0.4,
+            vx: (Math.random() - 0.5) * 0.18,
+            vy: (Math.random() - 0.5) * 0.18,
+            oa: Math.random() * 0.1 + 0.06, // base opacity 6–16%
+            a: 0,
+            pulse: Math.random() * Math.PI * 2,
+            color: isGold ? 'rgba(233,195,73,' : 'rgba(255,255,255,'
+          });
+        }
+      }
+
+      let frame = 0;
+      function draw() {
+        ctx.clearRect(0, 0, W, H);
+        frame++;
+        particles.forEach(p => {
+          p.x += p.vx;
+          p.y += p.vy;
+          if (p.x < 0) p.x = W;
+          if (p.x > W) p.x = 0;
+          if (p.y < 0) p.y = H;
+          if (p.y > H) p.y = 0;
+          p.pulse += 0.008;
+          const pulseO = Math.sin(p.pulse) * 0.012;
+          p.a = Math.max(0, p.oa + pulseO);
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fillStyle = p.color + p.a.toFixed(3) + ')';
+          ctx.fill();
+        });
+        requestAnimationFrame(draw);
+      }
+
+      resize();
+      initParticles();
+      draw();
+      window.addEventListener('resize', () => { resize(); initParticles(); });
+    })();
+
+    /* ---------- Glass Divider Observer ---------- */
+    document.querySelectorAll('.glass-divider').forEach(el => {
+      new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) el.classList.add('visible');
+          else el.classList.remove('visible');
+        });
+      }, { threshold: 0.1 }).observe(el);
+    });
+
+    /* ---------- Bridge Line Reveal ---------- */
+    const bridgeLine = document.getElementById('bridge-line-1');
+    if (bridgeLine) {
+      new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) bridgeLine.classList.add('expanded');
+        });
+      }, { threshold: 0.5 }).observe(document.getElementById('truth-promise-bridge'));
+    }
+
+    /* ---------- Parallax ---------- */
+    window.addEventListener('scroll', () => {
+      const p = document.getElementById('gap-parallax');
+      if (p) {
+        const rect = p.parentElement.getBoundingClientRect();
+        if (rect.top < window.innerHeight && rect.bottom > 0) {
+          const shift = (window.innerHeight - rect.top) * 0.1;
+          p.style.transform = `translateY(${shift}px)`;
+        }
+      }
+    });
+
+    /* ---------- Lightbox ---------- */
+    const depImages = [
+      'depoimentos/marcelrullidepoimentos_1.jpeg',
+      'depoimentos/marcelrullidepoimentos_2.jpeg',
+      'depoimentos/marcelrullidepoimentos_3.jpeg',
+      'depoimentos/marcelrullidepoimentos_4.jpeg',
+      'depoimentos/marcelrullidepoimentos_5.jpeg',
+      'depoimentos2/WhatsApp_Image_2026-04-18_at_16.20.37.jpeg',
+      'depoimentos2/WhatsApp_Image_2026-04-18_at_16.21.39.jpeg',
+      'depoimentos2/WhatsApp_Image_2026-04-18_at_16.22.12.jpeg',
+      'depoimentos2/Skype_Picture_2022_06_26T13_20_27_805Z.jpeg',
+      'depoimentos2/image_2022_07_01T20_16_47_248Z.png',
+      'depoimentos2/image_2022_08_31T23_03_56_244Z.png',
+      'depoimentos2/image_2023_03_03T00_52_38_514Z.png',
+    ];
+    let lbCurrent = 0;
+
+    function openLightbox(idx) {
+      lbCurrent = idx;
+      document.getElementById('lb-img').src = depImages[lbCurrent];
+      document.getElementById('lb-cur').textContent = lbCurrent + 1;
+      document.getElementById('lb-tot').textContent = depImages.length;
+      document.getElementById('dep-lightbox').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox() {
+      document.getElementById('dep-lightbox').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    function closeLightboxOutside(e) {
+      if (e.target === document.getElementById('dep-lightbox')) closeLightbox();
+    }
+    function lightboxNav(dir) {
+      lbCurrent = (lbCurrent + dir + depImages.length) % depImages.length;
+      const img = document.getElementById('lb-img');
+      img.style.animation = 'none';
+      img.src = depImages[lbCurrent];
+      img.style.animation = '';
+      document.getElementById('lb-cur').textContent = lbCurrent + 1;
+    }
+    document.addEventListener('keydown', e => {
+      if (!document.getElementById('dep-lightbox').classList.contains('open')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowRight') lightboxNav(1);
+      if (e.key === 'ArrowLeft') lightboxNav(-1);
+    });
+  </script>
+
+  <!-- ===== CINEMATIC ATMOSPHERE SCRIPTS ===== -->
+  <canvas id="atm-canvas"></canvas>
+
+  <script>
+  (function() {
+    /* -----------------------------------------------
+       1. PARTICLE SYSTEM
+    ----------------------------------------------- */
+    const canvas = document.getElementById('atm-canvas');
+    const ctx    = canvas.getContext('2d');
+    let W, H, particles;
+
+    const GOLD  = [233, 195, 73];
+    const WHITE = [220, 228, 255];
+
+    function resize() {
+      W = canvas.width  = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+    }
+
+    function mkParticle(forceY) {
+      const gold = Math.random() < 0.25;
+      const col  = gold ? GOLD : WHITE;
+      return {
+        x:   Math.random() * W,
+        y:   forceY !== undefined ? forceY : Math.random() * H,
+        r:   Math.random() * 1.1 + 0.3,
+        vy:  -(Math.random() * 0.22 + 0.06),
+        vx:  (Math.random() - 0.5) * 0.12,
+        op:  Math.random() * 0.07 + 0.03,
+        col: col,
+      };
+    }
+
+    function initParticles() {
+      const count = Math.round((W * H) / 14000);
+      particles = Array.from({ length: count }, () => mkParticle());
+    }
+
+    function drawParticles() {
+      ctx.clearRect(0, 0, W, H);
+      for (const p of particles) {
+        p.x += p.vx;
+        p.y += p.vy;
+        if (p.y < -4) { Object.assign(p, mkParticle(H + 4)); }
+        if (p.x < -4) p.x = W + 4;
+        if (p.x > W + 4) p.x = -4;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${p.col[0]},${p.col[1]},${p.col[2]},${p.op})`;
+        ctx.fill();
+      }
+      requestAnimationFrame(drawParticles);
+    }
+
+    resize();
+    initParticles();
+    drawParticles();
+    window.addEventListener('resize', () => { resize(); initParticles(); });
+
+    /* -----------------------------------------------
+       2. GLASS VEIL — removed by user request
+    ----------------------------------------------- */
+
+    /* -----------------------------------------------
+       3. MULTI-LAYER PARALLAX (non-hero sections)
+    ----------------------------------------------- */
+    const pyTargets = [
+      '#promise', '#for-you', '#social-proof', '#final-cta', '#gap'
+    ].map(s => document.querySelector(s)).filter(Boolean);
+
+    function updateParallax() {
+      const sy = window.scrollY;
+      for (const el of pyTargets) {
+        const rect  = el.getBoundingClientRect();
+        const top   = el.offsetTop;
+        const mid   = top + el.offsetHeight / 2;
+        const dist  = sy + window.innerHeight / 2 - mid;
+        const bgShift  = dist * 0.08;   // 60% speed difference
+        const midShift = dist * 0.04;   // 80% speed difference
+        el.style.setProperty('--py-bg',  `${bgShift}px`);
+        el.style.setProperty('--py-mid', `${midShift}px`);
+      }
+    }
+
+    window.addEventListener('scroll', updateParallax, { passive: true });
+    updateParallax();
+  })();
+  </script>
+</body>
+</html>
