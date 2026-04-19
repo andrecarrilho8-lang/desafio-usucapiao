@@ -81,6 +81,8 @@
     }
     .btn-primary:hover { opacity: .88; transform: translateY(-2px); }
     .btn-primary.large { font-size: 1rem; padding: 26px 72px; }
+    /* Hero CTA — slightly smaller than other large buttons */
+    #hero-cta { font-size: 0.82rem; padding: 18px 52px; letter-spacing: 0.18em; }
 
     /* =============================================
        GLASS MORPHISM SECTION DIVIDERS
@@ -180,16 +182,14 @@
     }
     .top-pill {
       display: inline-block;
-      padding: 8px 16px;
-      border: 1px solid rgba(233,195,73,0.3);
       font-family: var(--font-display);
-      font-size: 0.65rem;
-      font-weight: 700;
-      letter-spacing: 0.15em;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
       color: var(--gold);
-      margin-bottom: 24px;
-      background: rgba(233,195,73,0.05);
+      opacity: 0.8;
+      margin-bottom: 28px;
     }
     .hero-title {
       font-family: var(--font-display);
@@ -325,11 +325,11 @@
     #truth h2 {
       font-family: var(--font-display);
       font-weight: 200;
-      font-size: clamp(2.6rem, 4.5vw, 3.8rem);
-      line-height: 1.08;
+      font-size: clamp(1.8rem, 3.2vw, 2.8rem);
+      line-height: 1.1;
       letter-spacing: -0.03em;
       color: var(--primary);
-      margin-bottom: 48px;
+      margin-bottom: 24px;
     }
     #truth h2 em {
       font-style: normal;
@@ -340,50 +340,77 @@
     #truth h2 em::after {
       content: '';
       position: absolute;
-      bottom: -4px; left: 0; right: 0; height: 2px;
+      bottom: -2px; left: 0; right: 0; height: 2px;
       background: var(--gold);
       opacity: 0.5;
     }
-    /* Stat chips on the left */
-    .truth-stat-stack {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      margin-top: 40px;
-    }
-    .truth-stat-chip {
+    /* Stat chips — hidden, content moved to ticker belt */
+    .truth-stat-stack { display: none; }
+    .truth-stat-chip { display: none; }
+
+    /* =============================================
+       GOLD TICKER BELT
+    ============================================= */
+    .ticker-belt {
+      position: relative;
+      width: 100%;
+      background: linear-gradient(135deg, #b8860b 0%, #e9c349 30%, #f5d76e 50%, #e9c349 70%, #b8860b 100%);
+      overflow: hidden;
+      height: 56px;
       display: flex;
       align-items: center;
-      gap: 20px;
-      padding: 16px 20px;
-      background: rgba(255,255,255,0.025);
-      border: 1px solid rgba(255,255,255,0.05);
-      position: relative;
-      overflow: hidden;
+      z-index: 10;
+      flex-shrink: 0;
     }
-    .truth-stat-chip::before {
+    .ticker-belt::before {
       content: '';
       position: absolute;
-      left: 0; top: 0; bottom: 0; width: 2px;
-      background: var(--gold);
+      inset: 0;
+      background: linear-gradient(180deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.06) 45%, rgba(0,0,0,0.08) 55%, rgba(0,0,0,0.15) 100%);
+      z-index: 1;
+      pointer-events: none;
     }
-    .truth-stat-chip .chip-num {
+    .ticker-belt::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, #c49a1a 0%, transparent 7%), linear-gradient(to left, #c49a1a 0%, transparent 7%);
+      z-index: 2;
+      pointer-events: none;
+    }
+    .ticker-track {
+      display: flex;
+      white-space: nowrap;
+      animation: ticker-scroll 30s linear infinite;
+      position: relative;
+      z-index: 3;
+    }
+    .ticker-belt:hover .ticker-track { animation-play-state: paused; }
+    .ticker-item {
+      display: inline-flex;
+      align-items: center;
+      padding: 0 40px;
       font-family: var(--font-display);
-      font-weight: 700;
-      font-size: 1.5rem;
-      color: var(--gold);
-      letter-spacing: -0.04em;
-      line-height: 1;
-      min-width: 72px;
-    }
-    .truth-stat-chip .chip-label {
-      font-size: 0.78rem;
-      font-weight: 400;
-      color: var(--muted);
-      letter-spacing: 0.04em;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
-      line-height: 1.4;
+      color: #1a1000;
     }
+    .ticker-dot {
+      display: inline-block;
+      width: 5px;
+      height: 5px;
+      background: rgba(0,0,0,0.35);
+      border-radius: 50%;
+      margin: 0 28px;
+      flex-shrink: 0;
+    }
+    @keyframes ticker-scroll {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
     /* Right column: text content with clip reveals */
     .truth-right {
       padding-top: 8px;
@@ -1978,6 +2005,24 @@
       </div>
     </div>
   </section>
+
+  <!-- ======== GOLD TICKER BELT ======== -->
+  <div class="ticker-belt" aria-hidden="true">
+    <div class="ticker-track">
+      <span class="ticker-item">30 Milh&otilde;es de Im&oacute;veis Irregulares no Brasil</span><span class="ticker-dot"></span>
+      <span class="ticker-item">At&eacute; R$ 30.000 de Honor&aacute;rios por Processo</span><span class="ticker-dot"></span>
+      <span class="ticker-item">20+ Anos de Mercado Insatur&aacute;vel</span><span class="ticker-dot"></span>
+      <span class="ticker-item">4 Dias para Dominar o Nicho</span><span class="ticker-dot"></span>
+      <span class="ticker-item">Ao Vivo no Zoom &mdash; 04 a 07 de Maio</span><span class="ticker-dot"></span>
+      <span class="ticker-item">Desafio Usucapi&atilde;o &mdash; Marcel Rulli</span><span class="ticker-dot"></span>
+      <span class="ticker-item">30 Milh&otilde;es de Im&oacute;veis Irregulares no Brasil</span><span class="ticker-dot"></span>
+      <span class="ticker-item">At&eacute; R$ 30.000 de Honor&aacute;rios por Processo</span><span class="ticker-dot"></span>
+      <span class="ticker-item">20+ Anos de Mercado Insatur&aacute;vel</span><span class="ticker-dot"></span>
+      <span class="ticker-item">4 Dias para Dominar o Nicho</span><span class="ticker-dot"></span>
+      <span class="ticker-item">Ao Vivo no Zoom &mdash; 04 a 07 de Maio</span><span class="ticker-dot"></span>
+      <span class="ticker-item">Desafio Usucapi&atilde;o &mdash; Marcel Rulli</span><span class="ticker-dot"></span>
+    </div>
+  </div>
 
   <section id="promise">
     <div class="container">
