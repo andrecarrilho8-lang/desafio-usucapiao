@@ -1568,300 +1568,353 @@
     ============================================= */
     @media (max-width: 768px) {
 
-      /* ---- GLOBAL ---- */
+      /* ============================================
+         GLOBAL — 20px side padding everywhere
+      ============================================ */
       .container {
         width: 100%;
-        padding: 0 25px;
+        padding: 0 20px;
       }
-      .section-pad { padding: 72px 0; }
+      .section-pad { padding: 64px 0; }
 
-      /* All headings + labels left-align on mobile */
+      /* All headings left-align */
       h1, h2, h3, h4,
       .label, .promise-eyebrow,
-      #promise h2, #gap h2,
-      #for-you h2, #for-you,
-      #faq h2, #faq .label,
-      #final-cta, #final-cta h2,
-      #investment .inv-wrap,
-      #content-schedule h2,
-      #social-proof h2, #social-proof .label {
+      #for-you, #final-cta,
+      #investment .inv-wrap {
         text-align: left !important;
       }
 
-      /* ---- HERO — untouched layout, just text scale ---- */
-      #hero-text h1 {
-        font-size: clamp(2.2rem, 9vw, 3.6rem);
-        letter-spacing: -0.03em;
+      /* ============================================
+         HERO — full mobile rework
+      ============================================ */
+      #hero {
+        height: auto;
+        min-height: 100svh;
       }
-      #hero-text .hero-sub {
-        font-size: 0.95rem;
-      }
-      #hero-cta-wrap {
+      #hero-sticky {
+        position: relative;
+        height: auto;
+        min-height: 100svh;
         flex-direction: column;
         align-items: flex-start;
-        gap: 16px;
+        overflow: hidden;
       }
+      /* Video: full-width background */
+      #hero-scroll-video {
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: 70% 15%;
+        opacity: 0.45;
+        z-index: 1;
+      }
+      /* Stronger overlay so text is always readable */
+      .hero-video-overlay {
+        background:
+          linear-gradient(to bottom, rgba(13,13,13,0.55) 0%, rgba(13,13,13,0.82) 100%),
+          linear-gradient(to right, rgba(13,13,13,0.9) 0%, transparent 100%);
+        z-index: 2;
+      }
+      /* Content pane */
+      #hero .hero-inner {
+        width: 100%;
+        min-height: 100svh;
+        padding: 80px 20px 60px;
+        display: flex;
+        align-items: flex-start;
+        box-sizing: border-box;
+      }
+      #hero .hero-content {
+        max-width: 100%;
+        position: relative;
+        z-index: 3;
+      }
+      .hero-brand {
+        font-size: 0.72rem;
+        letter-spacing: 0.3em;
+        margin-bottom: 6px;
+      }
+      .hero-date {
+        font-size: 0.62rem;
+        letter-spacing: 0.18em;
+        margin-bottom: 28px;
+      }
+      #hero h1 {
+        font-size: clamp(1.9rem, 7.5vw, 3rem);
+        line-height: 1.2;
+        margin-bottom: 20px;
+      }
+      #hero .hero-sub {
+        font-size: 0.92rem;
+        line-height: 1.7;
+        margin-bottom: 36px;
+        max-width: 100%;
+      }
+      /* Button full-width on mobile */
+      #hero-cta {
+        width: 100%;
+        text-align: center;
+        padding: 18px 20px;
+        font-size: 0.8rem;
+      }
+      .price-hint {
+        font-size: 0.75rem;
+        margin-top: 16px;
+      }
+      /* Progress monolith hidden on mobile */
+      #progress-monolith { display: none; }
 
-      /* ---- TRUTH ---- */
+      /* ============================================
+         TRUTH
+      ============================================ */
+      #truth .truth-inner {
+        padding: 80px 0 100px;
+      }
       #truth .truth-grid {
         grid-template-columns: 1fr;
-        gap: 48px;
+        gap: 40px;
       }
       #truth .truth-left {
         position: static;
         padding-bottom: 0;
       }
       #truth h2 {
-        font-size: clamp(2.4rem, 8vw, 3.2rem);
+        font-size: clamp(2rem, 8vw, 3rem);
+        margin-bottom: 20px;
+        white-space: normal;
       }
-      #truth .truth-inner {
-        padding: 100px 0 120px;
-      }
-      #truth .truth-right::before {
-        display: none; /* remove glow box on mobile */
-      }
-      .truth-stat-chip {
-        padding: 14px 16px;
+      #truth .truth-right::before { display: none; }
+      .truth-stat-stack { display: none; }
+
+      /* ============================================
+         TICKER BELT — font smaller on mobile
+      ============================================ */
+      .ticker-belt { height: 44px; }
+      .ticker-item {
+        font-size: 0.6rem;
+        padding: 0 24px;
+        letter-spacing: 0.15em;
       }
 
-      /* ---- PROMISE / O MÉTODO ---- */
-      #promise {
-        padding: 60px 0 100px;
-      }
-      #promise .promise-header {
-        margin-bottom: 60px;
-      }
+      /* ============================================
+         PROMISE / O MÉTODO
+      ============================================ */
+      #promise { padding: 60px 0 80px; }
+      #promise .promise-header { margin-bottom: 48px; }
       #promise h2 {
-        font-size: clamp(2rem, 7vw, 3rem);
-        text-align: left;
+        font-size: clamp(1.7rem, 6.5vw, 2.6rem);
+        white-space: normal;
       }
-      .features-list {
-        gap: 0;
-      }
+      .features-list { gap: 0; }
       .feature-row {
-        gap: 20px;
-        padding: 32px 0;
+        gap: 16px;
+        padding: 28px 0;
+        flex-direction: row;
+        align-items: flex-start;
       }
-      .feature-body h3 {
-        font-size: 1.15rem;
-      }
-      #promise .promise-footer {
-        text-align: left;
-      }
+      .feature-icon { flex-shrink: 0; }
+      .feature-body h3 { font-size: 1.05rem; }
+      #promise .promise-footer { text-align: left; }
 
-      /* ---- FOR YOU ---- */
-      #for-you {
-        padding: 80px 0;
-        text-align: left;
-      }
+      /* ============================================
+         FOR YOU
+      ============================================ */
+      #for-you { padding: 64px 0; }
       #for-you h2 {
-        font-size: clamp(1.8rem, 7vw, 2.8rem);
-        margin-bottom: 40px;
+        font-size: clamp(1.6rem, 6.5vw, 2.4rem);
+        margin-bottom: 32px;
+        white-space: normal;
       }
       #for-you .check-list li {
-        padding: 18px 20px;
-        gap: 16px;
-        font-size: 0.95rem;
-      }
-      #for-you .for-you-footer {
-        text-align: left;
+        padding: 16px 18px;
+        gap: 14px;
+        font-size: 0.9rem;
       }
 
-      /* ---- GAP SECTION (abismo) ---- */
-      #gap {
-        padding: 100px 0;
-      }
+      /* ============================================
+         GAP / ABISMO
+      ============================================ */
+      #gap { padding: 80px 0; }
       #gap h2 {
-        font-size: clamp(1.8rem, 7vw, 2.6rem);
-        margin-bottom: 48px;
-        padding-top: 20px;
+        font-size: clamp(1.5rem, 6vw, 2.2rem) !important;
+        white-space: normal !important;
+        margin-bottom: 40px;
+        padding-top: 16px;
         text-align: left;
       }
       #gap .gap-grid {
         grid-template-columns: 1fr;
-        gap: 20px;
+        gap: 16px;
       }
       .glass-card {
-        padding: 40px 28px;
+        padding: 32px 24px;
       }
       .glass-card h3 {
-        font-size: 0.8rem;
-        margin-bottom: 24px;
+        font-size: 0.75rem;
+        margin-bottom: 20px;
       }
-      .glass-card ul li {
-        gap: 14px;
-      }
+      .card-header-row { margin-bottom: 28px; }
+      .card-arrow { width: 28px; height: 28px; }
+      .glass-card ul li { gap: 12px; }
 
-      /* ---- MENTOR ---- */
-      #mentor {
-        min-height: auto;
-      }
+      /* ============================================
+         MENTOR
+      ============================================ */
+      #mentor { min-height: auto; }
       .mentor-inner {
         grid-template-columns: 1fr;
-        padding: 100px 0 60px;
-        gap: 40px;
+        padding: 0;
+        gap: 0;
       }
       .mentor-content {
-        padding-right: 0;
+        padding: 48px 20px 60px;
         order: 2;
+        padding-right: 20px;
       }
       .mentor-photo-bg {
         position: relative;
         width: 100%;
-        height: 380px;
+        height: 340px;
         object-position: top center;
         order: 1;
       }
       .mentor-photo-mask {
         background:
-          linear-gradient(to bottom, transparent 50%, #0a0a0a 100%),
-          linear-gradient(to right, #0a0a0a 0%, rgba(10,10,10,0.2) 60%, transparent 100%);
+          linear-gradient(to bottom, transparent 40%, #0a0a0a 100%);
       }
       #mentor h2 {
-        font-size: clamp(1.8rem, 7vw, 2.8rem);
+        font-size: clamp(1.8rem, 7vw, 2.6rem);
+        white-space: normal;
       }
+      .mentor-stats {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+      }
+      .mentor-stat .stat-num { font-size: 1.4rem; }
+      .mentor-stat .stat-label { font-size: 0.6rem; }
 
-      /* ---- SCHEDULE / CRONOGRAMA ---- */
-      #content-schedule {
-        padding: 80px 0;
-      }
+      /* ============================================
+         CRONOGRAMA / SCHEDULE
+      ============================================ */
+      #content-schedule { padding: 64px 0; }
       #content-schedule h2 {
-        font-size: clamp(1.6rem, 6.5vw, 2.4rem);
-        margin-bottom: 48px;
+        font-size: clamp(1.5rem, 6vw, 2.2rem);
+        margin-bottom: 40px;
+        white-space: normal;
       }
       #content-schedule .days-grid {
         grid-template-columns: 1fr;
-        gap: 20px;
+        gap: 16px;
       }
-      #content-schedule .day-card {
-        padding: 40px 28px;
-      }
+      #content-schedule .day-card { padding: 32px 24px; }
 
-      /* ---- INVESTMENT (O que você recebe) ---- */
-      #investment {
-        padding: 80px 0;
-      }
-      .inv-wrap {
-        padding: 40px 28px;
+      /* ============================================
+         INVESTMENT
+      ============================================ */
+      #investment { padding: 64px 0; }
+      .inv-wrap { padding: 32px 24px; }
+      #investment h2 {
+        font-size: clamp(1.5rem, 6vw, 2.2rem);
+        white-space: normal;
       }
       .offer-row {
-        gap: 12px;
-        padding: 16px 0;
+        gap: 10px;
+        padding: 14px 0;
         flex-wrap: wrap;
       }
-      .offer-val {
-        margin-left: auto;
-      }
-      .investment-price-block {
-        text-align: left;
-      }
+      .offer-val { margin-left: auto; }
 
-      /* ---- SOCIAL PROOF / DEPOIMENTOS ---- */
-      #social-proof {
-        padding: 80px 0;
-      }
+      /* ============================================
+         SOCIAL PROOF / DEPOIMENTOS
+      ============================================ */
+      #social-proof { padding: 64px 0; }
       #social-proof h2 {
-        font-size: clamp(1.6rem, 6.5vw, 2.4rem);
-        margin-bottom: 40px;
+        font-size: clamp(1.5rem, 6vw, 2.2rem);
+        margin-bottom: 32px;
+        white-space: normal;
       }
       .dep-grid {
         grid-template-columns: 1fr 1fr;
-        gap: 14px;
+        gap: 10px;
       }
-      .dep-card-img img {
-        height: 220px;
-      }
-      .dep-quote p {
-        font-size: 0.78rem;
-      }
+      .dep-card-img img { height: 200px; }
+      .dep-quote p { font-size: 0.75rem; }
 
-      /* ---- FAQ ---- */
-      #faq {
-        padding: 80px 0;
-      }
+      /* ============================================
+         FAQ
+      ============================================ */
+      #faq { padding: 64px 0; }
       #faq h2 {
-        font-size: clamp(1.8rem, 7vw, 2.6rem);
-        margin-bottom: 48px;
+        font-size: clamp(1.6rem, 6.5vw, 2.4rem);
+        margin-bottom: 40px;
+        white-space: normal;
       }
-      .faq-item {
-        padding: 24px 0;
-      }
-      .faq-question h3 {
-        font-size: 1rem;
-      }
+      .faq-item { padding: 22px 0; }
+      .faq-question h3 { font-size: 0.95rem; }
 
-      /* ---- FINAL CTA ---- */
-      #final-cta {
-        padding: 80px 0;
-        text-align: left;
-      }
+      /* ============================================
+         FINAL CTA
+      ============================================ */
+      #final-cta { padding: 72px 0; }
       #final-cta h2 {
-        font-size: clamp(1.8rem, 7vw, 2.8rem);
-        margin-left: 0;
-        margin-right: 0;
+        font-size: clamp(1.7rem, 7vw, 2.6rem);
         text-align: left;
+        white-space: normal;
       }
       #final-cta .final-sub {
-        margin: 0 0 40px;
+        margin: 0 0 36px;
         text-align: left;
+        font-size: 0.95rem;
       }
-      #final-cta .final-price-hint {
-        text-align: left;
-      }
+      #final-cta .final-price-hint { text-align: left; }
 
-      /* ---- BUTTONS ---- */
+      /* ============================================
+         BUTTONS — full-width on mobile
+      ============================================ */
       .btn-primary {
         width: 100%;
         text-align: center;
         justify-content: center;
-        padding: 18px 24px;
-        font-size: 0.85rem;
+        padding: 18px 20px;
+        font-size: 0.82rem;
+        box-sizing: border-box;
       }
       .btn-primary.large {
-        font-size: 0.9rem;
-        padding: 20px 28px;
+        font-size: 0.85rem;
+        padding: 18px 20px;
       }
 
-      /* ---- FOOTER ---- */
+      /* ============================================
+         FOOTER
+      ============================================ */
       footer {
-        padding: 40px 25px;
+        padding: 40px 20px;
         text-align: left;
       }
       footer .footer-brand {
-        font-size: 1.2rem;
-        margin-bottom: 12px;
+        font-size: 1.1rem;
+        margin-bottom: 10px;
       }
-      footer p {
-        font-size: 0.78rem;
-      }
+      footer p { font-size: 0.75rem; }
 
-      /* ---- LIGHTBOX ---- */
-      .lb-inner {
-        width: 96vw;
-        max-height: 80vh;
-      }
-
-      /* Ensure tech grid on schedule still shows */
-      #schedule::after {
-        opacity: 0.5;
-      }
+      /* Lightbox */
+      .lb-inner { width: 96vw; max-height: 80vh; }
     }
 
-    /* Extra small phones */
+    /* Extra-small phones (≤ 420px) */
     @media (max-width: 420px) {
-      .dep-grid {
-        grid-template-columns: 1fr;
-      }
-      #content-schedule .day-card {
-        padding: 32px 20px;
-      }
-      .glass-card {
-        padding: 32px 20px;
-      }
-      #truth h2 {
-        font-size: 2.1rem;
-      }
+      #hero h1 { font-size: clamp(1.7rem, 8vw, 2.2rem); }
+      .dep-grid { grid-template-columns: 1fr; }
+      .glass-card { padding: 28px 18px; }
+      #content-schedule .day-card { padding: 28px 18px; }
+      .mentor-stats { grid-template-columns: 1fr; gap: 16px; }
+      .mentor-stat { flex-direction: row; align-items: center; gap: 12px; }
+      #truth h2 { font-size: 1.9rem; }
     }
+
 
 
     /* =============================================
