@@ -977,7 +977,18 @@
     }
     .glass-card.before h3 { color: var(--muted); }
     .glass-card.after h3 { color: var(--gold); }
-    
+    .card-header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 40px;
+    }
+    .card-header-row h3 { margin-bottom: 0; }
+    .card-arrow {
+      flex-shrink: 0;
+      opacity: 0.85;
+    }
+
     .glass-card ul {
       list-style: none;
       display: flex;
@@ -2248,12 +2259,19 @@
   <section id="gap">
     <div class="parallax-bg" id="gap-parallax"></div>
     <div class="container">
-      <h2 class="reveal">O <strong>abismo</strong> entre onde voc&ecirc; est&aacute; <em>e onde pode chegar</em>:</h2>
+      <h2 class="reveal" style="font-size:clamp(1.5rem,2.8vw,2.3rem);white-space:nowrap;">O <strong>abismo</strong> entre onde voc&ecirc; est&aacute; <em>e onde pode chegar</em>:</h2>
 
       <div class="gap-grid">
         <!-- Before -->
         <div class="glass-card before reveal">
-          <h3>Como você está agora</h3>
+          <div class="card-header-row">
+            <h3>Como você está agora</h3>
+            <!-- Downtrend arrow -->
+            <svg class="card-arrow down" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <line x1="6" y1="8" x2="30" y2="28" stroke="rgba(255,80,80,0.55)" stroke-width="1.5" stroke-linecap="round"/>
+              <polyline points="20,28 30,28 30,18" stroke="rgba(255,80,80,0.55)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            </svg>
+          </div>
           <ul>
             <li>
               <div class="icon-wrap">—</div>
@@ -2275,7 +2293,14 @@
         </div>
         <!-- After -->
         <div class="glass-card gold-glass after reveal">
-          <h3>COMO VOCÊ SAIRÁ DO DESAFIO:</h3>
+          <div class="card-header-row">
+            <h3>COMO VOC&Ecirc; SAIR&Aacute; DO DESAFIO:</h3>
+            <!-- Uptrend arrow -->
+            <svg class="card-arrow up" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <line x1="6" y1="28" x2="30" y2="8" stroke="rgba(233,195,73,0.7)" stroke-width="1.5" stroke-linecap="round"/>
+              <polyline points="20,8 30,8 30,18" stroke="rgba(233,195,73,0.7)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            </svg>
+          </div>
           <ul>
             <li>
               <div class="icon-wrap">
@@ -2388,7 +2413,7 @@
     <div class="container">
       <div class="sp-header reveal">
         <p class="sp-eyebrow">Resultados reais</p>
-        <h2>Esses s&atilde;o alguns dos <strong>resultados reais</strong><br>que os meus alunos est&atilde;o tendo...</h2>
+        <h2>Esses s&atilde;o alguns dos <strong style="white-space:nowrap">resultados reais</strong><br>que os meus alunos est&atilde;o tendo...</h2>
       </div>
 
       <!-- Testimonial glossy card grid -->
