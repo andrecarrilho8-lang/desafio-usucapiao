@@ -87,8 +87,8 @@
     ============================================= */
     .glass-divider {
       position: relative;
-      height: 120px;
-      margin: -60px 0;
+      height: 0;
+      margin: 0;
       z-index: 10;
       pointer-events: none;
       overflow: hidden;
@@ -156,6 +156,7 @@
       width: 55%;
       height: 100%;
       object-fit: cover;
+      object-position: top center;
       z-index: 1;
       opacity: 0.9;
       filter: contrast(1.05) brightness(0.75);
@@ -175,7 +176,7 @@
       z-index: 3;
     }
     #hero .hero-content {
-      max-width: 55%;
+      max-width: 58%;
     }
     .top-pill {
       display: inline-block;
@@ -204,10 +205,10 @@
     #hero h1 {
       font-family: var(--font-display);
       font-weight: 200;
-      font-size: clamp(1.8rem, 3.2vw, 2.6rem);
-      line-height: 1.28;
-      letter-spacing: -0.01em;
-      margin-bottom: 36px;
+      font-size: clamp(2rem, 3.6vw, 3.1rem);
+      line-height: 1.22;
+      letter-spacing: -0.02em;
+      margin-bottom: 32px;
       color: var(--primary);
     }
     #hero h1 strong {
@@ -219,13 +220,18 @@
       font-weight: 600;
     }
     #hero .hero-sub {
-      font-size: 1.25rem;
+      font-size: 1.15rem;
       font-weight: 300;
-      color: rgba(232,232,234,0.65);
+      color: rgba(232,232,234,0.8);
       max-width: 520px;
       margin-bottom: 52px;
       line-height: 1.8;
     }
+    #hero .hero-sub strong {
+      color: var(--gold);
+      font-weight: 600;
+    }
+
     .price-hint {
       margin-top: 24px;
       font-family: var(--font-display);
@@ -1906,10 +1912,10 @@
         <div class="top-pill reveal">DOS DIAS 04 A 07 DE MAIO | ÀS 20H | AO VIVO NO ZOOM</div>
         <div class="hero-title reveal">DESAFIO USUCAPIÃO <span style="opacity:0.5;margin:0 6px;">—</span> UMA OPORTUNIDADE DE NEGÓCIOS</div>
         <h1 class="reveal">
-          <strong>Advogado:</strong> enquanto você lê esta página, colegas estão faturando <strong>até R$ 30.000 por processo</strong> em um mercado com mais de <strong>30 Milhões</strong> de imóveis irregulares esperando por você.
+          4 aulas para aprender a <strong>dominar o maior nicho</strong> de oportunidades da advocacia atual.
         </h1>
         <p class="hero-sub reveal">
-          Uma Oportunidade de Negócios para advogados que desejam multiplicar seus resultados e dominar a Regularização Imobiliária.
+          <strong>Advogado:</strong> enquanto voc&ecirc; l&ecirc; esta p&aacute;gina, colegas est&atilde;o faturando <strong>at&eacute; R$ 30.000 por processo</strong> em um mercado com mais de <strong>30 Milh&otilde;es</strong> de im&oacute;veis irregulares.
         </p>
         <a href="#truth" class="btn-primary large reveal" id="hero-cta">QUERO PARTICIPAR</a>
         <p class="price-hint reveal">De <span class="strike">R$ 4.437</span> por <span>R$ 57,00</span> | Por tempo limitado!</p>
