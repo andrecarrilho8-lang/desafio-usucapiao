@@ -1586,52 +1586,67 @@
       }
 
       /* ============================================
-         HERO — full mobile rework
+         HERO — stacked mobile: video on top, text below
       ============================================ */
       #hero {
-        height: auto;
-        min-height: 100svh;
+        height: auto !important;
+        min-height: unset;
+        background: #131313;
       }
       #hero-sticky {
-        position: relative;
-        height: auto;
-        min-height: 100svh;
-        flex-direction: column;
-        align-items: flex-start;
-        overflow: hidden;
+        position: relative !important;
+        height: auto !important;
+        min-height: unset !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+        overflow: visible !important;
       }
-      /* Video: full-width background */
+      /* Video: block at top showing Marcel */
       #hero-scroll-video {
-        position: absolute;
-        top: 0; left: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        object-position: 70% 15%;
-        opacity: 0.45;
-        z-index: 1;
+        position: relative !important;
+        top: auto !important; left: auto !important;
+        right: auto !important;
+        width: 100% !important;
+        height: 58vw !important;
+        min-height: 240px;
+        object-fit: cover !important;
+        object-position: center 10% !important;
+        opacity: 1 !important;
+        z-index: 1 !important;
+        display: block;
+        flex-shrink: 0;
       }
-      /* Stronger overlay so text is always readable */
+      /* Overlay: only covers the video block, fades bottom to dark */
       .hero-video-overlay {
-        background:
-          linear-gradient(to bottom, rgba(13,13,13,0.55) 0%, rgba(13,13,13,0.82) 100%),
-          linear-gradient(to right, rgba(13,13,13,0.9) 0%, transparent 100%);
-        z-index: 2;
+        position: absolute !important;
+        top: 0; left: 0; right: 0;
+        height: 58vw !important;
+        min-height: 240px;
+        background: linear-gradient(
+          to bottom,
+          rgba(13,13,13,0.15) 0%,
+          rgba(13,13,13,0.45) 60%,
+          #131313 100%
+        ) !important;
+        z-index: 2 !important;
       }
-      /* Content pane */
+      /* Content pane: directly below video */
       #hero .hero-inner {
-        width: 100%;
-        min-height: 100svh;
-        padding: 80px 20px 60px;
-        display: flex;
-        align-items: flex-start;
-        box-sizing: border-box;
+        width: 100% !important;
+        min-height: unset !important;
+        padding: 0 20px 60px !important;
+        display: block !important;
+        position: relative;
+        z-index: 3;
+        background: #131313;
+        margin-top: -2px;
       }
       #hero .hero-content {
         max-width: 100%;
         position: relative;
         z-index: 3;
       }
+
       .hero-brand {
         font-size: 0.72rem;
         letter-spacing: 0.3em;
