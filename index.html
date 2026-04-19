@@ -1571,11 +1571,45 @@
       /* ============================================
          GLOBAL — 20px side padding everywhere
       ============================================ */
+      *, *::before, *::after { box-sizing: border-box; }
+      html, body {
+        overflow-x: hidden;
+        max-width: 100vw;
+      }
+      body {
+        padding: 0 !important;
+      }
       .container {
         width: 100%;
         padding: 0 20px;
+        max-width: 100%;
+      }
+      /* Apply 20px to sections that don't use .container */
+      section, footer {
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+      /* But sections that DO use .container: remove section padding so we don't double it */
+      section .container {
+        padding-left: 0;
+        padding-right: 0;
+      }
+      /* Direct section containers keep it */
+      #truth .container,
+      #promise .container,
+      #for-you .container,
+      #gap .container,
+      #content-schedule .container,
+      #investment .container,
+      #social-proof .container,
+      #faq .container,
+      #final-cta .container,
+      #mentor .container {
+        padding-left: 20px;
+        padding-right: 20px;
       }
       .section-pad { padding: 64px 0; }
+
 
       /* All headings left-align */
       h1, h2, h3, h4,
