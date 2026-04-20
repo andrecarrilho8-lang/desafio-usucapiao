@@ -1569,46 +1569,21 @@
     @media (max-width: 768px) {
 
       /* ============================================
-         GLOBAL — 20px side padding everywhere
+         GLOBAL — 20px padding on text containers only
       ============================================ */
       *, *::before, *::after { box-sizing: border-box; }
       html, body {
-        /* clip = no horizontal scroll but does NOT create a new scroll container
-           (unlike 'hidden' which BREAKS position:sticky) */
+        /* clip = blocks horiz scroll WITHOUT creating new scroll container
+           (overflow:hidden would break position:sticky) */
         overflow-x: clip;
-        max-width: 100vw;
       }
-      body {
-        padding: 0 !important;
-      }
+      body { padding: 0 !important; }
+
+      /* ONLY .container gets the 20px — backgrounds stay edge-to-edge */
       .container {
         width: 100%;
         padding: 0 20px;
         max-width: 100%;
-      }
-      /* Apply 20px to sections that don't use .container — but NOT to #hero so video stays edge-to-edge */
-      section:not(#hero), footer {
-        padding-left: 20px;
-        padding-right: 20px;
-      }
-      /* But sections that DO use .container: remove section padding so we don't double it */
-      section .container {
-        padding-left: 0;
-        padding-right: 0;
-      }
-      /* Direct section containers keep it */
-      #truth .container,
-      #promise .container,
-      #for-you .container,
-      #gap .container,
-      #content-schedule .container,
-      #investment .container,
-      #social-proof .container,
-      #faq .container,
-      #final-cta .container,
-      #mentor .container {
-        padding-left: 20px;
-        padding-right: 20px;
       }
       .section-pad { padding: 64px 0; }
 
@@ -1622,36 +1597,32 @@
       }
 
       /* ============================================
-         HERO — mobile: restore scroll scrubbing,
-         full-width video + bottom gradient
+         HERO — mobile scroll scrubbing
+         Video: full-width bg.  Text: absolutely anchored.
       ============================================ */
       #hero {
-        height: 250vh; /* keep tall for JS scroll scrubbing */
+        height: 250vh;
         background: #131313;
       }
       #hero-sticky {
         position: sticky !important;
         top: 0 !important;
         height: 100svh !important;
-        display: flex !important;
-        flex-direction: column !important;
-        justify-content: flex-end !important;
-        align-items: flex-start !important;
         overflow: hidden !important;
+        /* No flex-end: text is absolute so it never reflows on address-bar change */
       }
-      /* Video: full-width, raised to show Marcel's face more */
+      /* Video fills entire sticky viewport */
       #hero-scroll-video {
         position: absolute !important;
-        top: 0 !important; left: 0 !important;
-        right: auto !important;
+        inset: 0 !important;
         width: 100% !important;
-        height: 88% !important;
+        height: 90% !important;
         object-fit: cover !important;
         object-position: center 0% !important;
         opacity: 0.92 !important;
         z-index: 1 !important;
       }
-      /* Gradient: gold glow bloom at bottom + dark fade for text readability */
+      /* Overlay: dark fade bottom + subtle gold bloom */
       .hero-video-overlay {
         position: absolute !important;
         inset: 0 !important;
@@ -1659,35 +1630,33 @@
           linear-gradient(
             to bottom,
             transparent 0%,
-            transparent 40%,
-            rgba(13,13,13,0.5) 58%,
-            rgba(13,13,13,0.9) 72%,
-            #131313 86%
+            transparent 42%,
+            rgba(13,13,13,0.55) 60%,
+            rgba(13,13,13,0.92) 74%,
+            #131313 88%
           ),
           radial-gradient(
-            ellipse 120% 35% at 50% 100%,
-            rgba(233,195,73,0.18) 0%,
-            rgba(233,195,73,0.04) 50%,
-            transparent 70%
+            ellipse 110% 30% at 50% 100%,
+            rgba(233,195,73,0.15) 0%,
+            transparent 65%
           ) !important;
         z-index: 2 !important;
       }
-
-      /* Text anchored at bottom of sticky viewport */
+      /* Text: absolutely pinned to bottom — never reflows */
       #hero .hero-inner {
-        position: relative !important;
-        width: 100% !important;
-        min-height: unset !important;
+        position: absolute !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
         padding: 0 20px 48px !important;
-        display: block !important;
+        width: auto !important;
+        min-height: unset !important;
         z-index: 3 !important;
         background: transparent !important;
-        margin-top: 0 !important;
       }
       #hero .hero-content {
-        max-width: 100%;
-        position: relative;
-        z-index: 3;
+        max-width: 100% !important;
+        width: 100% !important;
       }
 
       .hero-brand {
@@ -2940,8 +2909,8 @@
     };
     window.addEventListener('scroll', monolithFill, { passive: true });
 
-    /* Use inline approach for progress line */
-    (function () {
+    /* Inline progress line — desktop only (mobile: hidden via CSS + this guard) */
+    if (window.innerWidth > 768) (function () {
       const line = document.createElement('div');
       line.style.cssText = `
         position: fixed; right: 28px; top: 50%; transform: translateY(-50%);
@@ -3025,12 +2994,14 @@
       vid.addEventListener('canplay', onReady, { once: true });
       vid.load(); // trigger loading
 
+      /* Cache viewport height once — prevents address-bar show/hide
+         from changing the scrub denominator mid-scroll */
+      const cachedVpH = window.innerHeight;
+
       function computeTarget() {
         const scrollPos = window.scrollY;
-        const heroH = hero.offsetHeight;   /* 250vh */
-        const vpH  = window.innerHeight;   /* 100vh */
-        /* subtract 1 viewport so progress reaches 1 at the BOTTOM of hero */
-        const progress = Math.max(0, Math.min(1, scrollPos / (heroH - vpH)));
+        const heroH = hero.offsetHeight;
+        const progress = Math.max(0, Math.min(1, scrollPos / (heroH - cachedVpH)));
         return vid.duration * progress;
       }
 
