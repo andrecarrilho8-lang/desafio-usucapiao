@@ -31,17 +31,22 @@
     /* =============================================
        RESET & BASE
     ============================================= */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body {
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      min-height: 100%;
+      overflow-x: hidden;
       background: var(--bg);
       color: var(--primary);
       font-family: var(--font-body);
       font-weight: 300;
       font-size: 1.05rem;
       line-height: 1.85;
-      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
     }
+    html { scroll-behavior: smooth; }
     img { display: block; max-width: 100%; }
     a { color: inherit; text-decoration: none; }
 
@@ -1510,7 +1515,8 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 500px;
+      width: 100vw;
+      max-width: 500px;
       height: 500px;
       background: radial-gradient(circle, rgba(233,195,73,.06) 0%, transparent 70%);
       pointer-events: none;
