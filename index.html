@@ -1610,8 +1610,10 @@
         position: sticky !important;
         top: 0 !important;
         height: 100svh !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: flex-end !important;
         overflow: hidden !important;
-        /* No flex-end: text is absolute so it never reflows on address-bar change */
       }
       /* Video: full viewport height, raised +75px from top */
       #hero-scroll-video {
@@ -1646,18 +1648,13 @@
           ) !important;
         z-index: 2 !important;
       }
-      /* Text: 20px from screen edges — handled by inline style on the HTML element */
+      /* Text: flex-end positions it at bottom of sticky viewport — no absolute, no iOS bug */
       #hero .hero-inner {
-        position: absolute !important;
-        bottom: 0 !important;
-        left: 0 !important;
-        right: 0 !important;
-        top: auto !important;
+        position: relative !important;
         width: 100% !important;
         max-width: none !important;
         margin: 0 !important;
-        padding-top: 40px !important;
-        padding-bottom: 48px !important;
+        padding: 0 20px 48px !important;
         box-sizing: border-box !important;
         min-height: unset !important;
         z-index: 3 !important;
@@ -1667,6 +1664,7 @@
           rgba(13,13,13,0.52) 25%,
           rgba(13,13,13,0.72) 100%
         ) !important;
+        flex-shrink: 0 !important;
       }
 
       #hero .hero-content {
@@ -2121,7 +2119,7 @@
         <source src="hero-scroll.mp4" type="video/mp4">
       </video>
       <div class="hero-video-overlay"></div>
-      <div class="hero-inner" style="padding-left:20px;padding-right:20px;">
+      <div class="hero-inner">
       <div class="hero-content">
         <div class="hero-brand reveal">DESAFIO USUCAPI&Atilde;O</div>
         <div class="hero-date reveal">04 a 07 de Maio &nbsp;&middot;&nbsp; 20h &nbsp;&middot;&nbsp; Ao Vivo no Zoom</div>
