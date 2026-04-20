@@ -2174,16 +2174,16 @@
           <!-- Right: text + stats below -->
           <div class="truth-right clip-parent" id="truth-right-clip">
             <h3>
-              <span class="clip-wrap"><span class="clip-inner" style="--ci:0ms">Ser um bom advogado <mark style="background:var(--gold);color:#1a0a00;font-weight:900;padding:1px 5px;border-radius:2px;">NÃO É MAIS SUFICIENTE.</mark></span></span>
+              <span class="clip-wrap"><span class="clip-inner" style="--ci:0ms">Ser um bom advogado NÃO É MAIS SUFICIENTE.</span></span>
             </h3>
             <p class="truth-p">
-              <span class="clip-wrap"><span class="clip-inner" style="--ci:120ms">Enquanto você compete por preço em áreas saturadas, existe um mercado bilionário praticamente DESERTO: <strong>30 milhões de imóveis irregulares</strong> no Brasil. Cada caso vale entre <mark style="background:var(--gold);color:#1a0a00;font-weight:700;padding:1px 5px;border-radius:2px;">R$ 5.000 e R$ 30.000</mark>.</span></span>
+              <span class="clip-wrap"><span class="clip-inner" style="--ci:120ms">Enquanto você compete por preço em áreas saturadas, existe um mercado bilionário praticamente DESERTO: 30 milhões de imóveis irregulares no Brasil. Cada caso vale entre <mark style="background:var(--gold);color:#1a0a00;font-weight:700;padding:1px 5px;border-radius:2px;">R$ 5.000 e R$ 30.000</mark>.</span></span>
             </p>
             <p class="truth-p">
-              <span class="clip-wrap"><span class="clip-inner" style="--ci:240ms">Faça as contas: é matematicamente <strong>IMPOSSÍVEL saturar esse mercado</strong> nos próximos <mark style="background:var(--gold);color:#1a0a00;font-weight:700;padding:1px 5px;border-radius:2px;">20 anos</mark>.</span></span>
+              <span class="clip-wrap"><span class="clip-inner" style="--ci:240ms">Faça as contas: é matematicamente IMPOSSÍVEL saturar esse mercado nos próximos 20 anos.</span></span>
             </p>
             <div class="truth-quote">
-              <p><span class="clip-wrap"><span class="clip-inner" style="--ci:360ms">A questão é: <strong>você vai aproveitar essa janela de oportunidade</strong> ou vai assistir de camarote enquanto outros advogados prosperam?</span></span></p>
+              <p><span class="clip-wrap"><span class="clip-inner" style="--ci:360ms">A questão é: você vai aproveitar essa janela de oportunidade ou vai assistir de camarote enquanto outros advogados prosperam?</span></span></p>
               <cite><span class="clip-wrap"><span class="clip-inner" style="--ci:480ms">&mdash; Marcel Rulli</span></span></cite>
             </div>
 
@@ -3339,9 +3339,9 @@
 
         function next() {
           if (charIndex >= chars.length) {
-            // Typing done — gold highlighter on 'verdade'
+            // Typing done — bold 'verdade' (no italic)
             el.innerHTML = fullText
-              .replace('verdade', '<mark style="background:var(--gold);color:#1a0a00;font-weight:700;font-style:italic;padding:1px 6px;border-radius:3px;">verdade</mark>');
+              .replace('verdade', '<strong>verdade</strong>');
             return;
           }
           el.textContent += chars[charIndex++];
