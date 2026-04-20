@@ -1983,6 +1983,19 @@
 
 
 
+    /* ---- Typewriter cursor ---- */
+    .tw-cursor {
+      display: inline;
+      color: var(--gold);
+      font-weight: 700;
+      animation: tw-blink 1s step-end infinite;
+      margin-left: 1px;
+    }
+    @keyframes tw-blink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0; }
+    }
+
     /* =============================================
        SCROLL ANIMATION & HIGH-TECH REVEAL SYSTEM
     ============================================= */
@@ -2132,7 +2145,7 @@
           <!-- Sticky left: big statement + stats -->
           <div class="truth-left">
             <h2 class="anim-words" id="truth-h2">
-              A <em>verdade</em> que ningu&eacute;m est&aacute; te contando:
+              <span id="truth-typewriter" data-text="A verdade que ninguém está te contando:"></span><span class="tw-cursor">_</span>
             </h2>
           </div>
 
@@ -3279,6 +3292,52 @@
     window.addEventListener('scroll', updateParallax, { passive: true });
     updateParallax();
   })();
+
+    /* ---------- Truth H2 Typewriter ---------- */
+    (function () {
+      const el = document.getElementById('truth-typewriter');
+      const cursor = document.querySelector('.tw-cursor');
+      if (!el) return;
+
+      const fullText = el.dataset.text || el.getAttribute('data-text') || '';
+      let typed = false;
+
+      // Initially hide cursor until typing starts
+      if (cursor) cursor.style.opacity = '0';
+
+      function typeIt() {
+        if (typed) return;
+        typed = true;
+        el.textContent = '';
+        if (cursor) cursor.style.opacity = '1';
+
+        const words = fullText.split(' ');
+        let charIndex = 0;
+        const chars = fullText.split('');
+
+        function next() {
+          if (charIndex >= chars.length) {
+            // Typing done — highlight 'verdade' gold
+            el.innerHTML = fullText
+              .replace('verdade', '<em style="color:var(--gold);font-style:italic">verdade</em>');
+            return;
+          }
+          el.textContent += chars[charIndex++];
+          setTimeout(next, charIndex < 4 ? 90 : 45);
+        }
+        next();
+      }
+
+      // Fire when element enters viewport (once)
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) { typeIt(); obs.disconnect(); }
+        });
+      }, { threshold: 0.4 });
+
+      obs.observe(document.getElementById('truth-h2') || el);
+    })();
+
   </script>
 </body>
 </html>
