@@ -1720,11 +1720,10 @@
         margin-bottom: 36px;
         max-width: 100%;
       }
-      /* Button full-width on mobile */
+      /* Button full-width on mobile: display:block fills parent content area naturally (no explicit width) */
       #hero-cta {
-        width: 100%;
-        max-width: 100%;
-        box-sizing: border-box;
+        display: block !important;
+        width: auto !important;
         overflow: hidden;
         text-align: center;
         padding: 18px 20px;
@@ -2147,7 +2146,7 @@
         <p class="hero-sub reveal">
           <strong>Advogado:</strong> enquanto voc&ecirc; l&ecirc; esta p&aacute;gina, colegas est&atilde;o faturando <strong>at&eacute; R$ 30.000 por processo</strong> em um mercado com mais de <strong>30 Milh&otilde;es</strong> de im&oacute;veis irregulares.
         </p>
-        <a href="#truth" class="btn-primary large reveal" id="hero-cta" style="display:block;width:100%;box-sizing:border-box;">QUERO PARTICIPAR</a>
+        <a href="#truth" class="btn-primary large reveal" id="hero-cta" style="display:block;">QUERO PARTICIPAR</a>
         <p class="price-hint reveal">De <span class="strike">R$ 4.437</span> por <span>R$ 57,00</span> | Por tempo limitado!</p>
       </div>
 
