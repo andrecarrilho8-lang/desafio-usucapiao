@@ -2002,19 +2002,53 @@
 
 
       /* ============================================
+      /* ============================================
          CRONOGRAMA / SCHEDULE
       ============================================ */
       #content-schedule { padding: 64px 0; }
       #content-schedule h2 {
         font-size: clamp(1.5rem, 6vw, 2.2rem);
-        margin-bottom: 40px;
+        margin-bottom: 36px;
         white-space: normal;
       }
       #content-schedule .days-grid {
         grid-template-columns: 1fr;
-        gap: 16px;
+        gap: 20px;
       }
-      #content-schedule .day-card { padding: 32px 24px; }
+      #content-schedule .day-card { padding: 28px 20px; }
+      /* DIA 0X label — bigger & bolder */
+      #content-schedule .day-meta {
+        font-size: 0.95rem !important;
+        letter-spacing: 0.15em !important;
+        font-weight: 800 !important;
+        color: var(--gold) !important;
+        display: flex ! important;
+        align-items: center;
+        gap: 8px;
+      }
+      /* Typewriter cursor */
+      .day-title-cursor {
+        display: inline-block;
+        width: 2px;
+        height: 1.1em;
+        background: var(--gold);
+        margin-left: 3px;
+        vertical-align: text-bottom;
+        animation: cursor-blink 0.8s step-end infinite;
+      }
+      @keyframes cursor-blink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0; }
+      }
+      #content-schedule .day-card h3 {
+        font-size: 1.3rem !important;
+        line-height: 1.3 !important;
+        margin-bottom: 16px !important;
+      }
+      #content-schedule .day-card p {
+        font-size: 0.97rem !important;
+        line-height: 1.85 !important;
+      }
 
       /* ============================================
          INVESTMENT
@@ -2488,52 +2522,55 @@
 
   <section id="content-schedule">
     <div class="container">
-      <h2 class="reveal">Confira o conte&uacute;do <span class="gold"><strong>exclusivo</strong> de cada dia</span>:</h2>
+      <div style="padding:0 20px;">
+        <h2 class="reveal">Confira o conte&uacute;do <span class="gold"><strong>exclusivo</strong> de cada dia</span>:</h2>
 
-      <div class="days-grid">
-        <!-- Dia 01 -->
-        <div class="day-card reveal">
-          <div class="day-num-bg">01</div>
-          <div class="day-label-wrap">
-            <span class="day-meta">DIA 01 - 04/05 às 20h</span>
+        <div class="days-grid">
+          <!-- Dia 01 -->
+          <div class="day-card reveal">
+            <div class="day-num-bg">01</div>
+            <div class="day-label-wrap">
+              <span class="day-meta">DIA 01 &mdash; 04/05 &agrave;s 20h</span>
+            </div>
+            <h3 class="day-title" data-text="O mercado de ouro da advocacia"></h3>
+            <p>Os dados n&atilde;o mentem: <strong>30 milh&otilde;es de im&oacute;veis irregulares</strong> representam um mercado de <mark style="background:var(--gold);color:#1a0a00;font-weight:700;padding:1px 5px;border-radius:2px;">R$ 300 BILH&Otilde;ES em honor&aacute;rios potenciais</mark>. Descubra por que este nicho permite honor&aacute;rios <strong>muito acima da m&eacute;dia</strong> e como se posicionar como <strong>autoridade IMEDIATAMENTE</strong>. Domine o M&eacute;todo 33 &mdash; o sistema que elimina erros e garante resultados previs&iacute;veis em cada caso.</p>
           </div>
-          <h3>O mercado de ouro da advocacia</h3>
-          <p>Os dados não mentem: 30 milhões de imóveis irregulares representam um mercado de R$ 300 BILHÕES em honorários potenciais. Descubra por que este nicho permite honorários muito acima da média e como se posicionar como autoridade IMEDIATAMENTE. Domine o Método 33 — o sistema que elimina erros e garante resultados previsíveis em cada caso.</p>
-        </div>
-        <!-- Dia 02 -->
-        <div class="day-card reveal">
-          <div class="day-num-bg">02</div>
-          <div class="day-label-wrap">
-            <span class="day-meta">DIA 02 - 05/05 às 20h</span>
+          <!-- Dia 02 -->
+          <div class="day-card reveal">
+            <div class="day-num-bg">02</div>
+            <div class="day-label-wrap">
+              <span class="day-meta">DIA 02 &mdash; 05/05 &agrave;s 20h</span>
+            </div>
+            <h3 class="day-title" data-text="Dominando usucapi&atilde;o do in&iacute;cio ao fim"></h3>
+            <p>Passo a passo completo: an&aacute;lise documental, requisitos legais, <strong>provas contundentes</strong> e peti&ccedil;&otilde;es irretoc&aacute;veis. Aprenda a <mark style="background:var(--gold);color:#1a0a00;font-weight:700;padding:1px 5px;border-radius:2px;">precificar corretamente</mark> e use t&eacute;cnicas de negocia&ccedil;&atilde;o que fazem clientes escolherem <strong>VOC&Ecirc; mesmo quando existem op&ccedil;&otilde;es mais baratas</strong>.</p>
           </div>
-          <h3>Dominando usucapião do início ao fim</h3>
-          <p>Passo a passo completo: análise documental, requisitos legais, provas contundentes e petições irretocáveis. Aprenda a precificar corretamente e use técnicas de negociação que fazem clientes escolherem VOCÊ mesmo quando existem opções mais baratas.</p>
-        </div>
-        <!-- Dia 03 -->
-        <div class="day-card reveal">
-          <div class="day-num-bg">03</div>
-          <div class="day-label-wrap">
-            <span class="day-meta">DIA 03 - 06/05 às 20h</span>
+          <!-- Dia 03 -->
+          <div class="day-card reveal">
+            <div class="day-num-bg">03</div>
+            <div class="day-label-wrap">
+              <span class="day-meta">DIA 03 &mdash; 06/05 &agrave;s 20h</span>
+            </div>
+            <h3 class="day-title" data-text="Sistema de faturamento constante"></h3>
+            <p>Estruture seu escrit&oacute;rio para atender em <mark style="background:var(--gold);color:#1a0a00;font-weight:700;padding:1px 5px;border-radius:2px;">ESCALA sem comprometer qualidade</mark> ou seu tempo. Ferramentas de automa&ccedil;&atilde;o, <strong>contratos blindados</strong> e estrat&eacute;gias para transformar clientes em divulgadores. Saia com um <strong>plano de a&ccedil;&atilde;o para implementar IMEDIATAMENTE</strong>.</p>
           </div>
-          <h3>Sistema de faturamento constante</h3>
-          <p>Estruture seu escritório para atender em ESCALA sem comprometer qualidade ou seu tempo. Ferramentas de automação, contratos blindados e estratégias para transformar clientes em divulgadores. Saia com um plano de ação para implementar IMEDIATAMENTE.</p>
-        </div>
-        <!-- Dia 04 -->
-        <div class="day-card reveal">
-          <div class="day-num-bg">04</div>
-          <div class="day-label-wrap">
-            <span class="day-meta">DIA 04 - 07/05 às 20h</span>
+          <!-- Dia 04 -->
+          <div class="day-card reveal">
+            <div class="day-num-bg">04</div>
+            <div class="day-label-wrap">
+              <span class="day-meta">DIA 04 &mdash; 07/05 &agrave;s 20h</span>
+            </div>
+            <h3 class="day-title" data-text="Dominando todas as modalidades"></h3>
+            <p>Judicial e extrajudicial: saiba aplicar o <strong>caminho correto, mais r&aacute;pido e mais barato</strong> para cada caso. Descubra outros m&eacute;todos de regulariza&ccedil;&atilde;o <mark style="background:var(--gold);color:#1a0a00;font-weight:700;padding:1px 5px;border-radius:2px;">t&atilde;o rent&aacute;veis quanto usucapi&atilde;o</mark>. Receba <strong>TODOS os modelos e mapas mentais</strong>.</p>
           </div>
-          <h3>Dominando todas as modalidades</h3>
-          <p>Judicial e extrajudicial: saiba aplicar o caminho correto, mais rápido e mais barato para cada caso. Descubra outros métodos de regularização tão rentáveis quanto usucapião. Receba TODOS os modelos e mapas mentais.</p>
         </div>
-      </div>
 
-      <div class="schedule-footer reveal">
-        <a href="https://hub.la/r/W9E7MRvAudq7IzLXRqND" target="_blank" rel="noopener" class="btn-primary large" id="schedule-cta">QUERO PARTICIPAR DO DESAFIO</a>
+        <div class="schedule-footer reveal">
+          <a href="https://hub.la/r/W9E7MRvAudq7IzLXRqND" target="_blank" rel="noopener" class="btn-primary large" id="schedule-cta">QUERO PARTICIPAR DO DESAFIO</a>
+        </div>
       </div>
     </div>
   </section>
+
 
   <section id="gap">
     <div class="parallax-bg" id="gap-parallax"></div>
@@ -3054,6 +3091,30 @@
       });
     }, { threshold: 0.15 });
     document.querySelectorAll('.feature-row').forEach(el => rowObserver.observe(el));
+
+    /* ---------- Day-Card Typewriter ---------- */
+    const dayTitleObserver = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        dayTitleObserver.unobserve(e.target);
+        const h3 = e.target;
+        const text = h3.dataset.text || '';
+        let i = 0;
+        const cursor = document.createElement('span');
+        cursor.className = 'day-title-cursor';
+        h3.textContent = '';
+        h3.appendChild(cursor);
+        const tick = () => {
+          if (i < text.length) {
+            h3.insertBefore(document.createTextNode(text[i++]), cursor);
+            setTimeout(tick, 38);
+          }
+          // cursor stays and keeps blinking
+        };
+        setTimeout(tick, 180);
+      });
+    }, { threshold: 0.4 });
+    document.querySelectorAll('.day-title').forEach(el => dayTitleObserver.observe(el));
 
     /* ---------- Truth Section Parallax ---------- */
     const truthBg = document.getElementById('truth-parallax-bg');
