@@ -1620,60 +1620,59 @@
       }
 
       /* ============================================
-         HERO — stacked mobile: video on top, text below
+         HERO — mobile: restore scroll scrubbing,
+         full-width video + bottom gradient
       ============================================ */
       #hero {
-        height: auto !important;
-        min-height: unset;
+        height: 250vh; /* keep tall for JS scroll scrubbing */
         background: #131313;
       }
       #hero-sticky {
-        position: relative !important;
-        height: auto !important;
-        min-height: unset !important;
+        position: sticky !important;
+        top: 0 !important;
+        height: 100svh !important;
+        display: flex !important;
         flex-direction: column !important;
-        align-items: stretch !important;
-        overflow: visible !important;
+        justify-content: flex-end !important;
+        align-items: flex-start !important;
+        overflow: hidden !important;
       }
-      /* Video: block at top showing Marcel */
+      /* Video: full-width full-height showing Marcel */
       #hero-scroll-video {
-        position: relative !important;
-        top: auto !important; left: auto !important;
+        position: absolute !important;
+        top: 0 !important; left: 0 !important;
         right: auto !important;
         width: 100% !important;
-        height: 58vw !important;
-        min-height: 240px;
+        height: 78% !important;
         object-fit: cover !important;
-        object-position: center 10% !important;
-        opacity: 1 !important;
+        object-position: center 8% !important;
+        opacity: 0.9 !important;
         z-index: 1 !important;
-        display: block;
-        flex-shrink: 0;
       }
-      /* Overlay: only covers the video block, fades bottom to dark */
+      /* Strong bottom gradient — Marcel visible top, text readable bottom */
       .hero-video-overlay {
         position: absolute !important;
-        top: 0; left: 0; right: 0;
-        height: 58vw !important;
-        min-height: 240px;
+        inset: 0 !important;
         background: linear-gradient(
           to bottom,
-          rgba(13,13,13,0.15) 0%,
-          rgba(13,13,13,0.45) 60%,
-          #131313 100%
+          transparent 0%,
+          transparent 38%,
+          rgba(13,13,13,0.65) 55%,
+          rgba(13,13,13,0.92) 70%,
+          #131313 85%
         ) !important;
         z-index: 2 !important;
       }
-      /* Content pane: directly below video */
+      /* Text anchored at bottom of sticky viewport */
       #hero .hero-inner {
+        position: relative !important;
         width: 100% !important;
         min-height: unset !important;
-        padding: 0 20px 60px !important;
+        padding: 0 20px 48px !important;
         display: block !important;
-        position: relative;
-        z-index: 3;
-        background: #131313;
-        margin-top: -2px;
+        z-index: 3 !important;
+        background: transparent !important;
+        margin-top: 0 !important;
       }
       #hero .hero-content {
         max-width: 100%;
