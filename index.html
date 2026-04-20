@@ -1613,14 +1613,14 @@
         overflow: hidden !important;
         /* No flex-end: text is absolute so it never reflows on address-bar change */
       }
-      /* Video: full viewport height, raised more so head sits ~15px from top */
+      /* Video: full viewport height, raised +75px from top */
       #hero-scroll-video {
         position: absolute !important;
-        top: -55px !important;
+        top: -75px !important;
         left: 0 !important;
         right: 0 !important;
         width: 100% !important;
-        height: calc(100% + 55px) !important;
+        height: calc(100% + 75px) !important;
         object-fit: cover !important;
         object-position: center 0% !important;
         opacity: 1 !important;
@@ -1646,17 +1646,20 @@
           ) !important;
         z-index: 2 !important;
       }
-      /* Text zone: semi-transparent so Marcel is visible behind text */
+      /* Text: absolutely pinned to bottom, explicit 20px side padding */
       #hero .hero-inner {
         position: absolute !important;
         bottom: 0 !important;
         left: 0 !important;
         right: 0 !important;
-        padding: 40px 20px 48px !important;
-        width: auto !important;
+        box-sizing: border-box !important;
+        padding-top: 40px !important;
+        padding-bottom: 48px !important;
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+        width: 100% !important;
         min-height: unset !important;
         z-index: 3 !important;
-        /* Semi-transparent: Marcel visible through, text readable */
         background: linear-gradient(
           to bottom,
           transparent 0%,
