@@ -1573,7 +1573,9 @@
       ============================================ */
       *, *::before, *::after { box-sizing: border-box; }
       html, body {
-        overflow-x: hidden;
+        /* clip = no horizontal scroll but does NOT create a new scroll container
+           (unlike 'hidden' which BREAKS position:sticky) */
+        overflow-x: clip;
         max-width: 100vw;
       }
       body {
@@ -1584,8 +1586,8 @@
         padding: 0 20px;
         max-width: 100%;
       }
-      /* Apply 20px to sections that don't use .container */
-      section, footer {
+      /* Apply 20px to sections that don't use .container — but NOT to #hero so video stays edge-to-edge */
+      section:not(#hero), footer {
         padding-left: 20px;
         padding-right: 20px;
       }
@@ -1721,7 +1723,7 @@
         margin-top: 16px;
       }
       /* Progress monolith hidden on mobile */
-      #progress-monolith { display: none; }
+      #progress-monolith { display: none !important; }
 
       /* ============================================
          TRUTH
