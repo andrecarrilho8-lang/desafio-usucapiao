@@ -1957,15 +1957,21 @@
         position: relative;
         z-index: 3;
       }
-      /* Content: 20px side padding */
-      .mentor-content {
+      /* Content: 20px side padding — high specificity selector */
+      #mentor .mentor-content {
         padding-top: 28px !important;
         padding-bottom: 56px !important;
         padding-left: 20px !important;
         padding-right: 20px !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
         order: unset !important;
         background: #0a0a0a;
       }
+
       #mentor h2 {
         font-size: clamp(1.9rem, 7.5vw, 2.8rem);
         white-space: normal;
