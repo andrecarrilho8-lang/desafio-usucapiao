@@ -1598,12 +1598,6 @@
         text-align: left !important;
       }
 
-      /* MOBILE VIEWPORT CLAMP — nothing can overflow (clip not supported on old iOS) */
-      html, body {
-        max-width: 100vw !important;
-        overflow-x: hidden !important;
-      }
-
       /* ============================================
          HERO — mobile scroll scrubbing
          Video: full-width bg.  Text: absolutely anchored.
@@ -1963,11 +1957,12 @@
         position: relative;
         z-index: 3;
       }
-      /* Content overlaps slightly onto photo bottom */
+      /* Content: 20px side padding */
       .mentor-content {
-        padding-top: 28px;
-        padding-bottom: 56px;
-        /* padding-left/right set via inline style on HTML element */
+        padding-top: 28px !important;
+        padding-bottom: 56px !important;
+        padding-left: 20px !important;
+        padding-right: 20px !important;
         order: unset !important;
         background: #0a0a0a;
       }
@@ -2398,23 +2393,23 @@
     <div class="mentor-photo-mask"></div>
 
     <div class="mentor-inner">
-      <div class="mentor-content" style="padding-left:20px;padding-right:20px;box-sizing:border-box;">
-        <p class="mentor-eyebrow reveal" style="margin-left:0;margin-right:0;">Marcel Rulli &mdash; quem está por trás do desafio</p>
-        <h2 class="reveal" style="margin-left:0;margin-right:0;">Mais de <strong>15 anos</strong><br>transformando a advocacia</h2>
-        <div class="mentor-title-rule reveal" style="margin-left:0;"></div>
+      <div class="mentor-content">
+        <p class="mentor-eyebrow reveal">Marcel Rulli &mdash; quem está por trás do desafio</p>
+        <h2 class="reveal">Mais de <strong>15 anos</strong><br>transformando a advocacia</h2>
+        <div class="mentor-title-rule reveal"></div>
 
-        <p class="bio-text reveal" style="margin-left:0;margin-right:0;">
+        <p class="bio-text reveal">
           Especialista em Regularização Imobiliária, Marcel criou um método próprio para
           identificar, avaliar e executar processos de Usucapião com velocidade cirúrgica
           &mdash; sem depender de peças genéricas que custam ao cliente meses desnecessários.
         </p>
-        <p class="bio-text reveal" style="margin-left:0;margin-right:0;">
+        <p class="bio-text reveal">
           Já ajudou centenas de advogados a dominar este nicho e faturar de forma
           consistente com regularização fundiaria &mdash; em um mercado bilionário que
           <strong style="color:var(--primary);font-weight:600">99% dos advogados ignora</strong>.
         </p>
 
-        <div class="mentor-stats reveal" style="margin-left:0;margin-right:0;">
+        <div class="mentor-stats reveal">
           <div class="mentor-stat">
             <span class="stat-num"><strong>30k</strong></span>
             <span class="stat-label">por processo honorários reais</span>
