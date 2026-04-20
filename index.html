@@ -1646,20 +1646,18 @@
           ) !important;
         z-index: 2 !important;
       }
-      /* Text: 20px from screen edges via position offsets (most reliable for abs. positioned) */
+      /* Text: 20px from screen edges — handled by inline style on the HTML element */
       #hero .hero-inner {
         position: absolute !important;
         bottom: 0 !important;
-        left: 20px !important;     /* offset from screen edge — not padding */
-        right: 20px !important;    /* offset from screen edge — not padding */
+        left: 0 !important;
+        right: 0 !important;
         top: auto !important;
-        width: auto !important;
+        width: 100% !important;
         max-width: none !important;
         margin: 0 !important;
         padding-top: 40px !important;
         padding-bottom: 48px !important;
-        padding-left: 0 !important;
-        padding-right: 0 !important;
         box-sizing: border-box !important;
         min-height: unset !important;
         z-index: 3 !important;
@@ -2123,7 +2121,7 @@
         <source src="hero-scroll.mp4" type="video/mp4">
       </video>
       <div class="hero-video-overlay"></div>
-      <div class="hero-inner">
+      <div class="hero-inner" style="padding-left:20px;padding-right:20px;">
       <div class="hero-content">
         <div class="hero-brand reveal">DESAFIO USUCAPI&Atilde;O</div>
         <div class="hero-date reveal">04 a 07 de Maio &nbsp;&middot;&nbsp; 20h &nbsp;&middot;&nbsp; Ao Vivo no Zoom</div>
