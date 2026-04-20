@@ -1646,18 +1646,21 @@
           ) !important;
         z-index: 2 !important;
       }
-      /* Text: absolutely pinned to bottom, explicit 20px side padding */
+      /* Text: 20px from screen edges via position offsets (most reliable for abs. positioned) */
       #hero .hero-inner {
         position: absolute !important;
         bottom: 0 !important;
-        left: 0 !important;
-        right: 0 !important;
-        box-sizing: border-box !important;
+        left: 20px !important;     /* offset from screen edge — not padding */
+        right: 20px !important;    /* offset from screen edge — not padding */
+        top: auto !important;
+        width: auto !important;
+        max-width: none !important;
+        margin: 0 !important;
         padding-top: 40px !important;
         padding-bottom: 48px !important;
-        padding-left: 20px !important;
-        padding-right: 20px !important;
-        width: 100% !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        box-sizing: border-box !important;
         min-height: unset !important;
         z-index: 3 !important;
         background: linear-gradient(
