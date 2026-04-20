@@ -1598,10 +1598,10 @@
         text-align: left !important;
       }
 
-      /* MOBILE VIEWPORT CLAMP — nothing can overflow */
+      /* MOBILE VIEWPORT CLAMP — nothing can overflow (clip not supported on old iOS) */
       html, body {
         max-width: 100vw !important;
-        overflow-x: clip !important;
+        overflow-x: hidden !important;
       }
 
       /* ============================================
@@ -1778,7 +1778,7 @@
       .ticker-belt {
         height: 44px;
         max-width: 100vw !important;
-        overflow: clip !important;
+        overflow: hidden !important;
       }
       .ticker-item {
         font-size: 0.6rem;
