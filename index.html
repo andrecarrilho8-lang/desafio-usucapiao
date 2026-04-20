@@ -397,6 +397,7 @@
     .ticker-belt {
       position: relative;
       width: 100%;
+      max-width: 100vw;
       background: linear-gradient(135deg, #b8860b 0%, #e9c349 30%, #f5d76e 50%, #e9c349 70%, #b8860b 100%);
       overflow: hidden;
       height: 56px;
@@ -1660,7 +1661,7 @@
         width: 100% !important;
         max-width: none !important;
         margin: 0 !important;
-        padding: 0 20px 48px !important;
+        padding: 0 0 48px !important;
         box-sizing: border-box !important;
         min-height: unset !important;
         z-index: 3 !important;
@@ -1676,6 +1677,11 @@
       #hero .hero-content {
         max-width: 100% !important;
         width: 100% !important;
+      }
+      /* FORCE 20px margin on EVERY child element inside hero */
+      #hero .hero-content > * {
+        margin-left: 20px !important;
+        margin-right: 20px !important;
       }
 
       .hero-brand {
