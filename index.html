@@ -2538,7 +2538,8 @@
             <div class="day-label-wrap">
               <span class="day-meta">DIA 01 &mdash; 04/05 &agrave;s 20h</span>
             </div>
-            <h3 class="day-title" data-text="O mercado de ouro da advocacia"></h3>
+            <h3 class="day-title" data-text="O mercado de ouro
+da advocacia"></h3>
             <p>Os dados n&atilde;o mentem: <strong>30 milh&otilde;es de im&oacute;veis irregulares</strong> representam um mercado de <mark style="background:var(--gold);color:#1a0a00;font-weight:700;padding:1px 5px;border-radius:2px;">R$ 300 BILH&Otilde;ES em honor&aacute;rios potenciais</mark>. Descubra por que este nicho permite honor&aacute;rios <strong>muito acima da m&eacute;dia</strong> e como se posicionar como <strong>autoridade IMEDIATAMENTE</strong>. Domine o M&eacute;todo 33 &mdash; o sistema que elimina erros e garante resultados previs&iacute;veis em cada caso.</p>
           </div>
           <!-- Dia 02 -->
@@ -2556,7 +2557,8 @@
             <div class="day-label-wrap">
               <span class="day-meta">DIA 03 &mdash; 06/05 &agrave;s 20h</span>
             </div>
-            <h3 class="day-title" data-text="Sistema de faturamento constante"></h3>
+            <h3 class="day-title" data-text="Sistema de faturamento
+constante"></h3>
             <p>Estruture seu escrit&oacute;rio para atender em <mark style="background:var(--gold);color:#1a0a00;font-weight:700;padding:1px 5px;border-radius:2px;">ESCALA sem comprometer qualidade</mark> ou seu tempo. Ferramentas de automa&ccedil;&atilde;o, <strong>contratos blindados</strong> e estrat&eacute;gias para transformar clientes em divulgadores. Saia com um <strong>plano de a&ccedil;&atilde;o para implementar IMEDIATAMENTE</strong>.</p>
           </div>
           <!-- Dia 04 -->
@@ -3125,7 +3127,12 @@
         h3.appendChild(cursor);
         const tick = () => {
           if (i < text.length) {
-            h3.insertBefore(document.createTextNode(text[i++]), cursor);
+            if (text[i] === '\n') {
+              h3.insertBefore(document.createElement('br'), cursor);
+            } else {
+              h3.insertBefore(document.createTextNode(text[i]), cursor);
+            }
+            i++;
             setTimeout(tick, 38);
           }
           // cursor stays and keeps blinking
