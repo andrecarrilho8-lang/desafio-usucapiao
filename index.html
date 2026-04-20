@@ -31,22 +31,17 @@
     /* =============================================
        RESET & BASE
     ============================================= */
-    *, *::before, *::after { box-sizing: border-box; }
-    html, body {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      min-height: 100%;
-      overflow-x: hidden;
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
       background: var(--bg);
       color: var(--primary);
       font-family: var(--font-body);
       font-weight: 300;
       font-size: 1.05rem;
       line-height: 1.85;
-      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
     }
-    html { scroll-behavior: smooth; }
     img { display: block; max-width: 100%; }
     a { color: inherit; text-decoration: none; }
 
@@ -397,7 +392,6 @@
     .ticker-belt {
       position: relative;
       width: 100%;
-      max-width: 100vw;
       background: linear-gradient(135deg, #b8860b 0%, #e9c349 30%, #f5d76e 50%, #e9c349 70%, #b8860b 100%);
       overflow: hidden;
       height: 56px;
@@ -1516,8 +1510,7 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 100vw;
-      max-width: 500px;
+      width: 500px;
       height: 500px;
       background: radial-gradient(circle, rgba(233,195,73,.06) 0%, transparent 70%);
       pointer-events: none;
@@ -1603,6 +1596,12 @@
       #for-you, #final-cta,
       #investment .inv-wrap {
         text-align: left !important;
+      }
+
+      /* MOBILE VIEWPORT CLAMP — nothing can overflow */
+      html, body {
+        max-width: 100vw !important;
+        overflow-x: clip !important;
       }
 
       /* ============================================
@@ -1774,7 +1773,11 @@
       /* ============================================
          TICKER BELT — font smaller on mobile
       ============================================ */
-      .ticker-belt { height: 44px; }
+      .ticker-belt {
+        height: 44px;
+        max-width: 100vw !important;
+        overflow: clip !important;
+      }
       .ticker-item {
         font-size: 0.6rem;
         padding: 0 24px;
