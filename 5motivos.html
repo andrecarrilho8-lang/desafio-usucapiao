@@ -156,10 +156,6 @@
       opacity: 1;
       pointer-events: none;
     }
-    /* iOS Safari bug: transform/backdrop-filter elements can capture
-       touches even when parent has pointer-events:none. Force none on
-       ALL slide children; only btn-gold is re-enabled below. */
-    .slide * { pointer-events: none !important; }
     .slide > * { position: relative; z-index: 5; }
 
     /* ─── TYPOGRAPHY ─────────────────────────────── */
@@ -606,11 +602,14 @@
       position: fixed;
       top: 0; bottom: 0;
       width: 50%;
-      z-index: 50;
+      z-index: 9999;
       cursor: pointer;
       -webkit-tap-highlight-color: transparent;
       touch-action: none;
+      user-select: none;
+      -webkit-user-select: none;
     }
+    #nav-prev { left: 0; }
     #nav-prev { left: 0; }
     #nav-next { right: 0; }
 
@@ -619,7 +618,7 @@
       position: fixed;
       bottom: max(18px, env(safe-area-inset-bottom, 18px));
       right: 16px;
-      z-index: 60;
+      z-index: 10000;
       font-size: 0.64rem;
       font-weight: 600;
       color: rgba(255,255,255,0.32);
@@ -633,7 +632,7 @@
       bottom: max(18px, env(safe-area-inset-bottom, 18px));
       left: 50%;
       transform: translateX(-50%);
-      z-index: 60;
+      z-index: 10000;
       display: flex;
       align-items: center;
       gap: 5px;
@@ -647,8 +646,9 @@
     }
     #swipe-hint.hidden { opacity: 0; }
 
-    /* ─── CTA BUTTON in nav zones needs pointer-events ─ */
-    .btn-gold { pointer-events: auto !important; position: relative; z-index: 60; }
+    /* ─── PROGRESS TRACK above nav zones ─────────── */
+    #progress-track { z-index: 10000; }
+
   </style>
 </head>
 <body>
@@ -1016,7 +1016,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     isHolding = false;
   }
 
-  // ── Press CANCEL (finger lifted off screen, etc.) ────
+  // ── Press CANCEL ──────────────────────────────────────
   function onPressCancel() {
     clearTimeout(holdTimer);
     if (isHolding) resumeStory();
@@ -1024,39 +1024,57 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     pressTarget = null;
   }
 
-  // ── UNIFIED touch input (document-level = zero gaps) ──
-  // Direction decided at RELEASE time from X position, not at press start.
-  // This means ANY touch anywhere on screen triggers hold detection.
-
-  function isCTA(target) {
-    return ctaBtn && (target === ctaBtn || ctaBtn.contains(target));
+  // ── CTA button area detection (bounding rect) ─────────
+  function onCtaArea(x, y) {
+    if (current !== TOTAL - 1) return false;
+    const r = ctaBtn.getBoundingClientRect();
+    return x >= r.left && x <= r.right && y >= r.top && y <= r.bottom;
   }
 
-  // Touch (mobile)
-  document.addEventListener('touchstart', e => {
-    if (isCTA(e.target)) return;           // let CTA button work normally
-    // Determine direction from initial X (updated at release for swipe accuracy)
-    const side = e.touches[0].clientX < window.innerWidth / 2 ? 'prev' : 'next';
-    onPressStart(side, e.touches[0].clientX, e.touches[0].clientY);
-  }, { passive: true });
+  // ── Nav zone touch handlers ───────────────────────────
+  // Using non-passive so we can preventDefault (blocks ghost clicks,
+  // text selection, long-press context menu on iOS/Android).
+  function handleNavTouchStart(side, e) {
+    e.preventDefault();
+    const t = e.touches[0];
+    if (onCtaArea(t.clientX, t.clientY)) {
+      pressTarget = 'cta'; // forward to programmatic click on touchend
+      return;
+    }
+    onPressStart(side, t.clientX, t.clientY);
+  }
+
+  navNext.addEventListener('touchstart', e => handleNavTouchStart('next', e), { passive: false });
+  navPrev.addEventListener('touchstart', e => handleNavTouchStart('prev', e), { passive: false });
 
   document.addEventListener('touchend', e => {
+    const t = e.changedTouches[0];
+    if (pressTarget === 'cta') {
+      if (onCtaArea(t.clientX, t.clientY)) ctaBtn.click();
+      pressTarget = null;
+      return;
+    }
     if (!pressTarget) return;
-    if (isCTA(e.target)) { onPressCancel(); return; }
-    onPressEnd(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
+    onPressEnd(t.clientX, t.clientY);
   }, { passive: true });
 
   document.addEventListener('touchcancel', onPressCancel, { passive: true });
 
-  // Mouse (desktop testing)
-  document.addEventListener('mousedown', e => {
-    if (isCTA(e.target)) return;
-    const side = e.clientX < window.innerWidth / 2 ? 'prev' : 'next';
-    onPressStart(side, e.clientX, e.clientY);
+  // ── Mouse events (desktop) ────────────────────────────
+  navNext.addEventListener('mousedown', e => {
+    if (onCtaArea(e.clientX, e.clientY)) { pressTarget = 'cta'; return; }
+    onPressStart('next', e.clientX, e.clientY);
+  });
+  navPrev.addEventListener('mousedown', e => {
+    onPressStart('prev', e.clientX, e.clientY);
   });
   document.addEventListener('mouseup', e => {
+    if (pressTarget === 'cta') {
+      if (onCtaArea(e.clientX, e.clientY)) ctaBtn.click();
+      pressTarget = null;
+      return;
+    }
     if (!pressTarget) return;
-    if (isCTA(e.target)) { onPressCancel(); return; }
     onPressEnd(e.clientX, e.clientY);
   });
   document.addEventListener('mouseleave', onPressCancel);
