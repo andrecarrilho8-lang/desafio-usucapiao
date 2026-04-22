@@ -363,18 +363,17 @@
 
     /* ─── CTA SLIDE ───────────────────────────────── */
     #slide-7 {
-      justify-content: space-between;
-      padding-top: max(54px, env(safe-area-inset-top, 54px));
-      padding-bottom: max(28px, env(safe-area-inset-bottom, 28px));
+      justify-content: center;
+      padding-top: max(48px, env(safe-area-inset-top, 48px));
+      padding-bottom: max(24px, env(safe-area-inset-bottom, 24px));
     }
     .cta-wrap {
       width: 100%;
       max-width: 420px;
       display: flex;
       flex-direction: column;
-      gap: 0;
-      flex: 1;
-      justify-content: space-between;
+      gap: 18px;
+      flex: none;
     }
     .cta-header { text-align: center; }
     .cta-title {
@@ -1005,7 +1004,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         r:     0.8 + Math.random() * 2.2,        // 0.8–3px radius
         speed: 0.35 + Math.random() * 0.65,       // px per frame
         drift: (Math.random() - 0.5) * 0.4,       // gentle horizontal drift
-        alpha: 0.15 + Math.random() * 0.35,       // max opacity
+        alpha: 0.30 + Math.random() * 0.45,       // max opacity (was 0.15-0.50)
         life:  0,                                  // 0..1 travel progress
         // Gold-to-white hue
         hue:   Math.random() < 0.6
