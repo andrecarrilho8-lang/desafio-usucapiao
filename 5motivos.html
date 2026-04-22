@@ -906,8 +906,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     // Trigger hero animation when returning to slide 0
     if (current === 0) triggerHeroAnim();
 
-    // On last slide hide navNext so CTA button gets real native taps
-    navNext.style.pointerEvents = (current === TOTAL - 1) ? 'none' : '';
+    // On last slide: hide navNext so CTA button gets real native touches
+    const onLast = current === TOTAL - 1;
+    navNext.style.pointerEvents = onLast ? 'none' : '';
+    ctaBtn.style.pointerEvents  = onLast ? 'auto' : ''; // re-enable through slide's pointer-events:none
 
     counter.textContent = `${current + 1} / ${TOTAL}`;
     remainingMs = AUTO_MS;
