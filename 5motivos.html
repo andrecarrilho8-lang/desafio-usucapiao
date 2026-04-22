@@ -653,35 +653,46 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </div><!-- /story -->
 
 <script>
-  // ── Mobile vh fix ──────────────────────────────────────
+  // ── Mobile vh fix ─────────────────────────────────────
   function setVh() {
     document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
   }
   setVh();
   window.addEventListener('resize', setVh, { passive: true });
 
-  // ── Constants ──────────────────────────────────────────
+  // ── Constants ─────────────────────────────────────────
   const TOTAL   = 8;
   const AUTO_MS = 5500;
+  const HOLD_MS = 180; // ms threshold: short=tap, long=hold
 
-  // ── Elements ───────────────────────────────────────────
-  const slides   = Array.from(document.querySelectorAll('.slide'));
-  const track    = document.getElementById('progress-track');
-  const counter  = document.getElementById('slide-counter');
-  const hint     = document.getElementById('swipe-hint');
-  const navPrev  = document.getElementById('nav-prev');
-  const navNext  = document.getElementById('nav-next');
-  const ctaBtn   = document.getElementById('cta-btn');
+  // ── Elements ──────────────────────────────────────────
+  const slides  = Array.from(document.querySelectorAll('.slide'));
+  const track   = document.getElementById('progress-track');
+  const counter = document.getElementById('slide-counter');
+  const hint    = document.getElementById('swipe-hint');
+  const navPrev = document.getElementById('nav-prev');
+  const navNext = document.getElementById('nav-next');
+  const ctaBtn  = document.getElementById('cta-btn');
 
-  let current   = 0;
-  let timer     = null;
-  let hintTimer = null;
-  let hintHid   = false;
-  let locked    = false; // prevent double-fire during transition
+  let current     = 0;
+  let timer       = null;
+  let locked      = false;
+  let hintHid     = false;
+  let hintTimer   = null;
 
-  // ── Build progress segments ────────────────────────────
+  // ── Hold-to-pause state ───────────────────────────────
+  let isPaused    = false;
+  let remainingMs = AUTO_MS;
+  let pausedPct   = 0;
+  let holdTimer   = null;
+  let isHolding   = false;
+  let pressTarget = null; // 'prev' | 'next'
+  let pressStartX = 0;
+  let pressStartY = 0;
+
+  // ── Build progress segments ───────────────────────────
   const segs = Array.from({ length: TOTAL }, () => {
-    const seg  = document.createElement('div');
+    const seg = document.createElement('div');
     seg.className = 'prog-seg';
     const fill = document.createElement('div');
     fill.className = 'fill';
@@ -690,102 +701,187 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     return seg;
   });
 
-  // ── Update progress bars (clean reset then animate) ────
-  function updateBars() {
-    const raf = requestAnimationFrame(() => {
+  // ── Update bars: hard-reset then animate current ──────
+  function updateBars(durationMs) {
+    const ms = durationMs != null ? durationMs : AUTO_MS;
+    requestAnimationFrame(() => {
       segs.forEach((s, i) => {
         const f = s.querySelector('.fill');
-        // 1. Kill any running transition immediately
         f.style.transition = 'none';
-        if (i < current) {
-          f.style.width = '100%';
-        } else {
-          f.style.width = '0%';
-        }
+        f.style.width = i < current ? '100%' : '0%';
       });
-      // 2. Force reflow so browsers flush the above
+      // Force reflow before re-enabling transition
       segs[current].querySelector('.fill').getBoundingClientRect();
-      // 3. Now start the animated fill only for current
       requestAnimationFrame(() => {
         const f = segs[current].querySelector('.fill');
-        f.style.transition = `width ${AUTO_MS}ms linear`;
+        f.style.transition = `width ${ms}ms linear`;
         f.style.width = '100%';
       });
     });
   }
 
-  // ── Auto-advance timer ─────────────────────────────────
-  function startTimer() {
+  // ── Timer ─────────────────────────────────────────────
+  function startTimer(ms) {
     clearTimeout(timer);
-    timer = setTimeout(() => goTo(current + 1), AUTO_MS);
+    const t = ms != null ? ms : AUTO_MS;
+    if (current < TOTAL - 1) timer = setTimeout(() => goTo(current + 1), t);
   }
   function stopTimer() { clearTimeout(timer); }
 
-  // ── Navigate ───────────────────────────────────────────
+  // ── Navigate ──────────────────────────────────────────
   function goTo(idx, skipLock) {
     if (locked && !skipLock) return;
+    if (isPaused) { isPaused = false; }
     if (idx < 0)      idx = 0;
     if (idx >= TOTAL) { stopTimer(); return; }
 
     locked = true;
     setTimeout(() => { locked = false; }, 220);
 
-    // Deactivate current
     slides[current].classList.remove('active');
     current = idx;
     slides[current].classList.add('active');
 
     counter.textContent = `${current + 1} / ${TOTAL}`;
+    remainingMs = AUTO_MS;
+    pausedPct   = 0;
     stopTimer();
-    updateBars();
-    // Don't auto-advance on CTA slide (last)
-    if (current < TOTAL - 1) startTimer();
+    updateBars(AUTO_MS);
+    startTimer(AUTO_MS);
   }
 
-  // ── Hide hint ──────────────────────────────────────────
+  // ── PAUSE (hold) ──────────────────────────────────────
+  function pauseStory() {
+    if (isPaused || current >= TOTAL - 1) return;
+    isPaused = true;
+    stopTimer();
+
+    const seg  = segs[current];
+    const fill = seg.querySelector('.fill');
+    // Read the live computed width (mid-transition)
+    const segW  = seg.offsetWidth || 1;
+    const fillW = fill.offsetWidth;
+    pausedPct   = Math.min(100, (fillW / segW) * 100);
+    remainingMs = AUTO_MS * (1 - pausedPct / 100);
+
+    // Freeze bar at current position
+    fill.style.transition = 'none';
+    fill.style.width = `${pausedPct}%`;
+  }
+
+  // ── RESUME (release after hold) ───────────────────────
+  function resumeStory() {
+    if (!isPaused) return;
+    isPaused = false;
+    const fill = segs[current].querySelector('.fill');
+    requestAnimationFrame(() => {
+      fill.style.transition = `width ${remainingMs}ms linear`;
+      fill.style.width = '100%';
+      startTimer(remainingMs);
+    });
+  }
+
+  // ── Hide hint ─────────────────────────────────────────
   function hideHint() {
     if (hintHid) return;
     hintHid = true;
     clearTimeout(hintTimer);
-    hintTimer = setTimeout(() => hint.classList.add('hidden'), 600);
+    hintTimer = setTimeout(() => hint.classList.add('hidden'), 500);
   }
 
-  // ── Tap navigation ─────────────────────────────────────
-  navNext.addEventListener('click', e => {
-    if (e.target === ctaBtn || ctaBtn.contains(e.target)) return;
-    hideHint();
-    goTo(current + 1);
-  });
-  navPrev.addEventListener('click', () => {
-    hideHint();
-    goTo(current - 1);
-  });
+  // ── Press START ───────────────────────────────────────
+  function onPressStart(side, x, y) {
+    pressTarget = side;
+    pressStartX = x;
+    pressStartY = y;
+    isHolding   = false;
+    clearTimeout(holdTimer);
+    holdTimer = setTimeout(() => {
+      isHolding = true;
+      pauseStory();
+    }, HOLD_MS);
+  }
 
-  // ── Keyboard ───────────────────────────────────────────
+  // ── Press END ─────────────────────────────────────────
+  function onPressEnd(x, y) {
+    clearTimeout(holdTimer);
+    const dx = x - pressStartX;
+    const dy = y - pressStartY;
+    const side = pressTarget;
+    pressTarget = null;
+
+    // Horizontal swipe overrides tap/hold
+    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 42) {
+      if (isPaused) resumeStory();
+      hideHint();
+      dx < 0 ? goTo(current + 1) : goTo(current - 1);
+      return;
+    }
+
+    if (isHolding) {
+      resumeStory();
+    } else {
+      hideHint();
+      if (side === 'next') goTo(current + 1);
+      else                  goTo(current - 1);
+    }
+    isHolding = false;
+  }
+
+  // ── Press CANCEL (finger lifted off screen, etc.) ────
+  function onPressCancel() {
+    clearTimeout(holdTimer);
+    if (isHolding) resumeStory();
+    isHolding = false;
+    pressTarget = null;
+  }
+
+  // ── Touch events (mobile) ─────────────────────────────
+  navNext.addEventListener('touchstart', e => {
+    if (ctaBtn.contains(e.target)) return;
+    e.preventDefault(); // avoid ghost click
+    onPressStart('next', e.touches[0].clientX, e.touches[0].clientY);
+  }, { passive: false });
+
+  navPrev.addEventListener('touchstart', e => {
+    e.preventDefault();
+    onPressStart('prev', e.touches[0].clientX, e.touches[0].clientY);
+  }, { passive: false });
+
+  document.addEventListener('touchend', e => {
+    if (!pressTarget) return;
+    if (ctaBtn.contains(e.target)) { onPressCancel(); return; }
+    onPressEnd(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
+  }, { passive: true });
+
+  document.addEventListener('touchcancel', onPressCancel, { passive: true });
+
+  // ── Mouse events (desktop testing) ───────────────────
+  navNext.addEventListener('mousedown', e => {
+    if (ctaBtn.contains(e.target)) return;
+    onPressStart('next', e.clientX, e.clientY);
+  });
+  navPrev.addEventListener('mousedown', e => {
+    onPressStart('prev', e.clientX, e.clientY);
+  });
+  document.addEventListener('mouseup', e => {
+    if (!pressTarget) return;
+    if (ctaBtn.contains(e.target)) { onPressCancel(); return; }
+    onPressEnd(e.clientX, e.clientY);
+  });
+  document.addEventListener('mouseleave', onPressCancel);
+
+  // ── Keyboard ─────────────────────────────────────────
   document.addEventListener('keydown', e => {
     if (e.key === 'ArrowRight' || e.key === ' ') { hideHint(); goTo(current + 1); }
     if (e.key === 'ArrowLeft')                   { hideHint(); goTo(current - 1); }
+    if (e.key === 'p' || e.key === 'P')          { isPaused ? resumeStory() : pauseStory(); }
   });
 
-  // ── Swipe ──────────────────────────────────────────────
-  let tsx = 0, tsy = 0;
-  document.addEventListener('touchstart', e => {
-    tsx = e.touches[0].clientX;
-    tsy = e.touches[0].clientY;
-  }, { passive: true });
-  document.addEventListener('touchend', e => {
-    const dx = e.changedTouches[0].clientX - tsx;
-    const dy = e.changedTouches[0].clientY - tsy;
-    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 45) {
-      hideHint();
-      dx < 0 ? goTo(current + 1) : goTo(current - 1);
-    }
-  }, { passive: true });
-
-  // ── Init ───────────────────────────────────────────────
-  // CTA button should work through the nav-next zone
+  // ── CTA button: don't let nav-next intercept it ──────
   ctaBtn.addEventListener('click', e => e.stopPropagation());
 
+  // ── Init ─────────────────────────────────────────────
   goTo(0, true);
 </script>
 </body>
