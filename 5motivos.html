@@ -93,14 +93,6 @@
       pointer-events: none;
     }
 
-    /* ─── PARTICLE CANVAS ─────────────────────────── */
-    #particles {
-      position: fixed;
-      inset: 0;
-      width: 100%; height: 100%;
-      z-index: 4;
-      pointer-events: none;
-    }
 
     /* ─── STORY CONTAINER ─────────────────────────── */
     #story {
@@ -361,6 +353,66 @@
     }
     .hero-avatar img { width: 100%; height: 100%; object-fit: cover; }
 
+    /* ─── HERO SLIDE 0 (redesign) ──────────────────── */
+    #slide-0 { justify-content: center; gap: 10px; }
+
+    .hero-big-num {
+      font-size: clamp(7rem, 38vw, 12rem);
+      font-weight: 900;
+      color: var(--gold);
+      line-height: 0.85;
+      letter-spacing: -0.06em;
+      display: block;
+      text-shadow: 0 0 40px rgba(233,195,73,0.65), 0 0 80px rgba(233,195,73,0.3);
+      animation: numPulse 2s ease-in-out infinite;
+    }
+    @keyframes numPulse {
+      0%,100% { text-shadow: 0 0 40px rgba(233,195,73,0.65), 0 0 80px rgba(233,195,73,0.28); }
+      50%      { text-shadow: 0 0 60px rgba(233,195,73,0.90), 0 0 120px rgba(233,195,73,0.45); }
+    }
+
+    .hero-hl-wrap {
+      max-width: 360px;
+      text-align: center;
+    }
+    .hl-line {
+      display: block;
+      font-size: clamp(1.45rem, 6.2vw, 2.1rem);
+      font-weight: 800;
+      color: var(--white);
+      line-height: 1.2;
+      letter-spacing: -0.025em;
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity 0.42s cubic-bezier(0.22,1,0.36,1),
+                  transform 0.42s cubic-bezier(0.22,1,0.36,1);
+    }
+    .hl-line em { font-style: normal; color: var(--gold); }
+    .hl-line.vis { opacity: 1; transform: translateY(0); }
+
+    .hero-footer {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      justify-content: center;
+      margin-top: 6px;
+    }
+    .hero-avatar-sm {
+      width: 30px; height: 30px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(233,195,73,0.45);
+      overflow: hidden;
+      flex-shrink: 0;
+      box-shadow: 0 0 0 2px rgba(233,195,73,0.1);
+    }
+    .hero-avatar-sm img { width:100%; height:100%; object-fit:cover; }
+    .hero-brand {
+      font-size: 0.69rem;
+      color: rgba(255,255,255,0.45);
+      font-weight: 500;
+      letter-spacing: 0.06em;
+    }
+
     /* ─── CTA SLIDE ───────────────────────────────── */
     #slide-7 {
       justify-content: center;
@@ -608,7 +660,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <div id="top-fade"   aria-hidden="true"></div>
 <div id="bot-fade"   aria-hidden="true"></div>
 
-<canvas id="particles" aria-hidden="true"></canvas>
 <div id="story" role="main">
 
   <!-- Progress bars -->
@@ -619,13 +670,22 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <!-- SLIDE 0 — HERO -->
     <div class="slide active" id="slide-0" role="region" aria-label="Abertura">
-      <div class="hero-avatar">
-        <img src="marcel.webp" alt="Marcel Rulli" loading="eager" />
+      <div class="badge" style="margin-bottom:4px;">🎯 Exclusivo para Advogados</div>
+
+      <span id="hero-count" class="hero-big-num">5</span>
+
+      <div class="hero-hl-wrap">
+        <span class="hl-line">argumentos</span>
+        <span class="hl-line"><em>irrefutáveis</em> para você</span>
+        <span class="hl-line">não ficar de fora da área</span>
+        <span class="hl-line">com <em>40 milhões</em> de clientes</span>
+        <span class="hl-line">te esperando.</span>
       </div>
-      <p class="hero-brand">Marcel Rulli · Desafio Usucapião</p>
-      <h1 class="hero-head">A área com <em>40 milhões</em> de clientes esperando</h1>
-      <div class="hero-divider"></div>
-      <p class="hero-sub">Por que Regularização de Imóveis é a <strong style="color:#fff;">melhor decisão de carreira</strong> que você pode tomar hoje</p>
+
+      <div class="hero-footer">
+        <div class="hero-avatar-sm"><img src="marcel.webp" alt="Marcel Rulli" loading="eager"></div>
+        <span class="hero-brand">Marcel Rulli · Desafio Usucapião</span>
+      </div>
     </div>
 
     <!-- SLIDE 1 — ARG 1 -->
@@ -838,12 +898,39 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     current = idx;
     slides[current].classList.add('active');
 
+    // Trigger hero animation when returning to slide 0
+    if (current === 0) triggerHeroAnim();
+
     counter.textContent = `${current + 1} / ${TOTAL}`;
     remainingMs = AUTO_MS;
     pausedPct   = 0;
     stopTimer();
     updateBars(AUTO_MS);
     startTimer(AUTO_MS);
+  }
+
+  // ── Hero slide animation ───────────────────────────────
+  const heroCount = document.getElementById('hero-count');
+  const hlLines   = Array.from(document.querySelectorAll('.hl-line'));
+  let heroAnimTimer = null;
+
+  function triggerHeroAnim() {
+    clearTimeout(heroAnimTimer);
+    // Reset lines
+    hlLines.forEach(l => l.classList.remove('vis'));
+    // Count-up: 1 → 5 rapidly
+    const steps = [1, 2, 3, 4, 5];
+    steps.forEach((n, i) => {
+      heroAnimTimer = setTimeout(() => {
+        heroCount.textContent = n;
+        // After last count, reveal lines
+        if (i === steps.length - 1) {
+          hlLines.forEach((l, li) => {
+            setTimeout(() => l.classList.add('vis'), li * 130 + 80);
+          });
+        }
+      }, i * 90);
+    });
   }
 
   // ── PAUSE (hold) ──────────────────────────────────────
@@ -979,76 +1066,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   // ── Init ─────────────────────────────────────────────
   goTo(0, true);
-
-  // ── Particles ─────────────────────────────────────────
-  (function () {
-    const canvas = document.getElementById('particles');
-    const ctx    = canvas.getContext('2d');
-    const COUNT  = 42;
-
-    function resize() {
-      canvas.width  = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
-    resize();
-    window.addEventListener('resize', resize, { passive: true });
-
-    // Particle factory
-    function mkParticle(forceBottom) {
-      const h = canvas.height;
-      const w = canvas.width;
-      return {
-        x:     Math.random() * w,
-        // Start in the bottom 35% of the screen
-        y:     forceBottom ? h + Math.random() * 20 : h * 0.65 + Math.random() * h * 0.35,
-        r:     0.8 + Math.random() * 2.2,        // 0.8–3px radius
-        speed: 0.35 + Math.random() * 0.65,       // px per frame
-        drift: (Math.random() - 0.5) * 0.4,       // gentle horizontal drift
-        alpha: 0.30 + Math.random() * 0.45,       // max opacity (was 0.15-0.50)
-        life:  0,                                  // 0..1 travel progress
-        // Gold-to-white hue
-        hue:   Math.random() < 0.6
-               ? `rgba(233,195,73,`               // gold
-               : `rgba(255,245,210,`,             // warm white
-      };
-    }
-
-    const pool = Array.from({ length: COUNT }, () => mkParticle(false));
-
-    function draw() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      const travelH = canvas.height * 0.55; // total travel height
-
-      pool.forEach(p => {
-        // Move up
-        p.y     -= p.speed;
-        p.x     += p.drift;
-        p.life   = Math.max(0, 1 - (p.y / canvas.height));
-
-        // Fade: ramp in quickly, then fade out in top 30% of travel
-        const fadeIn  = Math.min(p.life * 5, 1);
-        const fadeOut = p.y < canvas.height * 0.35
-                        ? Math.max(0, p.y / (canvas.height * 0.35))
-                        : 1;
-        const a = p.alpha * fadeIn * fadeOut;
-
-        if (a > 0.01) {
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-          ctx.fillStyle = p.hue + a + ')';
-          ctx.fill();
-        }
-
-        // Reset when particle reaches top ~20% or drifts off screen
-        if (p.y < canvas.height * 0.18 || p.x < -10 || p.x > canvas.width + 10) {
-          Object.assign(p, mkParticle(true));
-        }
-      });
-
-      requestAnimationFrame(draw);
-    }
-    draw();
-  })();
+  triggerHeroAnim(); // run on first load
 </script>
 </body>
 </html>
