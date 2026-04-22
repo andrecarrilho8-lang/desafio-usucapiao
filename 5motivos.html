@@ -1024,40 +1024,43 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     pressTarget = null;
   }
 
-  // ── Touch events (mobile) ─────────────────────────────
-  navNext.addEventListener('touchstart', e => {
-    if (ctaBtn.contains(e.target)) return;
-    e.preventDefault(); // avoid ghost click
-    onPressStart('next', e.touches[0].clientX, e.touches[0].clientY);
-  }, { passive: false });
+  // ── UNIFIED touch input (document-level = zero gaps) ──
+  // Direction decided at RELEASE time from X position, not at press start.
+  // This means ANY touch anywhere on screen triggers hold detection.
 
-  navPrev.addEventListener('touchstart', e => {
-    e.preventDefault();
-    onPressStart('prev', e.touches[0].clientX, e.touches[0].clientY);
-  }, { passive: false });
+  function isCTA(target) {
+    return ctaBtn && (target === ctaBtn || ctaBtn.contains(target));
+  }
+
+  // Touch (mobile)
+  document.addEventListener('touchstart', e => {
+    if (isCTA(e.target)) return;           // let CTA button work normally
+    // Determine direction from initial X (updated at release for swipe accuracy)
+    const side = e.touches[0].clientX < window.innerWidth / 2 ? 'prev' : 'next';
+    onPressStart(side, e.touches[0].clientX, e.touches[0].clientY);
+  }, { passive: true });
 
   document.addEventListener('touchend', e => {
     if (!pressTarget) return;
-    if (ctaBtn.contains(e.target)) { onPressCancel(); return; }
+    if (isCTA(e.target)) { onPressCancel(); return; }
     onPressEnd(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
   }, { passive: true });
 
   document.addEventListener('touchcancel', onPressCancel, { passive: true });
 
-  // ── Mouse events (desktop testing) ───────────────────
-  navNext.addEventListener('mousedown', e => {
-    if (ctaBtn.contains(e.target)) return;
-    onPressStart('next', e.clientX, e.clientY);
-  });
-  navPrev.addEventListener('mousedown', e => {
-    onPressStart('prev', e.clientX, e.clientY);
+  // Mouse (desktop testing)
+  document.addEventListener('mousedown', e => {
+    if (isCTA(e.target)) return;
+    const side = e.clientX < window.innerWidth / 2 ? 'prev' : 'next';
+    onPressStart(side, e.clientX, e.clientY);
   });
   document.addEventListener('mouseup', e => {
     if (!pressTarget) return;
-    if (ctaBtn.contains(e.target)) { onPressCancel(); return; }
+    if (isCTA(e.target)) { onPressCancel(); return; }
     onPressEnd(e.clientX, e.clientY);
   });
   document.addEventListener('mouseleave', onPressCancel);
+
 
   // ── Keyboard ─────────────────────────────────────────
   document.addEventListener('keydown', e => {
