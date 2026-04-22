@@ -156,6 +156,10 @@
       opacity: 1;
       pointer-events: none;
     }
+    /* iOS Safari bug: transform/backdrop-filter elements can capture
+       touches even when parent has pointer-events:none. Force none on
+       ALL slide children; only btn-gold is re-enabled below. */
+    .slide * { pointer-events: none !important; }
     .slide > * { position: relative; z-index: 5; }
 
     /* ─── TYPOGRAPHY ─────────────────────────────── */
@@ -644,7 +648,7 @@
     #swipe-hint.hidden { opacity: 0; }
 
     /* ─── CTA BUTTON in nav zones needs pointer-events ─ */
-    .btn-gold { pointer-events: auto; position: relative; z-index: 60; }
+    .btn-gold { pointer-events: auto !important; position: relative; z-index: 60; }
   </style>
 </head>
 <body>
