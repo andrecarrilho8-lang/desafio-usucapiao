@@ -4,12 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>5 Motivos – Regularização de Imóveis | Marcel Rulli</title>
-  <meta name="description" content="A área do Direito com 40 milhões de clientes esperando. Descubra por que regularização de imóveis é a melhor decisão de carreira que você pode tomar hoje." />
+  <meta name="description" content="A área do Direito com 40 milhões de clientes esperando. Por que regularização de imóveis é a melhor decisão de carreira que você pode tomar hoje." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
   <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" /></noscript>
-
   <!-- Google Tag Manager -->
   <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
   new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -22,70 +21,120 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --gold: #E9C349;
-      --gold-dim: rgba(233,195,73,0.15);
-      --gold-glow: rgba(233,195,73,0.3);
-      --bg: #080808;
-      --glass: rgba(255,255,255,0.05);
-      --glass-border: rgba(255,255,255,0.09);
-      --white: #FFFFFF;
-      --muted: rgba(255,255,255,0.55);
-      --font: 'Inter', -apple-system, 'Helvetica Neue', sans-serif;
+      --gold:        #E9C349;
+      --gold-dark:   #c9a32a;
+      --gold-dim:    rgba(233,195,73,0.12);
+      --gold-glass:  rgba(233,195,73,0.18);
+      --glass:       rgba(255,255,255,0.06);
+      --glass-hi:    rgba(255,255,255,0.10);
+      --glass-b:     rgba(255,255,255,0.10);
+      --white:       #FFFFFF;
+      --muted:       rgba(255,255,255,0.52);
+      --font:        'Inter', -apple-system, 'Helvetica Neue', sans-serif;
+      /* Dynamic viewport height fix for iOS Safari */
+      --vh: 1vh;
     }
 
     html, body {
       width: 100%; height: 100%;
       overflow: hidden;
-      background: var(--bg);
+      background: #050505;
       font-family: var(--font);
       -webkit-font-smoothing: antialiased;
-      touch-action: none;
-      user-select: none;
+      -moz-osx-font-smoothing: grayscale;
     }
 
-    /* ─── CONTAINER ─────────────────────────────── */
+    /* ─── VIDEO BACKGROUND ────────────────────────── */
+    #bg-video {
+      position: fixed;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.45;
+      filter: blur(1px) saturate(0.6);
+    }
+    /* Layered overlays for depth */
+    #bg-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      background:
+        radial-gradient(ellipse 90% 60% at 50% 100%, rgba(233,195,73,0.07) 0%, transparent 60%),
+        radial-gradient(ellipse 120% 80% at 50% 0%, rgba(0,0,0,0.5) 0%, transparent 55%),
+        linear-gradient(to bottom, rgba(5,5,5,0.55) 0%, rgba(5,5,5,0.38) 50%, rgba(5,5,5,0.82) 100%);
+      pointer-events: none;
+    }
+    /* Cinematic vignette */
+    #vignette {
+      position: fixed;
+      inset: 0;
+      z-index: 2;
+      background: radial-gradient(ellipse 100% 100% at 50% 50%, transparent 40%, rgba(0,0,0,0.68) 100%);
+      pointer-events: none;
+    }
+    /* Top gradient for progress bar legibility */
+    #top-fade {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 80px;
+      z-index: 3;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.65) 0%, transparent 100%);
+      pointer-events: none;
+    }
+    /* Bottom gradient */
+    #bot-fade {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      height: 80px;
+      z-index: 3;
+      background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 100%);
+      pointer-events: none;
+    }
+
+    /* ─── STORY CONTAINER ─────────────────────────── */
     #story {
       position: fixed;
       inset: 0;
       display: flex;
       flex-direction: column;
+      z-index: 10;
     }
 
-    /* ─── PROGRESS BARS ──────────────────────────── */
+    /* ─── PROGRESS BARS ───────────────────────────── */
     #progress-track {
       position: relative;
       z-index: 30;
       display: flex;
-      gap: 4px;
-      padding: 14px 14px 0;
-      padding-top: max(14px, env(safe-area-inset-top));
+      gap: 5px;
+      padding: 16px 14px 0;
+      padding-top: max(16px, env(safe-area-inset-top, 16px));
+      flex-shrink: 0;
     }
-
     .prog-seg {
       flex: 1;
-      height: 2.5px;
+      height: 2px;
       border-radius: 2px;
-      background: rgba(255,255,255,0.22);
+      background: rgba(255,255,255,0.2);
       overflow: hidden;
     }
     .prog-seg .fill {
       height: 100%;
       width: 0%;
-      background: var(--white);
-      transition: width 0.12s linear;
+      background: #FFFFFF;
       border-radius: 2px;
+      will-change: width;
     }
-    .prog-seg.done .fill  { width: 100%; }
-    .prog-seg.active .fill { width: 0%; }
 
-    /* ─── SLIDES WRAPPER ─────────────────────────── */
+    /* ─── SLIDES WRAPPER ──────────────────────────── */
     #slides-wrap {
       flex: 1;
       position: relative;
       overflow: hidden;
     }
 
-    /* ─── SINGLE SLIDE ───────────────────────────── */
+    /* ─── SINGLE SLIDE ────────────────────────────── */
     .slide {
       position: absolute;
       inset: 0;
@@ -93,168 +142,124 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      padding: 32px 28px 40px;
-      padding-bottom: max(40px, env(safe-area-inset-bottom));
+      padding: 24px 20px;
+      padding-top: 10px;
+      padding-bottom: max(20px, env(safe-area-inset-bottom, 20px));
       opacity: 0;
-      transform: scale(1.03);
-      transition: opacity 0.38s cubic-bezier(0.4,0,0.2,1),
-                  transform 0.38s cubic-bezier(0.4,0,0.2,1);
+      transition: opacity 0.32s ease;
       pointer-events: none;
       text-align: center;
     }
     .slide.active {
       opacity: 1;
-      transform: scale(1);
-      pointer-events: auto;
+      pointer-events: none; /* nav zones handle input */
     }
-    .slide.out {
-      opacity: 0;
-      transform: scale(0.97);
-    }
+    .slide > * { position: relative; z-index: 5; }
 
-    /* ─── AMBIENT BG ──────────────────────────────── */
-    .slide::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      z-index: 0;
-      pointer-events: none;
-    }
-    /* Unique ambience per slide via --glow-color */
-    .slide { --glow-color: rgba(233,195,73,0.12); }
-    #slide-0::before { background: radial-gradient(ellipse 80% 60% at 50% 30%, rgba(233,195,73,0.14) 0%, transparent 70%), var(--bg); }
-    #slide-1::before { background: radial-gradient(ellipse 70% 50% at 30% 40%, rgba(80,160,255,0.08) 0%, transparent 65%), var(--bg); }
-    #slide-2::before { background: radial-gradient(ellipse 70% 50% at 70% 30%, rgba(233,195,73,0.10) 0%, transparent 65%), var(--bg); }
-    #slide-3::before { background: radial-gradient(ellipse 70% 50% at 40% 50%, rgba(160,80,255,0.09) 0%, transparent 65%), var(--bg); }
-    #slide-4::before { background: radial-gradient(ellipse 70% 50% at 60% 60%, rgba(80,200,120,0.08) 0%, transparent 65%), var(--bg); }
-    #slide-5::before { background: radial-gradient(ellipse 70% 50% at 35% 35%, rgba(233,195,73,0.10) 0%, transparent 65%), var(--bg); }
-    #slide-6::before { background: radial-gradient(ellipse 80% 80% at 50% 50%, rgba(233,195,73,0.18) 0%, transparent 70%), var(--bg); }
-    #slide-7::before { background: radial-gradient(ellipse 80% 70% at 50% 40%, rgba(233,195,73,0.2) 0%, transparent 70%),
-                       radial-gradient(ellipse 60% 40% at 80% 80%, rgba(255,120,0,0.07) 0%, transparent 60%), var(--bg); }
-
-    /* inner content stacking context */
-    .slide > * { position: relative; z-index: 2; }
-
-    /* ─── TYPOGRAPHY ──────────────────────────────── */
+    /* ─── TYPOGRAPHY ─────────────────────────────── */
     .eyebrow {
-      font-size: 0.65rem;
-      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 0.63rem;
+      font-weight: 800;
       letter-spacing: 0.22em;
       text-transform: uppercase;
       color: var(--gold);
-      margin-bottom: 18px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
+      margin-bottom: 12px;
     }
     .eyebrow::before, .eyebrow::after {
       content: '';
       display: block;
       height: 1px;
-      width: 28px;
+      width: 22px;
       background: var(--gold);
-      opacity: 0.5;
+      opacity: 0.45;
+      flex-shrink: 0;
     }
 
     .big-num {
-      font-size: clamp(5rem, 28vw, 9rem);
+      font-size: clamp(4.5rem, 26vw, 8rem);
       font-weight: 900;
-      line-height: 1;
+      line-height: 0.9;
       color: transparent;
-      -webkit-text-stroke: 1px rgba(233,195,73,0.22);
+      -webkit-text-stroke: 1px rgba(233,195,73,0.18);
       letter-spacing: -0.04em;
-      margin-bottom: -8px;
       pointer-events: none;
+      margin-bottom: -4px;
     }
 
     .slide-headline {
-      font-size: clamp(1.45rem, 6vw, 2.2rem);
+      font-size: clamp(1.35rem, 5.8vw, 2rem);
       font-weight: 800;
       line-height: 1.18;
       color: var(--white);
-      letter-spacing: -0.02em;
-      margin-bottom: 20px;
+      letter-spacing: -0.025em;
+      margin-bottom: 16px;
+      max-width: 360px;
     }
-    .slide-headline em {
-      font-style: normal;
-      color: var(--gold);
-    }
+    .slide-headline em { font-style: normal; color: var(--gold); }
 
-    .slide-sub {
-      font-size: clamp(0.88rem, 3.5vw, 1rem);
-      font-weight: 400;
-      line-height: 1.7;
-      color: var(--muted);
-      max-width: 340px;
-      margin: 0 auto 24px;
-    }
-
-    /* ─── GLASS CARD ────────────────────────────── */
-    .glass-card {
-      background: var(--glass);
-      border: 1px solid var(--glass-border);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      border-radius: 18px;
-      padding: 20px 22px;
-      width: 100%;
-      max-width: 380px;
-      text-align: left;
-    }
-
-    /* ─── BULLET LIST ───────────────────────────── */
+    /* ─── GLASS CARDS (bullet list) ──────────────── */
     .bullet-list {
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 9px;
       width: 100%;
-      max-width: 380px;
+      max-width: 390px;
     }
     .bullet-list li {
       display: flex;
       align-items: flex-start;
-      gap: 12px;
-      font-size: clamp(0.82rem, 3.2vw, 0.92rem);
+      gap: 11px;
+      font-size: clamp(0.78rem, 3.1vw, 0.88rem);
       font-weight: 400;
-      color: rgba(255,255,255,0.78);
-      line-height: 1.55;
-      background: var(--glass);
-      border: 1px solid var(--glass-border);
-      border-radius: 12px;
-      padding: 13px 15px;
+      color: rgba(255,255,255,0.80);
+      line-height: 1.5;
+      background: rgba(255,255,255,0.07);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.11);
+      border-radius: 14px;
+      padding: 12px 14px;
+      text-align: left;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.08);
     }
-    .bullet-list li .icon {
+    .bullet-list li .ico {
       flex-shrink: 0;
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
+      width: 26px;
+      height: 26px;
       background: var(--gold-dim);
+      border: 1px solid rgba(233,195,73,0.22);
+      border-radius: 8px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.7rem;
-      color: var(--gold);
-      margin-top: 1px;
+      font-size: 0.78rem;
+      margin-top: 0;
     }
-    .bullet-list li strong { color: var(--white); font-weight: 600; }
+    .bullet-list li strong { color: var(--white); font-weight: 700; }
     .bullet-list li .gold  { color: var(--gold);  font-weight: 700; }
 
-    /* ─── STAT BADGE ─────────────────────────────── */
+    /* ─── STAT BOXES ──────────────────────────────── */
     .stat-row {
       display: flex;
-      gap: 12px;
+      gap: 10px;
       width: 100%;
-      max-width: 380px;
-      margin-bottom: 14px;
+      max-width: 390px;
+      margin-bottom: 10px;
     }
     .stat-box {
       flex: 1;
-      background: var(--glass);
-      border: 1px solid var(--glass-border);
-      border-radius: 14px;
+      background: rgba(255,255,255,0.07);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 16px;
       padding: 14px 10px;
       text-align: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.10);
     }
     .stat-box .val {
       font-size: clamp(1.4rem, 6vw, 2rem);
@@ -265,122 +270,207 @@
       display: block;
     }
     .stat-box .lbl {
-      font-size: 0.68rem;
+      font-size: 0.66rem;
       color: var(--muted);
       margin-top: 5px;
       display: block;
-      line-height: 1.3;
+      line-height: 1.35;
     }
 
-    /* ─── BADGE ──────────────────────────────────── */
+    /* ─── BADGE ───────────────────────────────────── */
     .badge {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      background: var(--gold-dim);
-      border: 1px solid rgba(233,195,73,0.3);
+      background: rgba(233,195,73,0.1);
+      border: 1px solid rgba(233,195,73,0.28);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       border-radius: 100px;
       padding: 5px 14px;
-      font-size: 0.71rem;
-      font-weight: 700;
+      font-size: 0.69rem;
+      font-weight: 800;
       color: var(--gold);
-      letter-spacing: 0.1em;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      margin-bottom: 18px;
+      margin-bottom: 14px;
+      box-shadow: 0 0 20px rgba(233,195,73,0.15);
     }
 
+    /* ─── HERO SLIDE ──────────────────────────────── */
+    #slide-0 {
+      gap: 0;
+    }
+    .hero-brand {
+      font-size: 0.61rem;
+      font-weight: 700;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+      opacity: 0.85;
+    }
+    .hero-head {
+      font-size: clamp(1.65rem, 7.2vw, 2.6rem);
+      font-weight: 900;
+      line-height: 1.1;
+      color: var(--white);
+      letter-spacing: -0.03em;
+      margin-bottom: 6px;
+      max-width: 360px;
+      text-shadow: 0 2px 20px rgba(0,0,0,0.5);
+    }
+    .hero-head em { font-style: normal; color: var(--gold); }
+    .hero-divider {
+      width: 36px; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 16px auto;
+    }
+    .hero-sub {
+      font-size: clamp(0.8rem, 3.3vw, 0.93rem);
+      font-weight: 400;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 305px;
+      margin: 0 auto;
+    }
+    /* Glossy avatar ring */
+    .hero-avatar {
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+      border: 2px solid rgba(233,195,73,0.5);
+      overflow: hidden;
+      margin-bottom: 16px;
+      box-shadow: 0 0 0 4px rgba(233,195,73,0.08), 0 8px 32px rgba(0,0,0,0.5);
+      flex-shrink: 0;
+    }
+    .hero-avatar img { width: 100%; height: 100%; object-fit: cover; }
+
     /* ─── CTA SLIDE ───────────────────────────────── */
-    .cta-box {
-      background: rgba(233,195,73,0.06);
-      border: 1px solid rgba(233,195,73,0.25);
-      border-radius: 20px;
-      padding: 24px 22px;
+    #slide-7 { justify-content: flex-start; padding-top: 20px; }
+    .cta-wrap {
       width: 100%;
-      max-width: 380px;
-      text-align: left;
+      max-width: 390px;
+    }
+    .cta-title {
+      font-size: clamp(1.2rem, 5.2vw, 1.7rem);
+      font-weight: 900;
+      color: var(--white);
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      margin-bottom: 14px;
+    }
+    .cta-title em { color: var(--gold); font-style: normal; }
+    .cta-box {
+      background: rgba(15,12,4,0.65);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      border: 1px solid rgba(233,195,73,0.2);
+      border-radius: 20px;
+      padding: 20px 18px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.55), inset 0 1px 0 rgba(233,195,73,0.12);
     }
     .cta-detail {
       display: flex;
       align-items: center;
       gap: 10px;
-      font-size: 0.82rem;
-      color: rgba(255,255,255,0.75);
-      margin-bottom: 9px;
+      font-size: 0.80rem;
+      color: rgba(255,255,255,0.72);
+      margin-bottom: 8px;
       font-weight: 400;
     }
-    .cta-detail .ico { font-size: 1rem; flex-shrink: 0; }
+    .cta-detail .ico { font-size: 0.95rem; flex-shrink: 0; width: 20px; }
     .cta-price {
       text-align: center;
-      margin: 18px 0 20px;
+      margin: 14px 0 16px;
     }
     .cta-price .from {
-      font-size: 0.75rem;
+      font-size: 0.73rem;
       color: var(--muted);
       text-decoration: line-through;
     }
     .cta-price .val {
-      font-size: clamp(2rem, 9vw, 3rem);
+      font-size: clamp(1.9rem, 8vw, 2.8rem);
       font-weight: 900;
       color: var(--gold);
       line-height: 1;
       letter-spacing: -0.03em;
       display: block;
       margin-top: 2px;
+      text-shadow: 0 0 30px rgba(233,195,73,0.4);
     }
     .cta-price .period {
-      font-size: 0.72rem;
+      font-size: 0.68rem;
       color: var(--muted);
-      margin-top: 2px;
+      margin-top: 3px;
     }
-
     .btn-gold {
       display: block;
       width: 100%;
-      background: linear-gradient(135deg, #E9C349, #c9a32a);
+      background: linear-gradient(135deg, #E9C349 0%, #c9a32a 100%);
       color: #1a0a00;
       font-family: var(--font);
-      font-size: 0.82rem;
-      font-weight: 800;
+      font-size: 0.80rem;
+      font-weight: 900;
       letter-spacing: 0.12em;
       text-transform: uppercase;
       text-align: center;
       text-decoration: none;
-      padding: 17px 24px;
+      padding: 16px 20px;
       border-radius: 12px;
       border: none;
       cursor: pointer;
       position: relative;
       overflow: hidden;
-      box-shadow: 0 8px 32px rgba(233,195,73,0.35);
-      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 6px 28px rgba(233,195,73,0.4);
+      transition: transform 0.18s, box-shadow 0.18s;
+      -webkit-tap-highlight-color: transparent;
     }
-    .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(233,195,73,0.5); }
+    .btn-gold:active { transform: scale(0.97); }
     .btn-gold::after {
       content: '';
       position: absolute;
-      top: 0; left: -100%;
+      top: 0; left: -120%;
       width: 60%; height: 100%;
-      background: linear-gradient(105deg, transparent 20%, rgba(255,255,255,0.35) 50%, transparent 80%);
+      background: linear-gradient(105deg, transparent 20%, rgba(255,255,255,0.4) 50%, transparent 80%);
       transform: skewX(-15deg);
-      animation: shimmer 2.4s ease-in-out 1s infinite;
+      animation: shimmer 2.6s ease-in-out 0.8s infinite;
     }
-    @keyframes shimmer { 0%,100% { left:-100%; } 60% { left:160%; } }
-
+    @keyframes shimmer { 0%,100% { left:-120%; } 55% { left:160%; } }
     .secure {
-      font-size: 0.68rem;
+      font-size: 0.66rem;
       color: var(--muted);
       text-align: center;
-      margin-top: 12px;
+      margin-top: 10px;
     }
 
-    /* ─── NAVIGATION ZONES ────────────────────────── */
+    /* ─── BONUS SLIDE ─────────────────────────────── */
+    .bonus-glow {
+      font-size: 1.8rem;
+      margin-bottom: 6px;
+      filter: drop-shadow(0 0 12px rgba(233,195,73,0.6));
+    }
+
+    /* Source note */
+    .source-note {
+      font-size: 0.6rem;
+      color: rgba(255,255,255,0.2);
+      text-align: center;
+      margin-top: 12px;
+      max-width: 320px;
+      line-height: 1.5;
+    }
+
+    /* ─── NAV ZONES ───────────────────────────────── */
     #nav-prev, #nav-next {
       position: fixed;
       top: 0; bottom: 0;
-      width: 35%;
-      z-index: 20;
+      width: 38%;
+      z-index: 50;
       cursor: pointer;
       -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
     }
     #nav-prev { left: 0; }
     #nav-next { right: 0; }
@@ -388,397 +478,315 @@
     /* ─── COUNTER ─────────────────────────────────── */
     #slide-counter {
       position: fixed;
-      bottom: max(22px, env(safe-area-inset-bottom));
-      right: 18px;
-      z-index: 30;
-      font-size: 0.67rem;
+      bottom: max(18px, env(safe-area-inset-bottom, 18px));
+      right: 16px;
+      z-index: 60;
+      font-size: 0.64rem;
       font-weight: 600;
-      color: rgba(255,255,255,0.35);
+      color: rgba(255,255,255,0.32);
       letter-spacing: 0.1em;
       pointer-events: none;
     }
 
-    /* ─── SWIPE HINT ─────────────────────────────── */
+    /* ─── HINT ───────────────────────────────────── */
     #swipe-hint {
       position: fixed;
-      bottom: max(22px, env(safe-area-inset-bottom));
+      bottom: max(18px, env(safe-area-inset-bottom, 18px));
       left: 50%;
       transform: translateX(-50%);
-      z-index: 30;
+      z-index: 60;
       display: flex;
       align-items: center;
-      gap: 6px;
-      font-size: 0.66rem;
-      color: rgba(255,255,255,0.3);
+      gap: 5px;
+      font-size: 0.64rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.28);
       letter-spacing: 0.08em;
       pointer-events: none;
-      transition: opacity 0.5s;
+      transition: opacity 0.6s;
+      white-space: nowrap;
     }
     #swipe-hint.hidden { opacity: 0; }
-    #swipe-hint svg { width: 16px; height: 16px; opacity: 0.4; }
 
-    /* ─── SOURCE NOTE ────────────────────────────── */
-    .source-note {
-      font-size: 0.62rem;
-      color: rgba(255,255,255,0.22);
-      text-align: center;
-      margin-top: 14px;
-      line-height: 1.4;
-    }
-
-    /* ─── SLIDE 0 — HERO ─────────────────────────── */
-    #slide-0 .hero-label {
-      font-size: 0.62rem;
-      font-weight: 700;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 22px;
-    }
-    #slide-0 .hero-head {
-      font-size: clamp(1.6rem, 7.5vw, 2.6rem);
-      font-weight: 900;
-      line-height: 1.12;
-      color: var(--white);
-      letter-spacing: -0.025em;
-      margin-bottom: 18px;
-      max-width: 360px;
-    }
-    #slide-0 .hero-head em {
-      font-style: normal;
-      color: var(--gold);
-    }
-    #slide-0 .hero-sub {
-      font-size: clamp(0.82rem, 3.4vw, 0.95rem);
-      font-weight: 400;
-      color: var(--muted);
-      line-height: 1.75;
-      max-width: 320px;
-      margin: 0 auto;
-    }
-    .hero-divider {
-      width: 40px;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, var(--gold), transparent);
-      margin: 20px auto;
-    }
-
-    /* ─── BONUS SLIDE ─────────────────────────────── */
-    #slide-6 .bonus-star {
-      font-size: 2rem;
-      margin-bottom: 8px;
-    }
-
-    /* ─── RESPONSIVE MAX WIDTH (desktop viewing) ─── */
-    @media (min-width: 480px) {
-      .slide { max-width: 430px; margin: 0 auto; }
-      #nav-prev, #nav-next { max-width: calc((100vw - 430px) / 2 + 430px * 0.35); }
-    }
+    /* ─── CTA BUTTON in nav zones needs pointer-events ─ */
+    .btn-gold { pointer-events: auto; position: relative; z-index: 60; }
   </style>
 </head>
 <body>
-<!-- Google Tag Manager (noscript) -->
+<!-- GTM noscript -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N9ZXBPTG"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
 
-<div id="story">
+<!-- Background video -->
+<video id="bg-video" autoplay loop muted playsinline preload="auto" aria-hidden="true">
+  <source src="hero-scroll.mp4" type="video/mp4">
+</video>
+<div id="bg-overlay" aria-hidden="true"></div>
+<div id="vignette"   aria-hidden="true"></div>
+<div id="top-fade"   aria-hidden="true"></div>
+<div id="bot-fade"   aria-hidden="true"></div>
+
+<div id="story" role="main">
 
   <!-- Progress bars -->
-  <div id="progress-track"></div>
+  <div id="progress-track" role="progressbar" aria-label="Progresso dos slides"></div>
 
   <!-- Slides -->
   <div id="slides-wrap">
 
-    <!-- SLIDE 0 — ABERTURA -->
-    <div class="slide active" id="slide-0">
-      <p class="hero-label">Marcel Rulli · Desafio Usucapião</p>
-      <h1 class="hero-head">A área do Direito com <em>40 milhões</em> de clientes esperando</h1>
+    <!-- SLIDE 0 — HERO -->
+    <div class="slide active" id="slide-0" role="region" aria-label="Abertura">
+      <div class="hero-avatar">
+        <img src="marcel.webp" alt="Marcel Rulli" loading="eager" />
+      </div>
+      <p class="hero-brand">Marcel Rulli · Desafio Usucapião</p>
+      <h1 class="hero-head">A área com <em>40 milhões</em> de clientes esperando</h1>
       <div class="hero-divider"></div>
-      <p class="hero-sub">Por que Regularização de Imóveis é, na prática, a melhor decisão de carreira que você pode tomar hoje</p>
+      <p class="hero-sub">Por que Regularização de Imóveis é a <strong style="color:#fff;">melhor decisão de carreira</strong> que você pode tomar hoje</p>
     </div>
 
-    <!-- SLIDE 1 — ARGUMENTO 1 -->
-    <div class="slide" id="slide-1">
+    <!-- SLIDE 1 — ARG 1 -->
+    <div class="slide" id="slide-1" role="region" aria-label="Argumento 1">
       <div class="eyebrow">Argumento 01</div>
       <p class="big-num">40M</p>
       <h2 class="slide-headline">O maior mercado jurídico do Brasil está <em>praticamente vazio</em></h2>
       <ul class="bullet-list">
-        <li>
-          <span class="icon">📍</span>
-          <span><strong>40 milhões</strong> de imóveis urbanos irregulares — <span class="gold">60%</span> de todos os domicílios do país</span>
-        </li>
-        <li>
-          <span class="icon">⚖️</span>
-          <span>A OAB tem 1,3 mi de advogados. Mesmo <strong>todos atuando nessa área</strong>, sobraria demanda por décadas</span>
-        </li>
-        <li>
-          <span class="icon">🏆</span>
-          <span><strong>Pouquíssimos se especializaram.</strong> Quem chegar primeiro, <span class="gold">fica com o mercado</span></span>
-        </li>
+        <li><span class="ico">📍</span><span><strong>40 milhões</strong> de imóveis irregulares — <span class="gold">60%</span> de todos os domicílios do país</span></li>
+        <li><span class="ico">⚖️</span><span>Mesmo se <strong>todos os 1,3 mi de advogados</strong> atuassem aqui, sobraria demanda por <span class="gold">décadas</span></span></li>
+        <li><span class="ico">🏆</span><span>Pouquíssimos se especializaram. <strong>Quem chegar primeiro, fica com o mercado</strong></span></li>
       </ul>
     </div>
 
-    <!-- SLIDE 2 — ARGUMENTO 2 -->
-    <div class="slide" id="slide-2">
+    <!-- SLIDE 2 — ARG 2 -->
+    <div class="slide" id="slide-2" role="region" aria-label="Argumento 2">
       <div class="eyebrow">Argumento 02</div>
-      <h2 class="slide-headline">Honorários proporcionais ao <em>patrimônio</em>, não ao seu esforço</h2>
+      <h2 class="slide-headline">Honorários pelo <em>patrimônio</em>, não pelo seu esforço</h2>
       <div class="stat-row">
-        <div class="stat-box">
-          <span class="val">20%</span>
-          <span class="lbl">do valor do imóvel pela tabela OAB</span>
-        </div>
-        <div class="stat-box">
-          <span class="val">R$50k</span>
-          <span class="lbl">por caso num imóvel de R$250mil</span>
-        </div>
+        <div class="stat-box"><span class="val">20%</span><span class="lbl">do imóvel pela tabela OAB</span></div>
+        <div class="stat-box"><span class="val">R$50k</span><span class="lbl">em imóvel de R$250mil</span></div>
       </div>
       <ul class="bullet-list">
-        <li>
-          <span class="icon">📅</span>
-          <span>Via extrajudicial resolvida em <strong>6 meses a 1 ano</strong></span>
-        </li>
-        <li>
-          <span class="icon">🚫</span>
-          <span><span class="gold">Sem audiências.</span> Sem contador de horas. Sem batalhas no tribunal</span>
-        </li>
+        <li><span class="ico">📅</span><span>Via extrajudicial resolvida em <strong>6 meses a 1 ano</strong></span></li>
+        <li><span class="ico">🚫</span><span><span class="gold">Sem audiências.</span> Sem contador de horas. Sem batalhas no tribunal</span></li>
       </ul>
     </div>
 
-    <!-- SLIDE 3 — ARGUMENTO 3 -->
-    <div class="slide" id="slide-3">
+    <!-- SLIDE 3 — ARG 3 -->
+    <div class="slide" id="slide-3" role="region" aria-label="Argumento 3">
       <div class="eyebrow">Argumento 03</div>
       <h2 class="slide-headline">A lei te dá <em>monopólio legal</em> sobre esse serviço</h2>
       <ul class="bullet-list">
-        <li>
-          <span class="icon">📜</span>
-          <span>Art. 216-A e o <strong>Provimento CNJ 149/2023</strong> tornam o advogado <span class="gold">obrigatório em todo processo</span></span>
-        </li>
-        <li>
-          <span class="icon">🏛️</span>
-          <span>Nenhum cartório processa <strong>sem advogado constituído</strong></span>
-        </li>
-        <li>
-          <span class="icon">🤖</span>
-          <span><strong>Nenhum app, plataforma ou IA</strong> substitui esse papel — por força de lei</span>
-        </li>
+        <li><span class="ico">📜</span><span><strong>Provimento CNJ 149/2023</strong> torna o advogado <span class="gold">obrigatório em todo processo</span></span></li>
+        <li><span class="ico">🏛️</span><span>Nenhum cartório processa <strong>sem advogado constituído</strong></span></li>
+        <li><span class="ico">🤖</span><span><strong>Nenhum app, plataforma ou IA</strong> substitui esse papel — por força de lei</span></li>
       </ul>
     </div>
 
-    <!-- SLIDE 4 — ARGUMENTO 4 -->
-    <div class="slide" id="slide-4">
+    <!-- SLIDE 4 — ARG 4 -->
+    <div class="slide" id="slide-4" role="region" aria-label="Argumento 4">
       <div class="eyebrow">Argumento 04</div>
       <h2 class="slide-headline">Você vende algo que o cliente <em>claramente já quer comprar</em></h2>
       <ul class="bullet-list">
-        <li>
-          <span class="icon">🚧</span>
-          <span>Imóvel irregular <strong>não pode vender, financiar ou deixar de herança</strong> sem burocracia</span>
-        </li>
-        <li>
-          <span class="icon">📈</span>
-          <span>Após regularização, o imóvel <span class="gold">valoriza entre 25% e 35% imediatamente</span></span>
-        </li>
-        <li>
-          <span class="icon">💰</span>
-          <span>Você não vende serviço abstrato — <strong>entrega dinheiro na mão</strong> e segurança jurídica</span>
-        </li>
+        <li><span class="ico">🚧</span><span>Imóvel irregular <strong>não pode vender, financiar ou deixar de herança</strong> sem burocracia</span></li>
+        <li><span class="ico">📈</span><span>Após regularização, valoriza <span class="gold">entre 25% e 35% imediatamente</span></span></li>
+        <li><span class="ico">💰</span><span>Você não vende serviço abstrato — <strong>entrega dinheiro na mão</strong> e segurança jurídica</span></li>
       </ul>
     </div>
 
-    <!-- SLIDE 5 — ARGUMENTO 5 -->
-    <div class="slide" id="slide-5">
+    <!-- SLIDE 5 — ARG 5 -->
+    <div class="slide" id="slide-5" role="region" aria-label="Argumento 5">
       <div class="eyebrow">Argumento 05</div>
       <h2 class="slide-headline">Um cliente vira <em>uma carteira inteira</em></h2>
       <ul class="bullet-list">
-        <li>
-          <span class="icon">🏘️</span>
-          <span>Quem tem imóvel irregular geralmente tem <strong>parentes e vizinhos no mesmo barco</strong></span>
-        </li>
-        <li>
-          <span class="icon">🔄</span>
-          <span>Com <span class="gold">60% dos imóveis do Brasil irregulares</span>, as indicações são <strong>naturais e constantes</strong></span>
-        </li>
-        <li>
-          <span class="icon">📊</span>
-          <span>Diferente de áreas contenciosas, <strong>o cliente não some depois do processo</strong></span>
-        </li>
+        <li><span class="ico">🏘️</span><span>Quem tem imóvel irregular geralmente tem <strong>parentes e vizinhos no mesmo barco</strong></span></li>
+        <li><span class="ico">🔄</span><span>Com <span class="gold">60% dos imóveis irregulares</span>, as indicações são <strong>naturais e constantes</strong></span></li>
+        <li><span class="ico">📊</span><span>Diferente de áreas contenciosas, <strong>o cliente não some depois do processo</strong></span></li>
       </ul>
     </div>
 
-    <!-- SLIDE 6 — BÔNUS -->
-    <div class="slide" id="slide-6">
-      <div class="badge">⭐ Bônus exclusivo</div>
+    <!-- SLIDE 6 — BONUS -->
+    <div class="slide" id="slide-6" role="region" aria-label="Bônus">
+      <div class="bonus-glow">⭐</div>
+      <div class="badge">Bônus exclusivo</div>
       <h2 class="slide-headline">O <em>melhor momento da história</em> para entrar nessa área</h2>
       <ul class="bullet-list">
-        <li>
-          <span class="icon">⚡</span>
-          <span>Desde 2016, a usucapião extrajudicial reduziu o processo de <strong>5–10 anos para 6–12 meses</strong></span>
-        </li>
-        <li>
-          <span class="icon">📋</span>
-          <span>O <span class="gold">Provimento CNJ 149/2023</span> consolidou e acelerou ainda mais esse caminho</span>
-        </li>
-        <li>
-          <span class="icon">🌊</span>
-          <span><strong>Demanda reprimida explosiva</strong> de quem antes desistia pela demora</span>
-        </li>
+        <li><span class="ico">⚡</span><span>Processo caiu de <strong>5–10 anos para 6–12 meses</strong> via extrajudicial</span></li>
+        <li><span class="ico">📋</span><span><span class="gold">Provimento CNJ 149/2023</span> acelerou ainda mais o caminho</span></li>
+        <li><span class="ico">🌊</span><span><strong>Demanda reprimida explosiva</strong> de quem antes desistia pela demora</span></li>
       </ul>
-      <p class="slide-sub" style="margin-top:16px;font-size:0.8rem;">A janela está aberta. A pergunta é: <strong style="color:#fff;">quem vai ocupar esse espaço na sua cidade?</strong></p>
+      <p style="font-size:0.78rem;color:var(--muted);margin-top:14px;max-width:310px;line-height:1.6;">A janela está aberta. A pergunta é: <strong style="color:#fff;">quem vai ocupar esse espaço na sua cidade?</strong></p>
     </div>
 
     <!-- SLIDE 7 — CTA -->
-    <div class="slide" id="slide-7">
-      <div class="badge">📋 Garanta sua vaga</div>
-      <h2 class="slide-headline" style="margin-bottom:16px;"><em>Desafio Usucapião</em> com Marcel Rulli</h2>
-      <div class="cta-box">
-        <div class="cta-detail"><span class="ico">📅</span> Dias 04, 05, 06 e 07 de Maio</div>
-        <div class="cta-detail"><span class="ico">🕗</span> Sempre às 20h</div>
-        <div class="cta-detail"><span class="ico">💻</span> Aulas ao vivo pelo Zoom</div>
-        <div class="cta-detail"><span class="ico">🎯</span> Exclusivo para Advogados</div>
-        <div class="cta-price">
-          <span class="from">De R$ 4.437</span>
-          <span class="val">R$ 57</span>
-          <span class="period">pagamento único · acesso imediato</span>
+    <div class="slide" id="slide-7" role="region" aria-label="Inscrição">
+      <div class="cta-wrap">
+        <div class="badge" style="margin-bottom:12px;">📋 Garanta sua vaga</div>
+        <p class="cta-title"><em>Desafio Usucapião</em><br>com Marcel Rulli</p>
+        <div class="cta-box">
+          <div class="cta-detail"><span class="ico">📅</span>Dias 04, 05, 06 e 07 de Maio</div>
+          <div class="cta-detail"><span class="ico">🕗</span>Sempre às 20h</div>
+          <div class="cta-detail"><span class="ico">💻</span>Aulas ao vivo pelo Zoom</div>
+          <div class="cta-detail"><span class="ico">🎯</span>Exclusivo para Advogados</div>
+          <div class="cta-price">
+            <span class="from">De R$ 4.437</span>
+            <span class="val">R$ 57</span>
+            <span class="period">pagamento único · acesso imediato</span>
+          </div>
+          <a href="https://hub.la/r/W9E7MRvAudq7IzLXRqND" target="_blank" rel="noopener" class="btn-gold" id="cta-btn">
+            QUERO GARANTIR MINHA VAGA →
+          </a>
+          <p class="secure">🔒 Vagas limitadas · Pagamento 100% seguro</p>
         </div>
-        <a href="https://hub.la/r/W9E7MRvAudq7IzLXRqND" target="_blank" rel="noopener" class="btn-gold" id="cta-final">
-          QUERO GARANTIR MINHA VAGA →
-        </a>
-        <p class="secure">🔒 Vagas limitadas · Pagamento 100% seguro</p>
+        <p class="source-note">Fontes verificáveis: Colégio Notarial do Brasil · Ministério da Integração · IBGE · OAB · Provimento CNJ 149/2023</p>
       </div>
-      <p class="source-note">Fontes: Colégio Notarial do Brasil · Ministério da Integração · IBGE · OAB · Provimento CNJ 149/2023</p>
     </div>
 
   </div><!-- /slides-wrap -->
 
-  <!-- Nav zones -->
-  <div id="nav-prev"></div>
-  <div id="nav-next"></div>
+  <!-- Nav zones (pointer-events on CTA area disabled) -->
+  <div id="nav-prev" role="button" aria-label="Slide anterior" tabindex="0"></div>
+  <div id="nav-next" role="button" aria-label="Próximo slide" tabindex="0"></div>
 
-  <!-- Counter -->
-  <div id="slide-counter">1 / 8</div>
-
-  <!-- Swipe hint -->
-  <div id="swipe-hint">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-    Toque para avançar
-  </div>
+  <div id="slide-counter" aria-hidden="true">1 / 8</div>
+  <div id="swipe-hint" aria-hidden="true">Toque para avançar →</div>
 
 </div><!-- /story -->
 
 <script>
-  const TOTAL     = 8;
-  const AUTO_MS   = 5000; // ms per slide
-  const HINT_HIDE = 2500; // hide hint after first tap
+  // ── Mobile vh fix ──────────────────────────────────────
+  function setVh() {
+    document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
+  }
+  setVh();
+  window.addEventListener('resize', setVh, { passive: true });
 
-  const slides     = document.querySelectorAll('.slide');
-  const track      = document.getElementById('progress-track');
-  const counter    = document.getElementById('slide-counter');
-  const hint       = document.getElementById('swipe-hint');
-  const navPrev    = document.getElementById('nav-prev');
-  const navNext    = document.getElementById('nav-next');
+  // ── Constants ──────────────────────────────────────────
+  const TOTAL   = 8;
+  const AUTO_MS = 5500;
 
-  let current  = 0;
-  let timer    = null;
-  let autoMode = true;
-  let hintShown = true;
+  // ── Elements ───────────────────────────────────────────
+  const slides   = Array.from(document.querySelectorAll('.slide'));
+  const track    = document.getElementById('progress-track');
+  const counter  = document.getElementById('slide-counter');
+  const hint     = document.getElementById('swipe-hint');
+  const navPrev  = document.getElementById('nav-prev');
+  const navNext  = document.getElementById('nav-next');
+  const ctaBtn   = document.getElementById('cta-btn');
 
-  // Build progress segments
-  const segs = [];
-  for (let i = 0; i < TOTAL; i++) {
-    const seg = document.createElement('div');
+  let current   = 0;
+  let timer     = null;
+  let hintTimer = null;
+  let hintHid   = false;
+  let locked    = false; // prevent double-fire during transition
+
+  // ── Build progress segments ────────────────────────────
+  const segs = Array.from({ length: TOTAL }, () => {
+    const seg  = document.createElement('div');
     seg.className = 'prog-seg';
     const fill = document.createElement('div');
     fill.className = 'fill';
     seg.appendChild(fill);
     track.appendChild(seg);
-    segs.push(seg);
+    return seg;
+  });
+
+  // ── Update progress bars (clean reset then animate) ────
+  function updateBars() {
+    const raf = requestAnimationFrame(() => {
+      segs.forEach((s, i) => {
+        const f = s.querySelector('.fill');
+        // 1. Kill any running transition immediately
+        f.style.transition = 'none';
+        if (i < current) {
+          f.style.width = '100%';
+        } else {
+          f.style.width = '0%';
+        }
+      });
+      // 2. Force reflow so browsers flush the above
+      segs[current].querySelector('.fill').getBoundingClientRect();
+      // 3. Now start the animated fill only for current
+      requestAnimationFrame(() => {
+        const f = segs[current].querySelector('.fill');
+        f.style.transition = `width ${AUTO_MS}ms linear`;
+        f.style.width = '100%';
+      });
+    });
   }
 
-  // ── Auto-advance with animated fill ─────────────
+  // ── Auto-advance timer ─────────────────────────────────
   function startTimer() {
-    clearInterval(timer);
-    if (!autoMode) return;
-    const seg    = segs[current];
-    const fill   = seg.querySelector('.fill');
-    fill.style.transition = `width ${AUTO_MS}ms linear`;
-    fill.style.width      = '100%';
+    clearTimeout(timer);
     timer = setTimeout(() => goTo(current + 1), AUTO_MS);
   }
+  function stopTimer() { clearTimeout(timer); }
 
-  function stopTimer() {
-    clearInterval(timer);
-    clearTimeout(timer);
-  }
-
-  // ── Navigate to slide ────────────────────────────
-  function goTo(idx) {
+  // ── Navigate ───────────────────────────────────────────
+  function goTo(idx, skipLock) {
+    if (locked && !skipLock) return;
     if (idx < 0)      idx = 0;
-    if (idx >= TOTAL) idx = TOTAL - 1;
-    if (idx === current && segs[current].classList.contains('active-playing')) return;
+    if (idx >= TOTAL) { stopTimer(); return; }
 
-    const prev = current;
-    slides[prev].classList.remove('active');
-    slides[prev].classList.add('out');
-    setTimeout(() => slides[prev].classList.remove('out'), 400);
+    locked = true;
+    setTimeout(() => { locked = false; }, 220);
 
+    // Deactivate current
+    slides[current].classList.remove('active');
     current = idx;
     slides[current].classList.add('active');
 
-    // Update progress segments
-    segs.forEach((s, i) => {
-      const f = s.querySelector('.fill');
-      f.style.transition = '';
-      if (i < current) {
-        f.style.width = '100%';
-        s.className = 'prog-seg done';
-      } else if (i === current) {
-        f.style.width = '0%';
-        s.className = 'prog-seg active';
-      } else {
-        f.style.width = '0%';
-        s.className = 'prog-seg';
-      }
-    });
-
     counter.textContent = `${current + 1} / ${TOTAL}`;
     stopTimer();
-    startTimer();
+    updateBars();
+    // Don't auto-advance on CTA slide (last)
+    if (current < TOTAL - 1) startTimer();
   }
 
-  // ── Hide hint on first interaction ──────────────
+  // ── Hide hint ──────────────────────────────────────────
   function hideHint() {
-    if (!hintShown) return;
-    hintShown = false;
-    setTimeout(() => hint.classList.add('hidden'), HINT_HIDE);
+    if (hintHid) return;
+    hintHid = true;
+    clearTimeout(hintTimer);
+    hintTimer = setTimeout(() => hint.classList.add('hidden'), 600);
   }
 
-  // ── Tap navigation ───────────────────────────────
-  navNext.addEventListener('click', () => { hideHint(); goTo(current + 1); });
-  navPrev.addEventListener('click', () => { hideHint(); goTo(current - 1); });
+  // ── Tap navigation ─────────────────────────────────────
+  navNext.addEventListener('click', e => {
+    if (e.target === ctaBtn || ctaBtn.contains(e.target)) return;
+    hideHint();
+    goTo(current + 1);
+  });
+  navPrev.addEventListener('click', () => {
+    hideHint();
+    goTo(current - 1);
+  });
 
-  // ── Touch swipe support ──────────────────────────
-  let touchStartX = 0, touchStartY = 0;
+  // ── Keyboard ───────────────────────────────────────────
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === ' ') { hideHint(); goTo(current + 1); }
+    if (e.key === 'ArrowLeft')                   { hideHint(); goTo(current - 1); }
+  });
+
+  // ── Swipe ──────────────────────────────────────────────
+  let tsx = 0, tsy = 0;
   document.addEventListener('touchstart', e => {
-    touchStartX = e.touches[0].clientX;
-    touchStartY = e.touches[0].clientY;
+    tsx = e.touches[0].clientX;
+    tsy = e.touches[0].clientY;
   }, { passive: true });
   document.addEventListener('touchend', e => {
-    const dx = e.changedTouches[0].clientX - touchStartX;
-    const dy = e.changedTouches[0].clientY - touchStartY;
-    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40) {
+    const dx = e.changedTouches[0].clientX - tsx;
+    const dy = e.changedTouches[0].clientY - tsy;
+    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 45) {
       hideHint();
       dx < 0 ? goTo(current + 1) : goTo(current - 1);
     }
   }, { passive: true });
 
-  // ── Keyboard support ─────────────────────────────
-  document.addEventListener('keydown', e => {
-    if (e.key === 'ArrowRight' || e.key === ' ') goTo(current + 1);
-    if (e.key === 'ArrowLeft')                   goTo(current - 1);
-  });
+  // ── Init ───────────────────────────────────────────────
+  // CTA button should work through the nav-next zone
+  ctaBtn.addEventListener('click', e => e.stopPropagation());
 
-  // ── Start ────────────────────────────────────────
-  goTo(0);
+  goTo(0, true);
 </script>
 </body>
 </html>
