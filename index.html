@@ -14,9 +14,19 @@
   })(window,document,'script','dataLayer','GTM-N9ZXBPTG');</script>
   <!-- End Google Tag Manager -->
 
+  <!-- Performance: DNS / preconnect hints -->
+  <link rel="preconnect" href="https://www.googletagmanager.com" />
+  <link rel="dns-prefetch" href="https://hub.la" />
+
+  <!-- Preload LCP hero background -->
+  <link rel="preload" href="event-wide-1.jpg" as="image" />
+
+  <!-- Google Fonts: non-render-blocking (print media trick) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,300&display=swap" rel="stylesheet" />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,300&display=swap" />
+  <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,300&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,300&display=swap" rel="stylesheet" /></noscript>
 
   <style>
     /* =============================================
@@ -2306,7 +2316,7 @@
   <!-- ======== HERO ======== -->
   <section id="hero">
     <div id="hero-sticky">
-      <video id="hero-scroll-video" muted playsinline preload="auto">
+      <video id="hero-scroll-video" muted playsinline preload="none">
         <source src="hero-scroll.mp4" type="video/mp4">
       </video>
       <div class="hero-video-overlay"></div>
@@ -2451,7 +2461,7 @@
   <!-- ======== MENTOR ======== -->
   <section id="mentor">
     <!-- Full-bleed photo -->
-    <img src="marcel.jpg" alt="Marcel Rulli" class="mentor-photo-bg reveal" />
+    <img src="marcel.jpg" alt="Marcel Rulli" class="mentor-photo-bg reveal" loading="lazy" decoding="async" />
     <div class="mentor-photo-mask"></div>
 
     <div class="mentor-inner">
