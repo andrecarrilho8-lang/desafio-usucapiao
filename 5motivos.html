@@ -93,6 +93,15 @@
       pointer-events: none;
     }
 
+    /* ─── PARTICLE CANVAS ─────────────────────────── */
+    #particles {
+      position: fixed;
+      inset: 0;
+      width: 100%; height: 100%;
+      z-index: 4;
+      pointer-events: none;
+    }
+
     /* ─── STORY CONTAINER ─────────────────────────── */
     #story {
       position: fixed;
@@ -411,6 +420,7 @@
     .cta-detail {
       display: flex;
       align-items: center;
+      justify-content: center;
       gap: 10px;
       font-size: clamp(0.82rem, 3.2vw, 0.90rem);
       color: rgba(255,255,255,0.85);
@@ -419,6 +429,7 @@
       border: 1px solid rgba(255,255,255,0.08);
       border-radius: 10px;
       padding: 11px 14px;
+      text-align: center;
       transform: translateZ(0);
     }
     .cta-detail .ico { font-size: 1rem; flex-shrink: 0; }
@@ -598,6 +609,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <div id="top-fade"   aria-hidden="true"></div>
 <div id="bot-fade"   aria-hidden="true"></div>
 
+<canvas id="particles" aria-hidden="true"></canvas>
 <div id="story" role="main">
 
   <!-- Progress bars -->
@@ -968,6 +980,76 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   // ── Init ─────────────────────────────────────────────
   goTo(0, true);
+
+  // ── Particles ─────────────────────────────────────────
+  (function () {
+    const canvas = document.getElementById('particles');
+    const ctx    = canvas.getContext('2d');
+    const COUNT  = 42;
+
+    function resize() {
+      canvas.width  = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize, { passive: true });
+
+    // Particle factory
+    function mkParticle(forceBottom) {
+      const h = canvas.height;
+      const w = canvas.width;
+      return {
+        x:     Math.random() * w,
+        // Start in the bottom 35% of the screen
+        y:     forceBottom ? h + Math.random() * 20 : h * 0.65 + Math.random() * h * 0.35,
+        r:     0.8 + Math.random() * 2.2,        // 0.8–3px radius
+        speed: 0.35 + Math.random() * 0.65,       // px per frame
+        drift: (Math.random() - 0.5) * 0.4,       // gentle horizontal drift
+        alpha: 0.15 + Math.random() * 0.35,       // max opacity
+        life:  0,                                  // 0..1 travel progress
+        // Gold-to-white hue
+        hue:   Math.random() < 0.6
+               ? `rgba(233,195,73,`               // gold
+               : `rgba(255,245,210,`,             // warm white
+      };
+    }
+
+    const pool = Array.from({ length: COUNT }, () => mkParticle(false));
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const travelH = canvas.height * 0.55; // total travel height
+
+      pool.forEach(p => {
+        // Move up
+        p.y     -= p.speed;
+        p.x     += p.drift;
+        p.life   = Math.max(0, 1 - (p.y / canvas.height));
+
+        // Fade: ramp in quickly, then fade out in top 30% of travel
+        const fadeIn  = Math.min(p.life * 5, 1);
+        const fadeOut = p.y < canvas.height * 0.35
+                        ? Math.max(0, p.y / (canvas.height * 0.35))
+                        : 1;
+        const a = p.alpha * fadeIn * fadeOut;
+
+        if (a > 0.01) {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fillStyle = p.hue + a + ')';
+          ctx.fill();
+        }
+
+        // Reset when particle reaches top ~20% or drifts off screen
+        if (p.y < canvas.height * 0.18 || p.x < -10 || p.x > canvas.width + 10) {
+          Object.assign(p, mkParticle(true));
+        }
+      });
+
+      requestAnimationFrame(draw);
+    }
+    draw();
+  })();
 </script>
 </body>
 </html>
