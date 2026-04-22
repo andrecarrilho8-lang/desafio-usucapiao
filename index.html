@@ -1736,12 +1736,13 @@
       }
       /* Button full-width on mobile: display:block fills parent content area naturally (no explicit width) */
       #hero-cta {
-        display: block !important;
+        display: inline-block !important;
         width: auto !important;
-        overflow: hidden;
+        min-width: 220px;
         text-align: center;
-        padding: 18px 20px;
+        padding: 18px 24px;
         font-size: 0.8rem;
+        white-space: normal;
       }
       .price-hint {
         font-size: 0.75rem;
@@ -2140,16 +2141,17 @@
          BUTTONS — full-width on mobile
       ============================================ */
       .btn-primary {
-        width: 100%;
+        display: inline-block !important;
+        width: auto !important;
         text-align: center;
-        justify-content: center;
-        padding: 18px 20px;
+        padding: 18px 28px;
         font-size: 0.82rem;
         box-sizing: border-box;
+        white-space: nowrap;
       }
       .btn-primary.large {
         font-size: 0.85rem;
-        padding: 18px 20px;
+        padding: 18px 28px;
       }
 
       /* ============================================
@@ -2324,7 +2326,7 @@
         <p class="hero-sub reveal">
           <strong>Advogado:</strong> enquanto voc&ecirc; l&ecirc; esta p&aacute;gina, colegas est&atilde;o faturando <strong>at&eacute; R$ 30.000 por processo</strong> em um mercado com mais de <strong>30 Milh&otilde;es</strong> de im&oacute;veis irregulares.
         </p>
-        <a href="#truth" class="btn-primary large reveal" id="hero-cta" style="display:block;">QUERO PARTICIPAR</a>
+        <a href="#truth" class="btn-primary large reveal" id="hero-cta">QUERO PARTICIPAR DO DESAFIO</a>
         <p class="price-hint reveal">De <span class="strike">R$ 4.437</span> por <span>R$ 57,00</span> | Por tempo limitado!</p>
       </div>
 
