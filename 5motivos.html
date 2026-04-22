@@ -357,12 +357,13 @@
     #slide-0 { justify-content: center; gap: 10px; }
 
     .hero-big-num {
-      font-size: clamp(7rem, 38vw, 12rem);
+      font-size: clamp(5rem, 28vw, 8rem);
       font-weight: 900;
       color: var(--gold);
       line-height: 0.85;
       letter-spacing: -0.06em;
       display: block;
+      margin: 12px 0;
       text-shadow: 0 0 40px rgba(233,195,73,0.65), 0 0 80px rgba(233,195,73,0.3);
       animation: numPulse 2s ease-in-out infinite;
     }
@@ -604,7 +605,7 @@
       z-index: 50;
       cursor: pointer;
       -webkit-tap-highlight-color: transparent;
-      touch-action: manipulation;
+      touch-action: none;
     }
     #nav-prev { left: 0; }
     #nav-next { right: 0; }
