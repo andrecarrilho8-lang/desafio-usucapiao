@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>5 Motivos – Regularização de Imóveis | Marcel Rulli</title>
+  <meta name="description" content="A área do Direito com 40 milhões de clientes esperando. Descubra por que regularização de imóveis é a melhor decisão de carreira que você pode tomar hoje." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" /></noscript>
+
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-N9ZXBPTG');</script>
+  <!-- End Google Tag Manager -->
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #E9C349;
+      --gold-dim: rgba(233,195,73,0.15);
+      --gold-glow: rgba(233,195,73,0.3);
+      --bg: #080808;
+      --glass: rgba(255,255,255,0.05);
+      --glass-border: rgba(255,255,255,0.09);
+      --white: #FFFFFF;
+      --muted: rgba(255,255,255,0.55);
+      --font: 'Inter', -apple-system, 'Helvetica Neue', sans-serif;
+    }
+
+    html, body {
+      width: 100%; height: 100%;
+      overflow: hidden;
+      background: var(--bg);
+      font-family: var(--font);
+      -webkit-font-smoothing: antialiased;
+      touch-action: none;
+      user-select: none;
+    }
+
+    /* ─── CONTAINER ─────────────────────────────── */
+    #story {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ─── PROGRESS BARS ──────────────────────────── */
+    #progress-track {
+      position: relative;
+      z-index: 30;
+      display: flex;
+      gap: 4px;
+      padding: 14px 14px 0;
+      padding-top: max(14px, env(safe-area-inset-top));
+    }
+
+    .prog-seg {
+      flex: 1;
+      height: 2.5px;
+      border-radius: 2px;
+      background: rgba(255,255,255,0.22);
+      overflow: hidden;
+    }
+    .prog-seg .fill {
+      height: 100%;
+      width: 0%;
+      background: var(--white);
+      transition: width 0.12s linear;
+      border-radius: 2px;
+    }
+    .prog-seg.done .fill  { width: 100%; }
+    .prog-seg.active .fill { width: 0%; }
+
+    /* ─── SLIDES WRAPPER ─────────────────────────── */
+    #slides-wrap {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* ─── SINGLE SLIDE ───────────────────────────── */
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 32px 28px 40px;
+      padding-bottom: max(40px, env(safe-area-inset-bottom));
+      opacity: 0;
+      transform: scale(1.03);
+      transition: opacity 0.38s cubic-bezier(0.4,0,0.2,1),
+                  transform 0.38s cubic-bezier(0.4,0,0.2,1);
+      pointer-events: none;
+      text-align: center;
+    }
+    .slide.active {
+      opacity: 1;
+      transform: scale(1);
+      pointer-events: auto;
+    }
+    .slide.out {
+      opacity: 0;
+      transform: scale(0.97);
+    }
+
+    /* ─── AMBIENT BG ──────────────────────────────── */
+    .slide::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+    /* Unique ambience per slide via --glow-color */
+    .slide { --glow-color: rgba(233,195,73,0.12); }
+    #slide-0::before { background: radial-gradient(ellipse 80% 60% at 50% 30%, rgba(233,195,73,0.14) 0%, transparent 70%), var(--bg); }
+    #slide-1::before { background: radial-gradient(ellipse 70% 50% at 30% 40%, rgba(80,160,255,0.08) 0%, transparent 65%), var(--bg); }
+    #slide-2::before { background: radial-gradient(ellipse 70% 50% at 70% 30%, rgba(233,195,73,0.10) 0%, transparent 65%), var(--bg); }
+    #slide-3::before { background: radial-gradient(ellipse 70% 50% at 40% 50%, rgba(160,80,255,0.09) 0%, transparent 65%), var(--bg); }
+    #slide-4::before { background: radial-gradient(ellipse 70% 50% at 60% 60%, rgba(80,200,120,0.08) 0%, transparent 65%), var(--bg); }
+    #slide-5::before { background: radial-gradient(ellipse 70% 50% at 35% 35%, rgba(233,195,73,0.10) 0%, transparent 65%), var(--bg); }
+    #slide-6::before { background: radial-gradient(ellipse 80% 80% at 50% 50%, rgba(233,195,73,0.18) 0%, transparent 70%), var(--bg); }
+    #slide-7::before { background: radial-gradient(ellipse 80% 70% at 50% 40%, rgba(233,195,73,0.2) 0%, transparent 70%),
+                       radial-gradient(ellipse 60% 40% at 80% 80%, rgba(255,120,0,0.07) 0%, transparent 60%), var(--bg); }
+
+    /* inner content stacking context */
+    .slide > * { position: relative; z-index: 2; }
+
+    /* ─── TYPOGRAPHY ──────────────────────────────── */
+    .eyebrow {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .eyebrow::before, .eyebrow::after {
+      content: '';
+      display: block;
+      height: 1px;
+      width: 28px;
+      background: var(--gold);
+      opacity: 0.5;
+    }
+
+    .big-num {
+      font-size: clamp(5rem, 28vw, 9rem);
+      font-weight: 900;
+      line-height: 1;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(233,195,73,0.22);
+      letter-spacing: -0.04em;
+      margin-bottom: -8px;
+      pointer-events: none;
+    }
+
+    .slide-headline {
+      font-size: clamp(1.45rem, 6vw, 2.2rem);
+      font-weight: 800;
+      line-height: 1.18;
+      color: var(--white);
+      letter-spacing: -0.02em;
+      margin-bottom: 20px;
+    }
+    .slide-headline em {
+      font-style: normal;
+      color: var(--gold);
+    }
+
+    .slide-sub {
+      font-size: clamp(0.88rem, 3.5vw, 1rem);
+      font-weight: 400;
+      line-height: 1.7;
+      color: var(--muted);
+      max-width: 340px;
+      margin: 0 auto 24px;
+    }
+
+    /* ─── GLASS CARD ────────────────────────────── */
+    .glass-card {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-radius: 18px;
+      padding: 20px 22px;
+      width: 100%;
+      max-width: 380px;
+      text-align: left;
+    }
+
+    /* ─── BULLET LIST ───────────────────────────── */
+    .bullet-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      width: 100%;
+      max-width: 380px;
+    }
+    .bullet-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: clamp(0.82rem, 3.2vw, 0.92rem);
+      font-weight: 400;
+      color: rgba(255,255,255,0.78);
+      line-height: 1.55;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      padding: 13px 15px;
+    }
+    .bullet-list li .icon {
+      flex-shrink: 0;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--gold-dim);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      color: var(--gold);
+      margin-top: 1px;
+    }
+    .bullet-list li strong { color: var(--white); font-weight: 600; }
+    .bullet-list li .gold  { color: var(--gold);  font-weight: 700; }
+
+    /* ─── STAT BADGE ─────────────────────────────── */
+    .stat-row {
+      display: flex;
+      gap: 12px;
+      width: 100%;
+      max-width: 380px;
+      margin-bottom: 14px;
+    }
+    .stat-box {
+      flex: 1;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 14px;
+      padding: 14px 10px;
+      text-align: center;
+    }
+    .stat-box .val {
+      font-size: clamp(1.4rem, 6vw, 2rem);
+      font-weight: 900;
+      color: var(--gold);
+      line-height: 1;
+      letter-spacing: -0.03em;
+      display: block;
+    }
+    .stat-box .lbl {
+      font-size: 0.68rem;
+      color: var(--muted);
+      margin-top: 5px;
+      display: block;
+      line-height: 1.3;
+    }
+
+    /* ─── BADGE ──────────────────────────────────── */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--gold-dim);
+      border: 1px solid rgba(233,195,73,0.3);
+      border-radius: 100px;
+      padding: 5px 14px;
+      font-size: 0.71rem;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+
+    /* ─── CTA SLIDE ───────────────────────────────── */
+    .cta-box {
+      background: rgba(233,195,73,0.06);
+      border: 1px solid rgba(233,195,73,0.25);
+      border-radius: 20px;
+      padding: 24px 22px;
+      width: 100%;
+      max-width: 380px;
+      text-align: left;
+    }
+    .cta-detail {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.75);
+      margin-bottom: 9px;
+      font-weight: 400;
+    }
+    .cta-detail .ico { font-size: 1rem; flex-shrink: 0; }
+    .cta-price {
+      text-align: center;
+      margin: 18px 0 20px;
+    }
+    .cta-price .from {
+      font-size: 0.75rem;
+      color: var(--muted);
+      text-decoration: line-through;
+    }
+    .cta-price .val {
+      font-size: clamp(2rem, 9vw, 3rem);
+      font-weight: 900;
+      color: var(--gold);
+      line-height: 1;
+      letter-spacing: -0.03em;
+      display: block;
+      margin-top: 2px;
+    }
+    .cta-price .period {
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .btn-gold {
+      display: block;
+      width: 100%;
+      background: linear-gradient(135deg, #E9C349, #c9a32a);
+      color: #1a0a00;
+      font-family: var(--font);
+      font-size: 0.82rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-align: center;
+      text-decoration: none;
+      padding: 17px 24px;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(233,195,73,0.35);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(233,195,73,0.5); }
+    .btn-gold::after {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 60%; height: 100%;
+      background: linear-gradient(105deg, transparent 20%, rgba(255,255,255,0.35) 50%, transparent 80%);
+      transform: skewX(-15deg);
+      animation: shimmer 2.4s ease-in-out 1s infinite;
+    }
+    @keyframes shimmer { 0%,100% { left:-100%; } 60% { left:160%; } }
+
+    .secure {
+      font-size: 0.68rem;
+      color: var(--muted);
+      text-align: center;
+      margin-top: 12px;
+    }
+
+    /* ─── NAVIGATION ZONES ────────────────────────── */
+    #nav-prev, #nav-next {
+      position: fixed;
+      top: 0; bottom: 0;
+      width: 35%;
+      z-index: 20;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+    #nav-prev { left: 0; }
+    #nav-next { right: 0; }
+
+    /* ─── COUNTER ─────────────────────────────────── */
+    #slide-counter {
+      position: fixed;
+      bottom: max(22px, env(safe-area-inset-bottom));
+      right: 18px;
+      z-index: 30;
+      font-size: 0.67rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.35);
+      letter-spacing: 0.1em;
+      pointer-events: none;
+    }
+
+    /* ─── SWIPE HINT ─────────────────────────────── */
+    #swipe-hint {
+      position: fixed;
+      bottom: max(22px, env(safe-area-inset-bottom));
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 30;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.66rem;
+      color: rgba(255,255,255,0.3);
+      letter-spacing: 0.08em;
+      pointer-events: none;
+      transition: opacity 0.5s;
+    }
+    #swipe-hint.hidden { opacity: 0; }
+    #swipe-hint svg { width: 16px; height: 16px; opacity: 0.4; }
+
+    /* ─── SOURCE NOTE ────────────────────────────── */
+    .source-note {
+      font-size: 0.62rem;
+      color: rgba(255,255,255,0.22);
+      text-align: center;
+      margin-top: 14px;
+      line-height: 1.4;
+    }
+
+    /* ─── SLIDE 0 — HERO ─────────────────────────── */
+    #slide-0 .hero-label {
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 22px;
+    }
+    #slide-0 .hero-head {
+      font-size: clamp(1.6rem, 7.5vw, 2.6rem);
+      font-weight: 900;
+      line-height: 1.12;
+      color: var(--white);
+      letter-spacing: -0.025em;
+      margin-bottom: 18px;
+      max-width: 360px;
+    }
+    #slide-0 .hero-head em {
+      font-style: normal;
+      color: var(--gold);
+    }
+    #slide-0 .hero-sub {
+      font-size: clamp(0.82rem, 3.4vw, 0.95rem);
+      font-weight: 400;
+      color: var(--muted);
+      line-height: 1.75;
+      max-width: 320px;
+      margin: 0 auto;
+    }
+    .hero-divider {
+      width: 40px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 20px auto;
+    }
+
+    /* ─── BONUS SLIDE ─────────────────────────────── */
+    #slide-6 .bonus-star {
+      font-size: 2rem;
+      margin-bottom: 8px;
+    }
+
+    /* ─── RESPONSIVE MAX WIDTH (desktop viewing) ─── */
+    @media (min-width: 480px) {
+      .slide { max-width: 430px; margin: 0 auto; }
+      #nav-prev, #nav-next { max-width: calc((100vw - 430px) / 2 + 430px * 0.35); }
+    }
+  </style>
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N9ZXBPTG"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<div id="story">
+
+  <!-- Progress bars -->
+  <div id="progress-track"></div>
+
+  <!-- Slides -->
+  <div id="slides-wrap">
+
+    <!-- SLIDE 0 — ABERTURA -->
+    <div class="slide active" id="slide-0">
+      <p class="hero-label">Marcel Rulli · Desafio Usucapião</p>
+      <h1 class="hero-head">A área do Direito com <em>40 milhões</em> de clientes esperando</h1>
+      <div class="hero-divider"></div>
+      <p class="hero-sub">Por que Regularização de Imóveis é, na prática, a melhor decisão de carreira que você pode tomar hoje</p>
+    </div>
+
+    <!-- SLIDE 1 — ARGUMENTO 1 -->
+    <div class="slide" id="slide-1">
+      <div class="eyebrow">Argumento 01</div>
+      <p class="big-num">40M</p>
+      <h2 class="slide-headline">O maior mercado jurídico do Brasil está <em>praticamente vazio</em></h2>
+      <ul class="bullet-list">
+        <li>
+          <span class="icon">📍</span>
+          <span><strong>40 milhões</strong> de imóveis urbanos irregulares — <span class="gold">60%</span> de todos os domicílios do país</span>
+        </li>
+        <li>
+          <span class="icon">⚖️</span>
+          <span>A OAB tem 1,3 mi de advogados. Mesmo <strong>todos atuando nessa área</strong>, sobraria demanda por décadas</span>
+        </li>
+        <li>
+          <span class="icon">🏆</span>
+          <span><strong>Pouquíssimos se especializaram.</strong> Quem chegar primeiro, <span class="gold">fica com o mercado</span></span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- SLIDE 2 — ARGUMENTO 2 -->
+    <div class="slide" id="slide-2">
+      <div class="eyebrow">Argumento 02</div>
+      <h2 class="slide-headline">Honorários proporcionais ao <em>patrimônio</em>, não ao seu esforço</h2>
+      <div class="stat-row">
+        <div class="stat-box">
+          <span class="val">20%</span>
+          <span class="lbl">do valor do imóvel pela tabela OAB</span>
+        </div>
+        <div class="stat-box">
+          <span class="val">R$50k</span>
+          <span class="lbl">por caso num imóvel de R$250mil</span>
+        </div>
+      </div>
+      <ul class="bullet-list">
+        <li>
+          <span class="icon">📅</span>
+          <span>Via extrajudicial resolvida em <strong>6 meses a 1 ano</strong></span>
+        </li>
+        <li>
+          <span class="icon">🚫</span>
+          <span><span class="gold">Sem audiências.</span> Sem contador de horas. Sem batalhas no tribunal</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- SLIDE 3 — ARGUMENTO 3 -->
+    <div class="slide" id="slide-3">
+      <div class="eyebrow">Argumento 03</div>
+      <h2 class="slide-headline">A lei te dá <em>monopólio legal</em> sobre esse serviço</h2>
+      <ul class="bullet-list">
+        <li>
+          <span class="icon">📜</span>
+          <span>Art. 216-A e o <strong>Provimento CNJ 149/2023</strong> tornam o advogado <span class="gold">obrigatório em todo processo</span></span>
+        </li>
+        <li>
+          <span class="icon">🏛️</span>
+          <span>Nenhum cartório processa <strong>sem advogado constituído</strong></span>
+        </li>
+        <li>
+          <span class="icon">🤖</span>
+          <span><strong>Nenhum app, plataforma ou IA</strong> substitui esse papel — por força de lei</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- SLIDE 4 — ARGUMENTO 4 -->
+    <div class="slide" id="slide-4">
+      <div class="eyebrow">Argumento 04</div>
+      <h2 class="slide-headline">Você vende algo que o cliente <em>claramente já quer comprar</em></h2>
+      <ul class="bullet-list">
+        <li>
+          <span class="icon">🚧</span>
+          <span>Imóvel irregular <strong>não pode vender, financiar ou deixar de herança</strong> sem burocracia</span>
+        </li>
+        <li>
+          <span class="icon">📈</span>
+          <span>Após regularização, o imóvel <span class="gold">valoriza entre 25% e 35% imediatamente</span></span>
+        </li>
+        <li>
+          <span class="icon">💰</span>
+          <span>Você não vende serviço abstrato — <strong>entrega dinheiro na mão</strong> e segurança jurídica</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- SLIDE 5 — ARGUMENTO 5 -->
+    <div class="slide" id="slide-5">
+      <div class="eyebrow">Argumento 05</div>
+      <h2 class="slide-headline">Um cliente vira <em>uma carteira inteira</em></h2>
+      <ul class="bullet-list">
+        <li>
+          <span class="icon">🏘️</span>
+          <span>Quem tem imóvel irregular geralmente tem <strong>parentes e vizinhos no mesmo barco</strong></span>
+        </li>
+        <li>
+          <span class="icon">🔄</span>
+          <span>Com <span class="gold">60% dos imóveis do Brasil irregulares</span>, as indicações são <strong>naturais e constantes</strong></span>
+        </li>
+        <li>
+          <span class="icon">📊</span>
+          <span>Diferente de áreas contenciosas, <strong>o cliente não some depois do processo</strong></span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- SLIDE 6 — BÔNUS -->
+    <div class="slide" id="slide-6">
+      <div class="badge">⭐ Bônus exclusivo</div>
+      <h2 class="slide-headline">O <em>melhor momento da história</em> para entrar nessa área</h2>
+      <ul class="bullet-list">
+        <li>
+          <span class="icon">⚡</span>
+          <span>Desde 2016, a usucapião extrajudicial reduziu o processo de <strong>5–10 anos para 6–12 meses</strong></span>
+        </li>
+        <li>
+          <span class="icon">📋</span>
+          <span>O <span class="gold">Provimento CNJ 149/2023</span> consolidou e acelerou ainda mais esse caminho</span>
+        </li>
+        <li>
+          <span class="icon">🌊</span>
+          <span><strong>Demanda reprimida explosiva</strong> de quem antes desistia pela demora</span>
+        </li>
+      </ul>
+      <p class="slide-sub" style="margin-top:16px;font-size:0.8rem;">A janela está aberta. A pergunta é: <strong style="color:#fff;">quem vai ocupar esse espaço na sua cidade?</strong></p>
+    </div>
+
+    <!-- SLIDE 7 — CTA -->
+    <div class="slide" id="slide-7">
+      <div class="badge">📋 Garanta sua vaga</div>
+      <h2 class="slide-headline" style="margin-bottom:16px;"><em>Desafio Usucapião</em> com Marcel Rulli</h2>
+      <div class="cta-box">
+        <div class="cta-detail"><span class="ico">📅</span> Dias 04, 05, 06 e 07 de Maio</div>
+        <div class="cta-detail"><span class="ico">🕗</span> Sempre às 20h</div>
+        <div class="cta-detail"><span class="ico">💻</span> Aulas ao vivo pelo Zoom</div>
+        <div class="cta-detail"><span class="ico">🎯</span> Exclusivo para Advogados</div>
+        <div class="cta-price">
+          <span class="from">De R$ 4.437</span>
+          <span class="val">R$ 57</span>
+          <span class="period">pagamento único · acesso imediato</span>
+        </div>
+        <a href="https://hub.la/r/W9E7MRvAudq7IzLXRqND" target="_blank" rel="noopener" class="btn-gold" id="cta-final">
+          QUERO GARANTIR MINHA VAGA →
+        </a>
+        <p class="secure">🔒 Vagas limitadas · Pagamento 100% seguro</p>
+      </div>
+      <p class="source-note">Fontes: Colégio Notarial do Brasil · Ministério da Integração · IBGE · OAB · Provimento CNJ 149/2023</p>
+    </div>
+
+  </div><!-- /slides-wrap -->
+
+  <!-- Nav zones -->
+  <div id="nav-prev"></div>
+  <div id="nav-next"></div>
+
+  <!-- Counter -->
+  <div id="slide-counter">1 / 8</div>
+
+  <!-- Swipe hint -->
+  <div id="swipe-hint">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+    Toque para avançar
+  </div>
+
+</div><!-- /story -->
+
+<script>
+  const TOTAL     = 8;
+  const AUTO_MS   = 5000; // ms per slide
+  const HINT_HIDE = 2500; // hide hint after first tap
+
+  const slides     = document.querySelectorAll('.slide');
+  const track      = document.getElementById('progress-track');
+  const counter    = document.getElementById('slide-counter');
+  const hint       = document.getElementById('swipe-hint');
+  const navPrev    = document.getElementById('nav-prev');
+  const navNext    = document.getElementById('nav-next');
+
+  let current  = 0;
+  let timer    = null;
+  let autoMode = true;
+  let hintShown = true;
+
+  // Build progress segments
+  const segs = [];
+  for (let i = 0; i < TOTAL; i++) {
+    const seg = document.createElement('div');
+    seg.className = 'prog-seg';
+    const fill = document.createElement('div');
+    fill.className = 'fill';
+    seg.appendChild(fill);
+    track.appendChild(seg);
+    segs.push(seg);
+  }
+
+  // ── Auto-advance with animated fill ─────────────
+  function startTimer() {
+    clearInterval(timer);
+    if (!autoMode) return;
+    const seg    = segs[current];
+    const fill   = seg.querySelector('.fill');
+    fill.style.transition = `width ${AUTO_MS}ms linear`;
+    fill.style.width      = '100%';
+    timer = setTimeout(() => goTo(current + 1), AUTO_MS);
+  }
+
+  function stopTimer() {
+    clearInterval(timer);
+    clearTimeout(timer);
+  }
+
+  // ── Navigate to slide ────────────────────────────
+  function goTo(idx) {
+    if (idx < 0)      idx = 0;
+    if (idx >= TOTAL) idx = TOTAL - 1;
+    if (idx === current && segs[current].classList.contains('active-playing')) return;
+
+    const prev = current;
+    slides[prev].classList.remove('active');
+    slides[prev].classList.add('out');
+    setTimeout(() => slides[prev].classList.remove('out'), 400);
+
+    current = idx;
+    slides[current].classList.add('active');
+
+    // Update progress segments
+    segs.forEach((s, i) => {
+      const f = s.querySelector('.fill');
+      f.style.transition = '';
+      if (i < current) {
+        f.style.width = '100%';
+        s.className = 'prog-seg done';
+      } else if (i === current) {
+        f.style.width = '0%';
+        s.className = 'prog-seg active';
+      } else {
+        f.style.width = '0%';
+        s.className = 'prog-seg';
+      }
+    });
+
+    counter.textContent = `${current + 1} / ${TOTAL}`;
+    stopTimer();
+    startTimer();
+  }
+
+  // ── Hide hint on first interaction ──────────────
+  function hideHint() {
+    if (!hintShown) return;
+    hintShown = false;
+    setTimeout(() => hint.classList.add('hidden'), HINT_HIDE);
+  }
+
+  // ── Tap navigation ───────────────────────────────
+  navNext.addEventListener('click', () => { hideHint(); goTo(current + 1); });
+  navPrev.addEventListener('click', () => { hideHint(); goTo(current - 1); });
+
+  // ── Touch swipe support ──────────────────────────
+  let touchStartX = 0, touchStartY = 0;
+  document.addEventListener('touchstart', e => {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+  }, { passive: true });
+  document.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    const dy = e.changedTouches[0].clientY - touchStartY;
+    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40) {
+      hideHint();
+      dx < 0 ? goTo(current + 1) : goTo(current - 1);
+    }
+  }, { passive: true });
+
+  // ── Keyboard support ─────────────────────────────
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === ' ') goTo(current + 1);
+    if (e.key === 'ArrowLeft')                   goTo(current - 1);
+  });
+
+  // ── Start ────────────────────────────────────────
+  goTo(0);
+</script>
+</body>
+</html>
