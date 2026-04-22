@@ -149,10 +149,11 @@
       transition: opacity 0.32s ease;
       pointer-events: none;
       text-align: center;
+      will-change: opacity;
     }
     .slide.active {
       opacity: 1;
-      pointer-events: none; /* nav zones handle input */
+      pointer-events: none;
     }
     .slide > * { position: relative; z-index: 5; }
 
@@ -225,6 +226,8 @@
       padding: 12px 14px;
       text-align: left;
       box-shadow: 0 2px 16px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.08);
+      transform: translateZ(0);
+      will-change: backdrop-filter;
     }
     .bullet-list li .ico {
       flex-shrink: 0;
@@ -260,6 +263,8 @@
       padding: 14px 10px;
       text-align: center;
       box-shadow: 0 4px 20px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.10);
+      transform: translateZ(0);
+      will-change: backdrop-filter;
     }
     .stat-box .val {
       font-size: clamp(1.4rem, 6vw, 2rem);
@@ -392,31 +397,37 @@
       -webkit-backdrop-filter: blur(28px);
       border: 1px solid rgba(233,195,73,0.25);
       border-radius: 22px;
-      padding: 22px 20px 20px;
+      padding: 24px 22px 22px;
       box-shadow: 0 8px 40px rgba(0,0,0,0.6), inset 0 1px 0 rgba(233,195,73,0.15);
+      transform: translateZ(0);
+      will-change: backdrop-filter;
     }
     .cta-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      margin-bottom: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 22px;
     }
     .cta-detail {
       display: flex;
       align-items: center;
-      gap: 7px;
-      font-size: clamp(0.80rem, 3.2vw, 0.88rem);
-      color: rgba(255,255,255,0.82);
+      gap: 10px;
+      font-size: clamp(0.82rem, 3.2vw, 0.90rem);
+      color: rgba(255,255,255,0.85);
       font-weight: 500;
       background: rgba(255,255,255,0.05);
       border: 1px solid rgba(255,255,255,0.08);
       border-radius: 10px;
-      padding: 10px 11px;
+      padding: 11px 14px;
+      transform: translateZ(0);
     }
-    .cta-detail .ico { font-size: 0.88rem; flex-shrink: 0; }
+    .cta-detail .ico { font-size: 1rem; flex-shrink: 0; }
     .cta-price {
       text-align: center;
-      margin: 6px 0 18px;
+      margin: 10px 0 22px;
+      padding: 6px 0;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
     }
     .cta-price .savings {
       display: inline-block;
