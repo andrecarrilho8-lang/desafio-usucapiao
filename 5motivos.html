@@ -183,7 +183,7 @@
       font-weight: 900;
       line-height: 0.9;
       color: transparent;
-      -webkit-text-stroke: 1px rgba(233,195,73,0.18);
+      -webkit-text-stroke: 2.5px rgba(233,195,73,0.35);
       letter-spacing: -0.04em;
       pointer-events: none;
       margin-bottom: -4px;
@@ -213,9 +213,9 @@
       display: flex;
       align-items: flex-start;
       gap: 11px;
-      font-size: clamp(0.78rem, 3.1vw, 0.88rem);
+      font-size: clamp(0.86rem, 3.4vw, 0.96rem);
       font-weight: 400;
-      color: rgba(255,255,255,0.80);
+      color: rgba(255,255,255,0.82);
       line-height: 1.5;
       background: rgba(255,255,255,0.07);
       backdrop-filter: blur(20px);
@@ -376,7 +376,15 @@
       font-size: clamp(0.78rem, 3vw, 0.88rem);
       color: var(--muted);
       font-weight: 400;
-      margin-bottom: 0;
+      margin-bottom: 4px;
+    }
+    .cta-sub2 {
+      font-size: clamp(0.74rem, 2.8vw, 0.82rem);
+      color: rgba(255,255,255,0.38);
+      font-weight: 400;
+      line-height: 1.55;
+      max-width: 320px;
+      margin: 6px auto 0;
     }
     .cta-box {
       background: rgba(10,8,2,0.72);
@@ -384,31 +392,31 @@
       -webkit-backdrop-filter: blur(28px);
       border: 1px solid rgba(233,195,73,0.25);
       border-radius: 22px;
-      padding: 18px 18px 16px;
+      padding: 22px 20px 20px;
       box-shadow: 0 8px 40px rgba(0,0,0,0.6), inset 0 1px 0 rgba(233,195,73,0.15);
     }
     .cta-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 6px;
-      margin-bottom: 14px;
+      gap: 8px;
+      margin-bottom: 18px;
     }
     .cta-detail {
       display: flex;
       align-items: center;
       gap: 7px;
-      font-size: clamp(0.76rem, 3vw, 0.85rem);
-      color: rgba(255,255,255,0.78);
+      font-size: clamp(0.80rem, 3.2vw, 0.88rem);
+      color: rgba(255,255,255,0.82);
       font-weight: 500;
       background: rgba(255,255,255,0.05);
       border: 1px solid rgba(255,255,255,0.08);
       border-radius: 10px;
-      padding: 8px 10px;
+      padding: 10px 11px;
     }
     .cta-detail .ico { font-size: 0.88rem; flex-shrink: 0; }
     .cta-price {
       text-align: center;
-      margin: 2px 0 14px;
+      margin: 6px 0 18px;
     }
     .cta-price .savings {
       display: inline-block;
@@ -678,6 +686,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <div class="badge" style="margin-bottom:10px;">🔥 Última chance</div>
           <p class="cta-title"><em>Desafio Usucapião</em></p>
           <p class="cta-subtitle">com Marcel Rulli · Ao vivo pelo Zoom</p>
+          <p class="cta-sub2">Aprenda na prática como transformar casos de usucapião em um negócio altamente lucrativo</p>
         </div>
 
         <div class="cta-box">
