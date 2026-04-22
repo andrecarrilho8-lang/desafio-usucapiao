@@ -906,6 +906,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     // Trigger hero animation when returning to slide 0
     if (current === 0) triggerHeroAnim();
 
+    // On last slide hide navNext so CTA button gets real native taps
+    navNext.style.pointerEvents = (current === TOTAL - 1) ? 'none' : '';
+
     counter.textContent = `${current + 1} / ${TOTAL}`;
     remainingMs = AUTO_MS;
     pausedPct   = 0;
@@ -940,7 +943,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   // ── PAUSE (hold) ──────────────────────────────────────
   function pauseStory() {
-    if (isPaused || current >= TOTAL - 1) return;
+    if (isPaused) return;
     isPaused = true;
     stopTimer();
 
@@ -1024,23 +1027,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     pressTarget = null;
   }
 
-  // ── CTA button area detection (bounding rect) ─────────
-  function onCtaArea(x, y) {
-    if (current !== TOTAL - 1) return false;
-    const r = ctaBtn.getBoundingClientRect();
-    return x >= r.left && x <= r.right && y >= r.top && y <= r.bottom;
-  }
-
   // ── Nav zone touch handlers ───────────────────────────
-  // Using non-passive so we can preventDefault (blocks ghost clicks,
-  // text selection, long-press context menu on iOS/Android).
+  // non-passive → can call preventDefault (blocks ghost clicks,
+  // text selection, long-press menu). navNext is pointer-events:none
+  // on the last slide so CTA button gets real native touch there.
   function handleNavTouchStart(side, e) {
     e.preventDefault();
     const t = e.touches[0];
-    if (onCtaArea(t.clientX, t.clientY)) {
-      pressTarget = 'cta'; // forward to programmatic click on touchend
-      return;
-    }
     onPressStart(side, t.clientX, t.clientY);
   }
 
@@ -1048,32 +1041,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   navPrev.addEventListener('touchstart', e => handleNavTouchStart('prev', e), { passive: false });
 
   document.addEventListener('touchend', e => {
-    const t = e.changedTouches[0];
-    if (pressTarget === 'cta') {
-      if (onCtaArea(t.clientX, t.clientY)) ctaBtn.click();
-      pressTarget = null;
-      return;
-    }
     if (!pressTarget) return;
-    onPressEnd(t.clientX, t.clientY);
+    onPressEnd(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
   }, { passive: true });
 
   document.addEventListener('touchcancel', onPressCancel, { passive: true });
 
   // ── Mouse events (desktop) ────────────────────────────
-  navNext.addEventListener('mousedown', e => {
-    if (onCtaArea(e.clientX, e.clientY)) { pressTarget = 'cta'; return; }
-    onPressStart('next', e.clientX, e.clientY);
-  });
-  navPrev.addEventListener('mousedown', e => {
-    onPressStart('prev', e.clientX, e.clientY);
-  });
+  navNext.addEventListener('mousedown', e => onPressStart('next', e.clientX, e.clientY));
+  navPrev.addEventListener('mousedown', e => onPressStart('prev', e.clientX, e.clientY));
   document.addEventListener('mouseup', e => {
-    if (pressTarget === 'cta') {
-      if (onCtaArea(e.clientX, e.clientY)) ctaBtn.click();
-      pressTarget = null;
-      return;
-    }
     if (!pressTarget) return;
     onPressEnd(e.clientX, e.clientY);
   });
